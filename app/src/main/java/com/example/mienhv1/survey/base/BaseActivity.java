@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.login.LoginActivity;
@@ -15,6 +16,9 @@ import com.example.mienhv1.survey.ui.login.LoginActivity;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

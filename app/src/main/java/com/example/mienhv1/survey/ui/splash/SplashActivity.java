@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
-import com.example.mienhv1.survey.MainActivity;
+import com.example.mienhv1.survey.ui.home.HomeActivity;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
 
@@ -33,7 +33,7 @@ public class SplashActivity extends BaseActivity implements SplashView{
 
     @Override
     public void navigateToHomePage() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

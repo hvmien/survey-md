@@ -36,4 +36,10 @@ public class PreferenceHelper {
     public void saveProfileId(String profileId) {
 
     }
+
+    public void clearUser() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.remove(USER_KEY);
+        editor.apply();;
+    }
 }

@@ -42,4 +42,8 @@ public class DataRepository {
     public void saveUser(User user) {
         mPreferenceHelper.saveUser(user.accountId);
     }
+
+    public void clearUser() {
+        mPreferenceHelper.clearUser();
+    }
 }

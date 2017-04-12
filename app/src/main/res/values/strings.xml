@@ -9,4 +9,7 @@
     <string name="error_invalid_username" >Your username is empty</string>
     <string name="error_invalid_password" >Your password is empty</string>
     <string name="error_invalid_login">This email address is invalid</string>
+    <string name="title_sign_out">Sign out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

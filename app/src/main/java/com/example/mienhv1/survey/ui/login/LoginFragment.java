@@ -1,8 +1,6 @@
 package com.example.mienhv1.survey.ui.login;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -12,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
-import com.example.mienhv1.survey.MainActivity;
+import com.example.mienhv1.survey.ui.home.HomeActivity;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 
@@ -95,7 +93,7 @@ public class LoginFragment extends BaseFragment implements LoginView, View.OnCli
 
     @Override
     public void navigateToHomePage() {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
         getActivity().finish();
     }

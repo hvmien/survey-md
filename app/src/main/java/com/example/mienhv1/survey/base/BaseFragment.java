@@ -15,6 +15,17 @@ import org.xmlpull.v1.XmlPullParser;
  */
 
 public abstract class BaseFragment extends Fragment {
+
+    /**
+     * findViewById without cast type
+     * @param id        id view need to find
+     * @return          View with generic type
+     */
+    @SuppressWarnings("unchecked")
+    protected <T extends View> T $(int id){
+        return (T)getActivity().findViewById(id);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
