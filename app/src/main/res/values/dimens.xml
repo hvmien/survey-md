@@ -19,4 +19,5 @@
     <dimen name="layout_marginBottom">27dp</dimen>
     <dimen name="layout_marginLeft">48dp</dimen>
     <dimen name="layout_marginRight">48dp</dimen>
+    <dimen name="image_user">79dp</dimen>
 </resources>
