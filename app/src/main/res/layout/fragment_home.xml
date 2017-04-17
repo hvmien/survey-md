@@ -11,6 +11,6 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <include layout="@layout/fragment_general_information" />
+    <include layout="@layout/fragment_survey_process" />
 
 </RelativeLayout>

@@ -14,4 +14,16 @@
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>
 
+    <style name="style_button_oval">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/bg_button_oval</item>
+    </style>
+
+    <style name="style_button_oval_gray">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/bg_button_oval_gray</item>
+    </style>
+
 </resources>
