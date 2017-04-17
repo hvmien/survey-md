@@ -1,5 +1,6 @@
 package com.example.mienhv1.survey.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,14 @@ public class HomeFragment extends BaseFragment implements HomeView{
         super.onAttach(context);
         if(context instanceof OnHomeListener){
             mListener = (OnHomeListener) context;
+        }
+    }
+
+    @Override
+    public void onAttach(Activity actvity) {
+        super.onAttach(actvity);
+        if(actvity instanceof OnHomeListener){
+            mListener = (OnHomeListener) actvity;
         }
     }
 
