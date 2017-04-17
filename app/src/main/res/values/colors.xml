@@ -10,4 +10,9 @@
     <color name="colorItemTextDrawer">#09005e</color>
     <color name="colorGray">#7baddf</color>
     <color name="colorRed">#FFFF0000</color>
+
+    <color name="colorOrange">#FF5722</color>
+    <color name="colorOrangeDark">#E64A19</color>
+    <color name="colorSilver">#9bd6d6d6</color>
+    <color name="colorTextDark">#212121</color>
 </resources>
