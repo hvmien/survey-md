@@ -31,7 +31,7 @@ public class SplashPresenter implements BasePresenter {
                     mSplashView.navigateToLoginPage();
                 }
             }
-        },3000);
+        },2000);
     }
 
 

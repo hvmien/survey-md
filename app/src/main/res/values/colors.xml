@@ -6,4 +6,8 @@
     <color name="colorBlack">@android:color/black</color>
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="textNameUser">#ff8c00</color>
+    <color name="colorItemTextDrawer">#09005e</color>
+    <color name="colorGray">#7baddf</color>
+    <color name="colorRed">#FFFF0000</color>
 </resources>

@@ -11,12 +11,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        tools:openDrawer="start"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:layout_height="match_parent">
+        tools:openDrawer="start">
 
         <fragment
-
             android:id="@+id/fragment_home"
             android:name="com.example.mienhv1.survey.ui.home.HomeFragment"
             android:layout_width="match_parent"
@@ -24,10 +23,10 @@
 
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
             android:layout_width="270dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true">
 
             <fragment
                 android:id="@+id/fragment_drawer"
@@ -37,7 +36,4 @@
 
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
-
-
-
 </LinearLayout>
