@@ -1,6 +1,9 @@
 package com.example.datasource.source.remote;
 
+import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -10,4 +13,8 @@ import io.reactivex.Observable;
 
 public interface IRemoteDataSource {
     Observable<User> signIn(String email, String password);
+
+    Observable<Boolean> signOut();
+
+    Observable<List<Model>> getDatabase();
 }
