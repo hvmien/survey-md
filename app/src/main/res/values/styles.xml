@@ -8,6 +8,7 @@
         <!-- Customize your theme here. -->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimaryDark">@android:color/background_dark</item>
+        <item name="android:windowBackground">@color/default_windows_background</item>
     </style>
     <style name="Toolbar"  parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimary</item>
@@ -25,5 +26,8 @@
         <item name="android:layout_margin">4dp</item>
         <item name="android:background">@drawable/bg_button_oval_gray</item>
     </style>
+
+
+
 
 </resources>

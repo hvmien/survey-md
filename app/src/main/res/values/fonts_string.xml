@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string translatable="false" name="Roboto_Black">roboto/Roboto_Black.ttf</string>
+    <string translatable="false" name="Roboto_Black_Italic">roboto/Roboto_Black_Italic.ttf</string>
+    <string translatable="false" name="Roboto_Bold">roboto/Roboto_Bold.ttf</string>
+    <string translatable="false" name="Roboto_Bold_Italic">roboto/Roboto_Bold_Italic.ttf</string>
+    <string translatable="false" name="Roboto_Condensed_Bold">roboto/Roboto_Condensed_Bold.ttf</string>
+    <string translatable="false" name="Roboto_Condensed_Bold_Italic">roboto/Roboto_Condensed_Bold_Italic.ttf</string>
+    <string translatable="false" name="Roboto_Condensed_Italic">roboto/Roboto_Condensed_Italic.ttf</string>
+    <string translatable="false" name="Roboto_Condensed_Light">roboto/Roboto_Condensed_Light.ttf</string>
+    <string translatable="false" name="Roboto_Condensed_LightItalic">roboto/Roboto_Condensed_LightItalic.ttf</string>
+    <string translatable="false" name="Roboto_Condensed_Regular">roboto/Roboto_Condensed_Regular.ttf</string>
+    <string translatable="false" name="Roboto_Light">roboto/Roboto_Light.ttf</string>
+    <string translatable="false" name="Roboto_Light_Italic">roboto/Roboto_Light_Italic.ttf</string>
+    <string translatable="false" name="Roboto_Medium_Italic">roboto/Roboto_Medium_Italic.ttf</string>
+    <string translatable="false" name="Roboto_Medium">roboto/Roboto_Medium.ttf</string>
+    <string translatable="false" name="Roboto_Thin">roboto/Roboto_Thin.ttf</string>
+    <string translatable="false" name="Roboto_Regular">roboto/Roboto_Regular.ttf</string>
+    <string translatable="false" name="Roboto_Thin_Italic">roboto/Roboto_Thin_Italic.ttf</string>
+
+
+    <string translatable="false" name="Prosto">prosto/Prosto.ttf</string>
+    <string translatable="false" name="Polaris">polaris/Polaris.ttf</string>
+</resources>

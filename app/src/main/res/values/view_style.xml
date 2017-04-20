@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextView.Normal">
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColorHint">@color/colorHintEdiText</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="EdiText.Normal">
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColorHint">@color/colorHintEdiText</item>
+    </style>
+
+    <style name="CardView.WrapEdiText">
+        <item name="android:layout_margin">2dp</item>
+        <item name="cardElevation">1dp</item>
+    </style>
+
+    <style name="TextView">
+        <item name="font">@string/Roboto_Regular</item>
+    </style>
+
+
+    <style name="TextView.Header">
+        <item name="font">@string/Roboto_Medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="EdiText">
+        <item name="font">@string/Roboto_Regular</item>
+    </style>
+
+
+    <style name="EdiText.Normal.SingLine">
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="TextView.Title">
+        <item name="font">@string/Roboto_Medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorBlueDark</item>
+    </style>
+
+    <style name="TextView.Small">
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+</resources>

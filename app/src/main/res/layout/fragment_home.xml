@@ -11,10 +11,12 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <fragment
+    <include layout="@layout/fragment_general_information"/>
+
+   <!-- <fragment
         android:id="@+id/fg_store"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.example.mienhv1.survey.ui.fragment.store.StoreFragment"/>
+        android:name="com.example.mienhv1.survey.ui.fragment.store.StoreFragment"/>-->
 
 </RelativeLayout>
