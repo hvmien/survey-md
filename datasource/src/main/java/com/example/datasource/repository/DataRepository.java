@@ -2,6 +2,7 @@ package com.example.datasource.repository;
 
 import android.text.TextUtils;
 
+import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 import com.example.datasource.source.preference.PreferenceHelper;
@@ -38,12 +39,17 @@ public class DataRepository {
         return !TextUtils.isEmpty(username);
     }
 
-    public Observable<User> signIn(String email, String password) {
-        return mRemoteDataSource.signIn(email, password);
+    public Observable<DataLoginResponse<User>> signIn(String email, String password,String devicesid) {
+        return mRemoteDataSource.signIn(email, password,devicesid);
     }
 
-    public void saveUser(User user) {
-        mPreferenceHelper.saveUser(user.accountId);
+    public Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid) {
+        return mRemoteDataSource.signInNoPass(email,devicesid);
+    }
+
+
+    public void saveUser(String username) {
+        mPreferenceHelper.saveUser(username);
     }
 
     public void clearUser() {

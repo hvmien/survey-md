@@ -1,8 +1,10 @@
 package com.example.mienhv1.survey.ui.login;
 
 import android.content.Context;
+import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.User;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.usercases.SignInUserCase;
@@ -17,14 +19,14 @@ import io.reactivex.observers.DisposableObserver;
  * Created by MienHV1 on 4/11/2017.
  */
 
-public class LoginPresenter implements BasePresenter{
+public class LoginPresenter implements BasePresenter {
 
     private DataRepository mDataRepository;
     private LoginView mLoginView;
     private SignInUserCase mSignInUserCase;
     private Context mContext;
 
-    public LoginPresenter(DataRepository dataRepository,  LoginView loginView) {
+    public LoginPresenter(DataRepository dataRepository, LoginView loginView) {
         mDataRepository = dataRepository;
         mLoginView = loginView;
 
@@ -33,16 +35,20 @@ public class LoginPresenter implements BasePresenter{
     }
 
     public void signIn(String email, String password) {
-        if(validateLoginForm(email,password)){
+        if (validateLoginForm(email, password)) {
+            String device_id = getDeviceId();
             mLoginView.showProgress();
-            SignInUserCase.RequestValue requestValue = new SignInUserCase.RequestValue(email, password);
+            SignInUserCase.RequestValue requestValue = new SignInUserCase.RequestValue(email, password,device_id);
             mSignInUserCase.execute(new SignInObserver(), requestValue);
         }
     }
+    private String getDeviceId() {
+        return Settings.Secure.getString(mContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+    }
 
     private boolean validateLoginForm(String email, String password) {
-        if(!Utils.isNetworkAvailable())
-        {
+        if (!Utils.isNetworkAvailable()) {
             mLoginView.showError(mContext.getString(R.string.error_network));
             return false;
         }
@@ -57,7 +63,14 @@ public class LoginPresenter implements BasePresenter{
         if (TextUtils.isEmpty(password)) {
             mLoginView.showError(mContext.getString(R.string.error_invalid_password));
             return false;
+        } else {
+            //checlk length pass
+            if ((password.length() > 0 && password.length() < 6)) {
+                mLoginView.showError(mContext.getString(R.string.error_missing_password));
+                return false;
+            }
         }
+
         return true;
     }
 
@@ -90,12 +103,13 @@ public class LoginPresenter implements BasePresenter{
         mLoginView = null;
     }
 
-    private class SignInObserver extends DisposableObserver<User> {
+    private class SignInObserver extends DisposableObserver<DataLoginResponse<User>> {
         @Override
-        public void onNext(User user) {
-            if(mLoginView!=null){
+        public void onNext(DataLoginResponse<User> user) {
+            if (mLoginView != null) {
                 mLoginView.hideProgress();
                 mLoginView.navigateToHomePage();
+
             }
         }
 

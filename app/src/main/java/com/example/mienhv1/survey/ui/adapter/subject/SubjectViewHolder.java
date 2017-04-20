@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.Subject;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.BaseViewHolder;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mienhv1.survey">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowTaskReparenting="true"
@@ -26,6 +27,7 @@
         </activity>
 
         <activity android:name="com.example.mienhv1.survey.ui.login.LoginActivity" />
+        <activity android:name=".ui.loginnopass.LoginNoPassActivity"/>
 
     </application>
 

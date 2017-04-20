@@ -8,6 +8,8 @@ import com.example.mienhv1.survey.base.BaseView;
 
 public interface SplashView extends BaseView {
 
+    void navigateToLoginNoPassPage();
+
     void navigateToHomePage();
 
     void navigateToLoginPage();

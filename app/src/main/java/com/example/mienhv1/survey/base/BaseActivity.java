@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.login.LoginActivity;
+import com.example.mienhv1.survey.ui.loginnopass.LoginNoPassActivity;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -34,6 +35,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void openLoginPage(){
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    protected void openLoginNoPassPage(){
+        Intent intent = new Intent(this,LoginNoPassActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

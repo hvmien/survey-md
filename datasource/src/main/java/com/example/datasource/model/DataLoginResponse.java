@@ -2,14 +2,11 @@ package com.example.datasource.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 /**
- * Created by Forev on 17/04/17.
+ * Created by HVM on 4/21/2017.
  */
 
-public class DataResponse<T> {
-
+public class DataLoginResponse<T> {
     @SerializedName("error")
     public int error;
 
@@ -17,5 +14,5 @@ public class DataResponse<T> {
     public String msg;
 
     @SerializedName("data")
-    public ArrayList<T> data;
+    public T data;
 }

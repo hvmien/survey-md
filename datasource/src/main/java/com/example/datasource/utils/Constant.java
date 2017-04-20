@@ -5,5 +5,5 @@ package com.example.datasource.utils;
  */
 
 public class Constant {
-    public static String BASE_URL="";
+    public static String BASE_URL="https://khaosat.herokuapp.com/apis/";
 }

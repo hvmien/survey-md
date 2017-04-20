@@ -1,7 +1,9 @@
 package com.example.datasource.source.remote;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 
@@ -11,6 +13,10 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -23,11 +29,11 @@ public class RemoteDataSource implements IRemoteDataSource {
     private ApiInterface mApiInterface;
 
     public RemoteDataSource() {
-        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
     public RemoteDataSource(Context context) {
         mContext = context.getApplicationContext();
+        mApiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
     public synchronized static RemoteDataSource getInstance(Context context) {
@@ -38,22 +44,13 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<User> signIn(final String email, String password) {
-        return Observable.create(new ObservableOnSubscribe<User>() {
-            @Override
-            public void subscribe(ObservableEmitter<User> emitter) throws Exception {
-                //handle code this here
-                if (email.equals("hominhduc") || email.equals("hvmien")) {
-                    User user = new User();
-                    user.accountId = email;
-                    emitter.onNext(user);
-                    emitter.onComplete();
-                } else {
-                    emitter.onError(null);
-                    emitter.onComplete();
-                }
-            }
-        });
+    public Observable<DataLoginResponse<User>> signIn(final String email, String password,String devicesid) {
+        User a = new User();
+        a.username = email;
+        a.password = password;
+        a.devicesid = devicesid;
+        Observable<DataLoginResponse<User>> result = mApiInterface.signIn(a.username,a.password,a.devicesid);
+        return result;
     }
 
     @Override
@@ -75,12 +72,21 @@ public class RemoteDataSource implements IRemoteDataSource {
             public void subscribe(ObservableEmitter<List<Model>> e) throws Exception {
                 List<Model> mList = new ArrayList<Model>();
                 Model model = new Model();
-                model.name="abc";
+                model.name = "abc";
                 mList.add(model);
                 e.onNext(mList);
                 e.onComplete();
                 return;
             }
         });
+    }
+
+    @Override
+    public Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid) {
+        User a = new User();
+        a.username = email;
+        a.devicesid = devicesid;
+        Observable<DataLoginResponse<User>> result = mApiInterface.signInNoPass(a.username,a.devicesid);
+        return result;
     }
 }

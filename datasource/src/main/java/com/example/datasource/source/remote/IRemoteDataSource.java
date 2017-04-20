@@ -1,5 +1,6 @@
 package com.example.datasource.source.remote;
 
+import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 
@@ -12,9 +13,12 @@ import io.reactivex.Observable;
  */
 
 public interface IRemoteDataSource {
-    Observable<User> signIn(String email, String password);
+
+    Observable<DataLoginResponse<User>> signIn(String email, String password,String devicesid);
 
     Observable<Boolean> signOut();
 
     Observable<List<Model>> getDatabase();
+
+    Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid);
 }

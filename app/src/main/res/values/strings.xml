@@ -8,7 +8,8 @@
     <string name="error_network" >Sorry! Not connected to internet.</string>
     <string name="error_invalid_username" >Your username is empty</string>
     <string name="error_invalid_password" >Your password is empty</string>
-    <string name="error_invalid_login">This email address is invalid</string>
+    <string name="error_invalid_login">This email address or password is invalid</string>
+    <string name="error_invalid_login_no_pass">This email address is invalid</string>
     <string name="title_sign_out">Sign out</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -22,4 +23,5 @@
     <string name="example_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</string>
     <string name="title_survey">SURVEY</string>
     <string name="title_start_survey">Begin survey</string>
+    <string name="error_missing_password">Password must at least 6 charactor</string>
 </resources>

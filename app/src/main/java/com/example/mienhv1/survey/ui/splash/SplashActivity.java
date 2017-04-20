@@ -32,6 +32,12 @@ public class SplashActivity extends BaseActivity implements SplashView{
     }
 
     @Override
+    public void navigateToLoginNoPassPage() {
+        openLoginNoPassPage();
+        finish();
+    }
+
+    @Override
     public void navigateToHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
