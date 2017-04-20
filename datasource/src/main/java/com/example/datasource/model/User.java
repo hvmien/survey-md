@@ -16,5 +16,5 @@ public class User {
     public String fullname;
 
     @SerializedName("deviceid")
-    public String devicesid;
+    public String deviceid;
 }

@@ -25,9 +25,9 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("login")
-    Observable<DataLoginResponse<User>> signIn(@Field("username") String username, @Field("password") String password, @Field("devicesid") String devicesid);
+    Observable<DataLoginResponse<User>> signIn(@Field("username") String username, @Field("password") String password, @Field("deviceid") String deviceid);
 
     @FormUrlEncoded
     @POST("login_no_pass")
-    Observable<DataLoginResponse<User>> signInNoPass(@Field("username")String username ,@Field("devicesid")String deviesid);
+    Observable<DataLoginResponse<User>> signInNoPass(@Field("username")String username ,@Field("deviceid")String deviceid);
 }

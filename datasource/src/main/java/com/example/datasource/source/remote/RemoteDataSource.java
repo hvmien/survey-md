@@ -48,8 +48,8 @@ public class RemoteDataSource implements IRemoteDataSource {
         User a = new User();
         a.username = email;
         a.password = password;
-        a.devicesid = devicesid;
-        Observable<DataLoginResponse<User>> result = mApiInterface.signIn(a.username,a.password,a.devicesid);
+        a.deviceid = devicesid;
+        Observable<DataLoginResponse<User>> result = mApiInterface.signIn(a.username,a.password,a.deviceid);
         return result;
     }
 
@@ -85,8 +85,8 @@ public class RemoteDataSource implements IRemoteDataSource {
     public Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid) {
         User a = new User();
         a.username = email;
-        a.devicesid = devicesid;
-        Observable<DataLoginResponse<User>> result = mApiInterface.signInNoPass(a.username,a.devicesid);
+        a.deviceid = devicesid;
+        Observable<DataLoginResponse<User>> result = mApiInterface.signInNoPass(a.username,a.deviceid);
         return result;
     }
 }
