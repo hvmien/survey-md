@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.datasource.model.StoreSystem;
 import com.example.mienhv1.survey.base.BaseView;
 
 import java.lang.ref.WeakReference;
@@ -38,5 +39,11 @@ public abstract class BaseAdapter<T, VH extends BaseViewHolder<T>> extends Recyc
     @Override
     public int getItemCount() {
         return mData == null ? 0 : mData.size();
+    }
+
+    public  void setData(ArrayList<T> data)
+    {
+        mData = data;
+        notifyDataSetChanged();
     }
 }
