@@ -12,6 +12,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
@@ -150,8 +152,19 @@
                         android:imeOptions="actionNext" />
                 </android.support.v7.widget.CardView>
 
-                <include
-                    layout="@layout/item_road_of_head"/>
+                <android.support.v7.widget.CardView
+                    style="@style/CardView.WrapEdiText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.example.mienhv1.survey.utils.view.CSRadioGroup
+                        android:id="@+id/gr_direction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" />
+                </android.support.v7.widget.CardView>
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

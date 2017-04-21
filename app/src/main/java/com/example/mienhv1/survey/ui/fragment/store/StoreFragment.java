@@ -55,7 +55,7 @@ public class StoreFragment extends BaseFragment implements StoreView{
 
     @Override
     protected void destroyView() {
-
+        presenter.destroy();
     }
 
     @Override

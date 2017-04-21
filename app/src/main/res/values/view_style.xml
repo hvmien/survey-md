@@ -8,12 +8,6 @@
         <item name="android:textColorHint">@color/colorHintEdiText</item>
     </style>
 
-    <style name="RadioButton">
-        <item name="android:textSize">14sp</item>
-        <item name="font">@string/Roboto_Regular</item>
-        <item name="android:background">@color/colorWhite</item>
-    </style>
-
     <style name="EdiText.Normal">
         <item name="android:textSize">14sp</item>
         <item name="android:background">@color/colorWhite</item>
@@ -56,6 +50,22 @@
     <style name="TextView.Small">
         <item name="font">@string/Roboto_Regular</item>
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="CheckBox">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBlueDark</item>
+        <item name="buttonTint">@color/colorBlueDark</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBlueDark</item>
+        <item name="buttonTint">@color/colorBlueDark</item>
     </style>
 
 </resources>
