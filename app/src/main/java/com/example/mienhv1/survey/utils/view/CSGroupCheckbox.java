@@ -15,6 +15,10 @@ public class CSGroupCheckbox extends LinearLayout {
 
     public CSGroupCheckbox(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.setOrientation(VERTICAL);
+        LayoutParams LLParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        this.setLayoutParams(LLParams);
+        invalidate();
     }
 
     public CSGroupCheckbox(Context context) {
