@@ -30,7 +30,7 @@ public class InfoFragment extends BaseFragment implements InfoView {
     @Override
     protected void mapView(View view) {
         presenter = new InfoPresenter(this);
-        grDirection = (CSRadioGroup) view.findViewById(R.id.gr_direction);
+/*        grDirection = (CSRadioGroup) view.findViewById(R.id.gr_direction);
 
         ArrayList<RoadAhead> data = new ArrayList<>();
         data.add(new RoadAhead(1, "Quoc Lo", false));
@@ -49,7 +49,7 @@ public class InfoFragment extends BaseFragment implements InfoView {
             }
         });
 
-        grDirection.setAdapter(adapter);
+        grDirection.setAdapter(adapter);*/
     }
 
     @Override
