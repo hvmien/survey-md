@@ -17,6 +17,7 @@ import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.datasource.usercases.SignOutUserCase;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
+import com.example.mienhv1.survey.ui.fragment.checkbox.CheckboxFragment;
 
 /**
  * Created by MienHV1 on 4/12/2017.
