@@ -13,6 +13,7 @@ import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BasePresenter;
 import com.example.mienhv1.survey.ui.login.LoginPresenter;
+import com.example.mienhv1.survey.ui.splash.SplashView;
 import com.example.mienhv1.survey.utils.Utils;
 
 import io.reactivex.observers.DisposableObserver;
@@ -26,10 +27,10 @@ import static java.security.AccessController.getContext;
 public class LoginNoPassPresenter implements BasePresenter {
     private SigInNoPassUserCase mSignSigInNoPassUserCase;
     private DataRepository mDataRepository;
-    private LoginNoPassView mLoginNoPassView;
+    private SplashView mLoginNoPassView;
     private Context mContext;
 
-    public LoginNoPassPresenter(DataRepository dataRepository, LoginNoPassView loginNoPassView) {
+    public LoginNoPassPresenter(DataRepository dataRepository, SplashView loginNoPassView) {
         this.mDataRepository = dataRepository;
         this.mLoginNoPassView = loginNoPassView;
         mSignSigInNoPassUserCase = new SigInNoPassUserCase(dataRepository);
@@ -67,12 +68,12 @@ public class LoginNoPassPresenter implements BasePresenter {
     }
 
     public void signInNoPass(String email) {
-        if(validateLoginForm(email)){
-            String device_id = getDeviceId();
-            mLoginNoPassView.showProgress();
-            SigInNoPassUserCase.RequestValue requestValue = new SigInNoPassUserCase.RequestValue(email,device_id);
-            mSignSigInNoPassUserCase.execute(new LoginNoPassPresenter.SignInNoPassObserver(), requestValue);
-        }
+
+        String device_id = getDeviceId();
+        mLoginNoPassView.showProgress();
+        SigInNoPassUserCase.RequestValue requestValue = new SigInNoPassUserCase.RequestValue(email, device_id);
+        mSignSigInNoPassUserCase.execute(new LoginNoPassPresenter.SignInNoPassObserver(), requestValue);
+
     }
 
     private String getDeviceId() {
@@ -81,8 +82,7 @@ public class LoginNoPassPresenter implements BasePresenter {
     }
 
     private boolean validateLoginForm(String email) {
-        if(!Utils.isNetworkAvailable())
-        {
+        if (!Utils.isNetworkAvailable()) {
             mLoginNoPassView.showError(mContext.getString(R.string.error_network));
             return false;
         }

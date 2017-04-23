@@ -39,6 +39,14 @@ public class DataRepository {
         return !TextUtils.isEmpty(username);
     }
 
+    public String getUserName(){
+        String username = mPreferenceHelper.getUserName();
+        if(!TextUtils.isEmpty(username)){
+            return username;
+        }
+        return null;
+    }
+
     public Observable<DataLoginResponse<User>> signIn(String email, String password,String devicesid) {
         return mRemoteDataSource.signIn(email, password,devicesid);
     }

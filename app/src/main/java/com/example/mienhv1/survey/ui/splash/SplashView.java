@@ -8,7 +8,7 @@ import com.example.mienhv1.survey.base.BaseView;
 
 public interface SplashView extends BaseView {
 
-    void navigateToLoginNoPassPage();
+    void navigateToLoginNoPassPage(String Username);
 
     void navigateToHomePage();
 

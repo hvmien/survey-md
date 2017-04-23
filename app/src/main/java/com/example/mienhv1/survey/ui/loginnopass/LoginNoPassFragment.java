@@ -44,8 +44,8 @@ public class LoginNoPassFragment extends BaseFragment implements LoginNoPassView
 
     @Override
     protected void initData() {
-        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
-        mPresenter = new LoginNoPassPresenter(dataRepository, this);
+//        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
+//        mPresenter = new LoginNoPassPresenter(dataRepository, this);
     }
 
     @Override

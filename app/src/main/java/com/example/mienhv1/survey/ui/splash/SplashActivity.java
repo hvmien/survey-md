@@ -7,6 +7,7 @@ import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.ui.home.HomeActivity;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
+import com.example.mienhv1.survey.ui.loginnopass.LoginNoPassPresenter;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -15,6 +16,7 @@ import com.example.mienhv1.survey.base.BaseActivity;
 public class SplashActivity extends BaseActivity implements SplashView{
 
     private SplashPresenter mSplashPresenter;
+    private LoginNoPassPresenter mLoginNoPassPresenter;
 
     @Override
     public void showProgress() {
@@ -32,8 +34,10 @@ public class SplashActivity extends BaseActivity implements SplashView{
     }
 
     @Override
-    public void navigateToLoginNoPassPage() {
-        openLoginNoPassPage();
+    public void navigateToLoginNoPassPage(String username) {
+        //openLoginPage();
+        //openLoginNoPassPage();
+        mLoginNoPassPresenter.signInNoPass(username);
         finish();
     }
 
@@ -73,6 +77,7 @@ public class SplashActivity extends BaseActivity implements SplashView{
     protected void initData() {
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getApplicationContext());
         mSplashPresenter = new SplashPresenter(dataRepository,this);
+        mLoginNoPassPresenter = new LoginNoPassPresenter(dataRepository,this);
     }
 
     @Override
