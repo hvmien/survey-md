@@ -6,8 +6,10 @@ import android.view.View;
 import com.example.datasource.model.RoadAhead;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
+import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.adapter.OnUpdateListener;
 import com.example.mienhv1.survey.ui.adapter.RoadAheadAdapter;
+import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.utils.view.CSGroupCheckbox;
 import com.example.mienhv1.survey.utils.view.CSRadioGroup;
 
@@ -17,11 +19,12 @@ import java.util.ArrayList;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends BaseFragment implements InfoView {
+public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
 
     CSRadioGroup grDirection;
     InfoPresenter presenter;
     private String TAG = "InfoFragment";
+
 
 
     @Override
@@ -80,5 +83,10 @@ public class InfoFragment extends BaseFragment implements InfoView {
     @Override
     public void showError(String error) {
 
+    }
+
+    @Override
+    public EnumSurveyFragment fragmentType() {
+        return EnumSurveyFragment.Common;
     }
 }
