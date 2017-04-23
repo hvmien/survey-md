@@ -35,10 +35,7 @@ public class SplashActivity extends BaseActivity implements SplashView{
 
     @Override
     public void navigateToLoginNoPassPage(String username) {
-        //openLoginPage();
-        //openLoginNoPassPage();
         mLoginNoPassPresenter.signInNoPass(username);
-        finish();
     }
 
     @Override
@@ -52,6 +49,11 @@ public class SplashActivity extends BaseActivity implements SplashView{
     public void navigateToLoginPage() {
         openLoginPage();
         finish();
+    }
+
+    @Override
+    public void callbackFinishActivity() {
+        this.finish();
     }
 
     @Override

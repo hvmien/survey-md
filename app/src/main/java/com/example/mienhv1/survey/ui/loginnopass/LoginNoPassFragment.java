@@ -94,4 +94,5 @@ public class LoginNoPassFragment extends BaseFragment implements LoginNoPassView
     public void showError(String error) {
         showFooterMessage(mContainer, error);
     }
+
 }

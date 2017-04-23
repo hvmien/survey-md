@@ -95,12 +95,14 @@ public class LoginNoPassPresenter implements BasePresenter {
         return true;
     }
 
+
     private class SignInNoPassObserver extends DisposableObserver<DataLoginResponse<User>> {
         @Override
         public void onNext(DataLoginResponse<User> userDataResponse) {
             if (mLoginNoPassView != null) {
                 mLoginNoPassView.hideProgress();
                 mLoginNoPassView.navigateToHomePage();
+                mLoginNoPassView.callbackFinishActivity();
 
             }
         }
@@ -110,6 +112,7 @@ public class LoginNoPassPresenter implements BasePresenter {
             if (mLoginNoPassView != null) {
                 mLoginNoPassView.hideProgress();
                 mLoginNoPassView.showError(mContext.getString(R.string.error_invalid_login_no_pass));
+                mLoginNoPassView.navigateToLoginPage();
             }
         }
 

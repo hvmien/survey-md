@@ -14,4 +14,6 @@ public interface SplashView extends BaseView {
 
     void navigateToLoginPage();
 
+    void callbackFinishActivity();
+
 }

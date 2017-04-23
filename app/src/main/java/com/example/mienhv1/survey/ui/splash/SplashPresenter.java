@@ -27,7 +27,6 @@ public class SplashPresenter implements BasePresenter {
                 if( mDataRepository.isSignedIn()){
                     String username = mDataRepository.getUserName();
                     mSplashView.navigateToLoginNoPassPage(username);
-                    //mSplashView.navigateToHomePage();
                 }
                 else {
                     mSplashView.navigateToLoginPage();
