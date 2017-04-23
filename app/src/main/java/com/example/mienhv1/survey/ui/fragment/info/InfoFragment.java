@@ -42,7 +42,7 @@ public class InfoFragment extends BaseFragment implements InfoView {
         data.add(new RoadAhead(3, "Hem", false));
         data.add(new RoadAhead(4, "Ngo Cut", false));
 
-        RoadAheadAdapter adapter = new RoadAheadAdapter(getActivity(), R.layout.item_radio_button, gpCheckbox, data);
+        RoadAheadAdapter adapter = new RoadAheadAdapter(getActivity(), R.layout.item_radio_button, grDirection, data);
         adapter.setOnUpdateListener(new OnUpdateListener<RoadAhead>() {
             @Override
             public void onUpdate(ArrayList<RoadAhead> data) {
