@@ -39,4 +39,12 @@ public class CSRadioButton extends android.support.v7.widget.AppCompatRadioButto
         }
     }
 
+    public CSRadioButton(Context context) {
+        super(context);
+        String fontName = "roboto/Roboto_Regular.ttf";
+        Typeface typeface = FontCache.getTypeface(fontName, context);
+        if (typeface != null)
+            setTypeface(typeface);
+    }
+
 }

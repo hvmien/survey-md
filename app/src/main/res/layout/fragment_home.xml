@@ -11,7 +11,12 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <include layout="@layout/fragment_general_information"/>
+    <fragment
+        android:id="@+id/sample"
+        android:name="com.example.mienhv1.survey.ui.fragment.info.InfoFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
    <!-- <fragment
         android:id="@+id/fg_store"
