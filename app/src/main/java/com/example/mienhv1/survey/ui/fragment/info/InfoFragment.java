@@ -8,6 +8,7 @@ import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.OnUpdateListener;
 import com.example.mienhv1.survey.ui.adapter.RoadAheadAdapter;
+import com.example.mienhv1.survey.utils.view.CSGroupCheckbox;
 import com.example.mienhv1.survey.utils.view.CSRadioGroup;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class InfoFragment extends BaseFragment implements InfoView {
     InfoPresenter presenter;
     private String TAG = "InfoFragment";
 
+
     @Override
     protected int getResourcesLayout() {
         return R.layout.fragment_general_information;
@@ -30,7 +32,9 @@ public class InfoFragment extends BaseFragment implements InfoView {
     @Override
     protected void mapView(View view) {
         presenter = new InfoPresenter(this);
-/*        grDirection = (CSRadioGroup) view.findViewById(R.id.gr_direction);
+//        grDirection = (CSRadioGroup) view.findViewById(R.id.gr_direction);
+
+        CSGroupCheckbox gpCheckbox = (CSGroupCheckbox) view.findViewById(R.id.gr_checkbox);
 
         ArrayList<RoadAhead> data = new ArrayList<>();
         data.add(new RoadAhead(1, "Quoc Lo", false));
@@ -49,7 +53,8 @@ public class InfoFragment extends BaseFragment implements InfoView {
             }
         });
 
-        grDirection.setAdapter(adapter);*/
+        gpCheckbox.setAdapter(adapter);
+        //grDirection.setAdapter(adapter);
     }
 
     @Override
