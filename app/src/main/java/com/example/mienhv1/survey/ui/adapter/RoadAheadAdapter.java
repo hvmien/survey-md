@@ -40,8 +40,7 @@ public class RoadAheadAdapter extends BaseViewAdapter<RoadAhead> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mData.get(position).select = isChecked;
                 if (count == 2) {
-                    if (listener != null)
-                        listener.onUpdate(mData);
+                    listener.onUpdate(mData);
                     count = 0;
                 }
 

@@ -48,7 +48,7 @@ public abstract class BaseViewAdapter<T>  {
 
 
     public View initView(int position) {
-        View root = LayoutInflater.from(mContext).inflate(resourceId, mParent, false);
+        View root = LayoutInflater.from(mContext).inflate(R.layout.item_radio_button, mParent, false);
         bindView(root, position);
         return root;
     }

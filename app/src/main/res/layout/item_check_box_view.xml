@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.mienhv1.survey.utils.view.CSCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/CardView.WrapEdiText"
+    style="@style/CheckBox"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.example.mienhv1.survey.utils.view.CSCheckBox
-        style="@style/CheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</android.support.v7.widget.CardView>
+    android:layout_height="wrap_content"
+    android:orientation="vertical" />
