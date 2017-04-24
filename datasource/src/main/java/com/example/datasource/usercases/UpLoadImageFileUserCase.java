@@ -4,6 +4,8 @@ import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ImageRespone;
 import com.example.datasource.repository.DataRepository;
 
+import java.util.ArrayList;
+
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -31,9 +33,9 @@ public class UpLoadImageFileUserCase extends RxUserCase<DataResponse<ImageRespon
                 });
     }
     public static class RequestValue implements RxUserCase.RequestValue{
-         MultipartBody.Part files;
+        ArrayList<MultipartBody.Part> files;
 
-        public RequestValue( MultipartBody.Part files) {
+        public RequestValue( ArrayList<MultipartBody.Part> files) {
             this.files = files;
         }
     }

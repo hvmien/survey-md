@@ -89,7 +89,7 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(MultipartBody.Part files) {
+    public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> files) {
         return mApiInterface.uploadImageFileMutilPart(files);
     }
 }

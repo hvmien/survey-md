@@ -11,6 +11,7 @@ import com.example.datasource.source.preference.PreferenceHelper;
 import com.example.datasource.source.remote.IRemoteDataSource;
 import com.example.datasource.source.remote.RemoteDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -75,7 +76,7 @@ public class DataRepository {
         return mRemoteDataSource.getDatabase();
     }
 
-    public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(MultipartBody.Part responseBody) {
+    public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> responseBody) {
         return mRemoteDataSource.upLoadImageFilesMutilPart(responseBody);
     }
 }

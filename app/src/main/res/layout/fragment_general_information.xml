@@ -16,6 +16,7 @@
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -206,15 +207,29 @@
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
-                <LinearLayout
-                    android:orientation="horizontal"
+
+                <ProgressBar
+                    android:id="@+id/progress_bar_percent"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="10dp" />
+                <TextView
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:id="@+id/text_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                     <Button
-                        android:text="Camera only"
                         android:id="@+id/camera_only"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="Camera only" />
 
                     <Button
                         android:id="@+id/pick_image"
@@ -223,6 +238,7 @@
                         android:layout_gravity="right"
                         android:text="Pick image"
                         android:textAllCaps="false" />
+
                     <Button
                         android:id="@+id/upload_image"
                         android:layout_width="wrap_content"
@@ -251,11 +267,11 @@
             </LinearLayout>
 
             <ProgressBar
-                android:visibility="gone"
-                android:layout_gravity="center"
                 android:id="@+id/progress_upload"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
         </LinearLayout>
 
     </ScrollView>

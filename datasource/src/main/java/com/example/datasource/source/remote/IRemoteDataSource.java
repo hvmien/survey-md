@@ -6,6 +6,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -25,5 +26,5 @@ public interface IRemoteDataSource {
 
     Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid);
 
-    Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(MultipartBody.Part files);
+    Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> files);
 }
