@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -38,7 +39,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, View.OnClickListener,ProgressRequestBody.UploadCallbacks {
+public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, View.OnClickListener, ProgressRequestBody.UploadCallbacks {
 
     private ArrayList<Image> images = new ArrayList<>();
     private static final int RC_CODE_PICKER = 2000;
@@ -127,14 +128,14 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         if (v.getId() == R.id.upload_image) {
             if (getMutilPart() != null) {
                 presenter.uploadImage(getMutilPart());
-                txtProgress.setText(count + "/" + mUriString.size());
+
             }
         }
     }
 
     private ArrayList<MultipartBody.Part> getMutilPart() {
         if (mUriString != null && mUriString.size() > 0) {
-            ArrayList< MultipartBody.Part> listPart = new ArrayList<>();
+            ArrayList<MultipartBody.Part> listPart = new ArrayList<>();
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
             builder.setType(MultipartBody.FORM);
@@ -144,7 +145,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
                 File files = new File(fileiPath);
 
 //                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
-                ProgressRequestBody requestFile = new ProgressRequestBody(files,this);
+                ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
 
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
@@ -245,12 +246,14 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         return (ImmediateCameraModule) cameraModule;
     }
 
-    int count =0;
+    int count = 0;
+
     //test update progress
     @Override
-    public void onProgressUpdate(int percentage) {
+    public void onProgressUpdate(int percentage, int total) {
         mProgressBarPercent.setProgress(percentage);
-        count++;
+
+//        Log.d("InfomationFrag", "percent : " + percentage + "/" + total);
     }
 
 
@@ -261,6 +264,9 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
 
     @Override
     public void onFinish() {
-        mProgressBarPercent.setProgress(100);
+        count++;
+        //mProgressBarPercent.setProgress(100);
+        txtProgress.setText(count + "/" + mUriString.size());
+        Log.d("InfomationFrag", "finish");
     }
 }
