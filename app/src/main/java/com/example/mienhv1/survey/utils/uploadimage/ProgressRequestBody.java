@@ -6,6 +6,7 @@ import android.os.Looper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -16,7 +17,7 @@ import okio.BufferedSink;
  */
 
 public class ProgressRequestBody extends RequestBody {
-    private File mFile;
+    private File mFileList;
     private String mPath;
     private UploadCallbacks mListener;
 
@@ -29,7 +30,7 @@ public class ProgressRequestBody extends RequestBody {
     }
 
     public ProgressRequestBody(final File file, final  UploadCallbacks listener) {
-        mFile = file;
+        mFileList = file;
         mListener = listener;
     }
 
@@ -41,30 +42,37 @@ public class ProgressRequestBody extends RequestBody {
 
     @Override
     public long contentLength() throws IOException {
-        return mFile.length();
+//        long sum=0;
+//        for (int i = 0; i < mFileList.size(); i++) {
+//            sum+= mFileList.get(i).length();
+//        }
+        return mFileList.length();
     }
 
     @Override
     public void writeTo(BufferedSink sink) throws IOException {
-        long fileLength = mFile.length();
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-        FileInputStream in = new FileInputStream(mFile);
-        long uploaded = 0;
+//        for (int i = 0; i < mFileList.size(); i++) {
+            long fileLength = mFileList.length();
+            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+            FileInputStream in = new FileInputStream(mFileList);
+            long uploaded = 0;
 
-        try {
-            int read;
-            Handler handler = new Handler(Looper.getMainLooper());
-            while ((read = in.read(buffer)) != -1) {
+            try {
+                int read;
+                Handler handler = new Handler(Looper.getMainLooper());
+                while ((read = in.read(buffer)) != -1) {
 
-                // update progress on UI thread
-                handler.post(new ProgressUpdater(uploaded, fileLength));
+                    // update progress on UI thread
+                    handler.post(new ProgressUpdater(uploaded, fileLength));
 
-                uploaded += read;
-                sink.write(buffer, 0, read);
+                    uploaded += read;
+                    sink.write(buffer, 0, read);
+                }
+            } finally {
+                in.close();
             }
-        } finally {
-            in.close();
-        }
+//        }
+
     }
     int count=0;
     private class ProgressUpdater implements Runnable {

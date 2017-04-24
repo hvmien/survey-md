@@ -127,6 +127,8 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         }
         if (v.getId() == R.id.upload_image) {
             if (getMutilPart() != null) {
+                count = 0;
+                txtProgress.setText("0/" + mUriString.size());
                 presenter.uploadImage(getMutilPart());
 
             }
@@ -137,21 +139,30 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         if (mUriString != null && mUriString.size() > 0) {
             ArrayList<MultipartBody.Part> listPart = new ArrayList<>();
 
-            MultipartBody.Builder builder = new MultipartBody.Builder();
-            builder.setType(MultipartBody.FORM);
+//            MultipartBody.Builder builder = new MultipartBody.Builder();
+//            builder.setType(MultipartBody.FORM);
+            ArrayList<File> listFile = new ArrayList<>();
 
             for (int i = 0; i < mUriString.size(); i++) {
                 String fileiPath = mUriString.get(i);
                 File files = new File(fileiPath);
-
+                listFile.add(files);
 //                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
-                ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
+                    ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
 
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
                 listPart.add(body);
             }
 
+//            ProgressRequestBody requestFile = new ProgressRequestBody(listFile, this);
+//
+//            for (int i = 0; i < mUriString.size(); i++) {
+//
+//                MultipartBody.Part body =
+//                        MultipartBody.Part.createFormData("photo", listFile.get(i).getName(), requestFile);
+//                listPart.add(body);
+//            }
             return listPart;
         }
 
@@ -253,7 +264,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
     public void onProgressUpdate(int percentage, int total) {
         mProgressBarPercent.setProgress(percentage);
 
-//        Log.d("InfomationFrag", "percent : " + percentage + "/" + total);
+        Log.d("InfomationFrag", "percent : " + percentage + "/" + total);
     }
 
 
