@@ -2,21 +2,14 @@ package com.example.mienhv1.survey.ui.home;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
-import com.example.datasource.usercases.SignOutUserCase;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
@@ -125,7 +118,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_home, menu);
+        inflater.inflate(R.menu.menu_home, menu);   
     }
 
     @Override
