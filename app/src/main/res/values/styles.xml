@@ -26,7 +26,11 @@
         <item name="android:layout_margin">4dp</item>
         <item name="android:background">@drawable/bg_button_oval_gray</item>
     </style>
-
+    <style name="ImagePickerTheme" parent="ef_BaseTheme">
+        <item name="colorPrimary">#607D8B</item>
+        <item name="colorPrimaryDark">#455A64</item>
+        <item name="colorAccent">@color/ef_colorAccent</item>
+    </style>
 
 
 

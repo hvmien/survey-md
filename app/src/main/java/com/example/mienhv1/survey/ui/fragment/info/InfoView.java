@@ -7,4 +7,5 @@ import com.example.mienhv1.survey.base.BaseView;
  */
 
 public interface InfoView extends BaseView {
+
 }

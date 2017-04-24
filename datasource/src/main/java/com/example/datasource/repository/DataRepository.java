@@ -3,6 +3,8 @@ package com.example.datasource.repository;
 import android.text.TextUtils;
 
 import com.example.datasource.model.DataLoginResponse;
+import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 import com.example.datasource.source.preference.PreferenceHelper;
@@ -12,6 +14,7 @@ import com.example.datasource.source.remote.RemoteDataSource;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -39,20 +42,20 @@ public class DataRepository {
         return !TextUtils.isEmpty(username);
     }
 
-    public String getUserName(){
+    public String getUserName() {
         String username = mPreferenceHelper.getUserName();
-        if(!TextUtils.isEmpty(username)){
+        if (!TextUtils.isEmpty(username)) {
             return username;
         }
         return null;
     }
 
-    public Observable<DataLoginResponse<User>> signIn(String email, String password,String devicesid) {
-        return mRemoteDataSource.signIn(email, password,devicesid);
+    public Observable<DataLoginResponse<User>> signIn(String email, String password, String devicesid) {
+        return mRemoteDataSource.signIn(email, password, devicesid);
     }
 
-    public Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid) {
-        return mRemoteDataSource.signInNoPass(email,devicesid);
+    public Observable<DataLoginResponse<User>> signInNoPass(String email, String devicesid) {
+        return mRemoteDataSource.signInNoPass(email, devicesid);
     }
 
 
@@ -68,7 +71,11 @@ public class DataRepository {
         return mRemoteDataSource.signOut();
     }
 
-    public Observable<List<Model>> getDatabase(){
+    public Observable<List<Model>> getDatabase() {
         return mRemoteDataSource.getDatabase();
+    }
+
+    public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(MultipartBody.Part responseBody) {
+        return mRemoteDataSource.upLoadImageFilesMutilPart(responseBody);
     }
 }

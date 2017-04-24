@@ -197,18 +197,67 @@
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_marginRight="8dp"
-                            android:foreground="?selectableItemBackground"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
                             android:clickable="true"
+                            android:foreground="?selectableItemBackground"
                             android:src="@drawable/ic_action_gps" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:text="Camera only"
+                        android:id="@+id/camera_only"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/pick_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="Pick image"
+                        android:textAllCaps="false" />
+                    <Button
+                        android:id="@+id/upload_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="Up image"
+                        android:textAllCaps="false" />
+                </LinearLayout>
 
 
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="image" />
+                    </LinearLayout>
+                </ScrollView>
             </LinearLayout>
+
+            <ProgressBar
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:id="@+id/progress_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
     </ScrollView>
+
 </LinearLayout>

@@ -1,12 +1,15 @@
 package com.example.datasource.source.remote;
 
 import com.example.datasource.model.DataLoginResponse;
+import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -21,4 +24,6 @@ public interface IRemoteDataSource {
     Observable<List<Model>> getDatabase();
 
     Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid);
+
+    Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(MultipartBody.Part files);
 }

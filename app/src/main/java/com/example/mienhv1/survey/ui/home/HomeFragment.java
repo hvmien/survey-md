@@ -74,11 +74,15 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         fragments.add(new InfoFragment());
         fragments.add(new InfoFragment());
         fragments.add(new InfoFragment());
+        fragments.add(new InfoFragment());
+        fragments.add(new InfoFragment());
+        fragments.add(new InfoFragment());
+        fragments.add(new InfoFragment());
 
 
         SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), fragments);
         mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(7);
 
 
         view.findViewById(R.id.btn_prev).setOnClickListener(this);
@@ -118,7 +122,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_home, menu);   
+        inflater.inflate(R.menu.menu_home, menu);
     }
 
     @Override

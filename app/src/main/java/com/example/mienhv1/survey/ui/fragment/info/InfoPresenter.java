@@ -1,7 +1,7 @@
 package com.example.mienhv1.survey.ui.fragment.info;
 
 import android.Manifest;
-import android.content.IntentSender;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -9,22 +9,30 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.ImageRespone;
+import com.example.datasource.repository.DataRepository;
+import com.example.datasource.repository.DataRepositoryFactory;
+import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.base.BasePresenter;
-import com.example.mienhv1.survey.ui.fragment.store.StoreView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+
+import java.util.ArrayList;
+
+import io.reactivex.observers.DisposableObserver;
+import okhttp3.MultipartBody;
 
 /**
  * Created by Forev on 17/04/20.
@@ -36,9 +44,12 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
     InfoView infoView;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation = null;
+    private Context mContext;
+    private UpLoadImageFileUserCase upLoadImageFileUserCase;
 
-    public InfoPresenter(InfoView view) {
+    public InfoPresenter(Context context,InfoView view) {
         this.infoView = view;
+        this.mContext= context;
     }
 
     @Override
@@ -137,5 +148,39 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
                 break;
         }
 
+    }
+
+    public void uploadImage( MultipartBody.Part files) {
+        infoView.showProgress();
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mContext);
+        upLoadImageFileUserCase = new UpLoadImageFileUserCase(dataRepository);
+        UpLoadImageFileUserCase.RequestValue requestValue = new UpLoadImageFileUserCase.RequestValue(files);
+        upLoadImageFileUserCase.execute(new UpLoadImageFileObserver(),requestValue);
+    }
+
+    private class UpLoadImageFileObserver extends DisposableObserver<DataResponse<ImageRespone>> {
+        @Override
+        public void onNext(DataResponse<ImageRespone> responseBody) {
+            infoView.hideProgress();
+            ArrayList<ImageRespone> list = responseBody.data;
+            if(list!=null&&list.size()>0){
+                for (int i = 0; i < list.size(); i++) {
+                    Log.d("OnNext",list.get(i).image+"");
+                }
+            }
+
+            Toast.makeText(mContext, "onNext: " +responseBody.msg, Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            infoView.hideProgress();
+            Toast.makeText(mContext, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
     }
 }

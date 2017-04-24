@@ -1,9 +1,10 @@
 package com.example.datasource.source.remote;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.datasource.model.DataLoginResponse;
+import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.Model;
 import com.example.datasource.model.User;
 
@@ -13,10 +14,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import okhttp3.MultipartBody;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -88,5 +86,10 @@ public class RemoteDataSource implements IRemoteDataSource {
         a.deviceid = devicesid;
         Observable<DataLoginResponse<User>> result = mApiInterface.signInNoPass(a.username,a.deviceid);
         return result;
+    }
+
+    @Override
+    public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(MultipartBody.Part files) {
+        return mApiInterface.uploadImageFileMutilPart(files);
     }
 }
