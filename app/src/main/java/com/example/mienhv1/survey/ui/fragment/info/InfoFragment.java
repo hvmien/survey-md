@@ -137,7 +137,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
                 RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
 
                 MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("picture", files.getName(), requestFile);
+                        MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
                 listPart.add(body);
             }
 
