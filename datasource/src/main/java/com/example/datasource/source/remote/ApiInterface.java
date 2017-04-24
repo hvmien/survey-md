@@ -5,6 +5,8 @@ import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.User;
 
+import java.util.ArrayList;
+
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -33,5 +35,5 @@ public interface ApiInterface {
 
     @Multipart
     @POST("upload_images")
-    Observable<DataResponse<ImageRespone>> uploadImageFileMutilPart(@Part MultipartBody.Part files);
+    Observable<DataResponse<ImageRespone>> uploadImageFileMutilPart(@Part ArrayList<MultipartBody.Part> files);
 }

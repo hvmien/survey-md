@@ -150,7 +150,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     }
 
-    public void uploadImage( MultipartBody.Part files) {
+    public void uploadImage( ArrayList<MultipartBody.Part> files) {
         infoView.showProgress();
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mContext);
         upLoadImageFileUserCase = new UpLoadImageFileUserCase(dataRepository);

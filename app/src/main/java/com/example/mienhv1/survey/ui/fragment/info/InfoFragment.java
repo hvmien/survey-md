@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.camera.CameraModule;
@@ -21,6 +22,7 @@ import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.utils.uploadimage.ProgressRequestBody;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, View.OnClickListener {
+public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, View.OnClickListener,ProgressRequestBody.UploadCallbacks {
 
     private ArrayList<Image> images = new ArrayList<>();
     private static final int RC_CODE_PICKER = 2000;
@@ -50,6 +52,8 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
     private Button uploadimageButton;
     private Button cameraonlyButton;
     private ProgressBar mProgressBar;
+    private ProgressBar mProgressBarPercent;
+    private TextView txtProgress;
     private UpLoadImageFileUserCase mUpLoadImageFileUserCase;
     private List<String> mUriString = new ArrayList<>();
     private List<Uri> mUriUri = new ArrayList<>();
@@ -67,6 +71,8 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         cameraonlyButton = (Button) view.findViewById(R.id.camera_only);
         uploadimageButton = (Button) view.findViewById(R.id.upload_image);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress_upload);
+        mProgressBarPercent = (ProgressBar) view.findViewById(R.id.progress_bar_percent);
+        txtProgress = (TextView) view.findViewById(R.id.text_progress);
         textView = (TextView) view.findViewById(R.id.text_view);
     }
 
@@ -76,6 +82,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         pickimageButton.setOnClickListener(this);
         cameraonlyButton.setOnClickListener(this);
         uploadimageButton.setOnClickListener(this);
+
 
     }
 
@@ -118,12 +125,14 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
             }
         }
         if (v.getId() == R.id.upload_image) {
-            if (getMutilPart() != null)
+            if (getMutilPart() != null) {
                 presenter.uploadImage(getMutilPart());
+                txtProgress.setText(count + "/" + mUriString.size());
+            }
         }
     }
 
-    private MultipartBody.Part getMutilPart() {
+    private ArrayList<MultipartBody.Part> getMutilPart() {
         if (mUriString != null && mUriString.size() > 0) {
             ArrayList< MultipartBody.Part> listPart = new ArrayList<>();
 
@@ -134,14 +143,15 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
                 String fileiPath = mUriString.get(i);
                 File files = new File(fileiPath);
 
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
+//                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
+                ProgressRequestBody requestFile = new ProgressRequestBody(files,this);
 
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
                 listPart.add(body);
             }
 
-            return listPart.get(0);
+            return listPart;
         }
 
         return null;
@@ -233,5 +243,24 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
             cameraModule = new ImmediateCameraModule();
         }
         return (ImmediateCameraModule) cameraModule;
+    }
+
+    int count =0;
+    //test update progress
+    @Override
+    public void onProgressUpdate(int percentage) {
+        mProgressBarPercent.setProgress(percentage);
+        count++;
+    }
+
+
+    @Override
+    public void onError() {
+        Toast.makeText(getActivity(), "Progress update error", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFinish() {
+        mProgressBarPercent.setProgress(100);
     }
 }
