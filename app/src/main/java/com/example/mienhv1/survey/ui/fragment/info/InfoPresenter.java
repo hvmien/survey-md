@@ -1,6 +1,7 @@
 package com.example.mienhv1.survey.ui.fragment.info;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -23,6 +24,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
@@ -38,18 +40,20 @@ import okhttp3.MultipartBody;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ResultCallback<LocationSettingsResult> {
+public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ResultCallback<LocationSettingsResult>, LocationListener {
 
     private static final String TAG = "InfoPresenter";
+    private static final int MY_PERMISSIONS_FINE_LOCATION = 1001;
     InfoView infoView;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation = null;
-    private Context mContext;
+    private Activity mActivity;
     private UpLoadImageFileUserCase upLoadImageFileUserCase;
+    private LocationRequest mLocationRequest;
 
-    public InfoPresenter(Context context,InfoView view) {
+    public InfoPresenter(Activity activity, InfoView view) {
         this.infoView = view;
-        this.mContext= context;
+        this.mActivity = activity;
     }
 
     @Override
@@ -77,7 +81,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     @Override
     public void pause() {
-
+        stopLocationUpdates();
     }
 
     @Override
@@ -91,11 +95,23 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     }
 
+    protected void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
         if (ActivityCompat.checkSelfPermission(MyApplication.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MyApplication.getInstance(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+
+
+            ActivityCompat.requestPermissions(mActivity,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    MY_PERMISSIONS_FINE_LOCATION);
+
         }
 
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
@@ -103,15 +119,22 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         if (mLastLocation != null) {
             Log.d(TAG, mLastLocation.toString());
         }
-
         createLocationRequest();
+        startLocationUpdates();
 
     }
 
+
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, this);
+    }
+
     protected void createLocationRequest() {
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(20000);
+        mLocationRequest.setFastestInterval(60000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
@@ -131,7 +154,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.d(TAG, connectionResult.getErrorMessage());
     }
 
     @Override
@@ -152,10 +175,15 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     public void uploadImage( MultipartBody.Part files) {
         infoView.showProgress();
-        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mContext);
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
         upLoadImageFileUserCase = new UpLoadImageFileUserCase(dataRepository);
         UpLoadImageFileUserCase.RequestValue requestValue = new UpLoadImageFileUserCase.RequestValue(files);
         upLoadImageFileUserCase.execute(new UpLoadImageFileObserver(),requestValue);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d(TAG, "Location Change: " + location);
     }
 
     private class UpLoadImageFileObserver extends DisposableObserver<DataResponse<ImageRespone>> {
@@ -169,13 +197,13 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
                 }
             }
 
-            Toast.makeText(mContext, "onNext: " +responseBody.msg, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "onNext: " +responseBody.msg, Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onError(Throwable e) {
             infoView.hideProgress();
-            Toast.makeText(mContext, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override

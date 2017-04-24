@@ -80,6 +80,26 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.start();
+    }
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        presenter.pause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        presenter.stop();
+    }
+
+    @Override
     protected void destroyView() {
 
     }
@@ -145,6 +165,12 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         }
 
         return null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.resume();
     }
 
     private String getRealPathFromURI(Uri contentURI) {
