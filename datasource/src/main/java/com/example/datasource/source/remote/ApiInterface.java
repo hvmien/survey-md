@@ -2,8 +2,11 @@ package com.example.datasource.source.remote;
 
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
+import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.User;
+import com.example.datasource.model.WardModel;
 
 import java.util.ArrayList;
 
@@ -36,4 +39,15 @@ public interface ApiInterface {
     @Multipart
     @POST("upload_images")
     Observable<DataResponse<ImageRespone>> uploadImageFileMutilPart(@Part ArrayList<MultipartBody.Part> files);
+
+    @POST("list_province")
+    Observable<DataResponse<ProvinceModel>> getListProvince();
+
+    @FormUrlEncoded
+    @POST("list_district")
+    Observable<DataResponse<DistrictModel>> getDistrictViaProvince(@Field("province_id")String provinceid);
+
+    @FormUrlEncoded
+    @POST("list_ward")
+    Observable<DataResponse<WardModel>> getWardViaDistrict(@Field("district_id") String districtid);
 }

@@ -2,7 +2,6 @@ package com.example.mienhv1.survey.ui.fragment.info;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,9 +12,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
+import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.WardModel;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
+import com.example.datasource.usercases.GetListDistrictUserCase;
+import com.example.datasource.usercases.GetListProvinceUserCase;
+import com.example.datasource.usercases.GetListWardUserCase;
 import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.base.BasePresenter;
@@ -44,11 +49,14 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     private static final String TAG = "InfoPresenter";
     private static final int MY_PERMISSIONS_FINE_LOCATION = 1001;
-    InfoView infoView;
+    private InfoView infoView;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation = null;
     private Activity mActivity;
     private UpLoadImageFileUserCase upLoadImageFileUserCase;
+    private GetListProvinceUserCase getListProvinceUserCase;
+    private GetListDistrictUserCase getListDistrictUserCase;
+    private GetListWardUserCase getListWardUserCase;
     private LocationRequest mLocationRequest;
 
     public InfoPresenter(Activity activity, InfoView view) {
@@ -186,6 +194,29 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         Log.d(TAG, "Location Change: " + location);
     }
 
+    public void getProvinceList() {
+        infoView.showProgress();
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
+        getListProvinceUserCase = new GetListProvinceUserCase(dataRepository);
+        getListProvinceUserCase.execute(new GetListProvinceObserver(),null);
+    }
+
+    public void getDistristViaProvince(String provinceid) {
+        infoView.showProgress();
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
+        getListDistrictUserCase = new GetListDistrictUserCase(dataRepository);
+        GetListDistrictUserCase.RequestValue requestValue = new GetListDistrictUserCase.RequestValue(provinceid);
+        getListDistrictUserCase.execute(new GetListDistrictObserver(),requestValue);
+    }
+
+    public void getWardViaDistrict(String districtid) {
+        infoView.showProgress();
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
+        getListWardUserCase = new GetListWardUserCase(dataRepository);
+        GetListWardUserCase.RequestValue requestValue = new GetListWardUserCase.RequestValue(districtid);
+        getListWardUserCase.execute(new GetListWardObserver(),requestValue);
+    }
+
     private class UpLoadImageFileObserver extends DisposableObserver<DataResponse<ImageRespone>> {
         @Override
         public void onNext(DataResponse<ImageRespone> responseBody) {
@@ -204,6 +235,64 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         public void onError(Throwable e) {
             infoView.hideProgress();
             Toast.makeText(mActivity, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    }
+
+    private class GetListProvinceObserver extends DisposableObserver<DataResponse<ProvinceModel>> {
+        @Override
+        public void onNext(DataResponse<ProvinceModel> provinceModelDataResponse) {
+            infoView.getListProvince(provinceModelDataResponse);
+            infoView.hideProgress();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            infoView.hideProgress();
+            infoView.showError(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    }
+
+    private class GetListDistrictObserver extends DisposableObserver<DataResponse<DistrictModel>> {
+        @Override
+        public void onNext(DataResponse<DistrictModel> districtModelDataResponse) {
+
+            infoView.hideProgress();
+            infoView.getListDistrict(districtModelDataResponse);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            infoView.hideProgress();
+            infoView.showError(e.getMessage());
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    }
+
+    private class GetListWardObserver extends DisposableObserver<DataResponse<com.example.datasource.model.WardModel>> {
+        @Override
+        public void onNext(DataResponse<WardModel> wardModelDataResponse) {
+            infoView.hideProgress();
+            infoView.getListWard(wardModelDataResponse);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            infoView.hideProgress();
+            infoView.showError(e.getMessage());
         }
 
         @Override

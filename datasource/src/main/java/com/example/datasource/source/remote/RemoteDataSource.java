@@ -4,9 +4,12 @@ import android.content.Context;
 
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.Model;
+import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.User;
+import com.example.datasource.model.WardModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,5 +94,20 @@ public class RemoteDataSource implements IRemoteDataSource {
     @Override
     public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> files) {
         return mApiInterface.uploadImageFileMutilPart(files);
+    }
+
+    @Override
+    public Observable<DataResponse<ProvinceModel>> getListProvince() {
+        return mApiInterface.getListProvince();
+    }
+
+    @Override
+    public Observable<DataResponse<DistrictModel>> getDistrictViaProvince(String provinceid) {
+        return mApiInterface.getDistrictViaProvince(provinceid);
+    }
+
+    @Override
+    public Observable<DataResponse<WardModel>> getWardViaDistrict(String districtid) {
+        return mApiInterface.getWardViaDistrict(districtid);
     }
 }

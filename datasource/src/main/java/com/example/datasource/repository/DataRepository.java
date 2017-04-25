@@ -4,9 +4,12 @@ import android.text.TextUtils;
 
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.Model;
+import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.User;
+import com.example.datasource.model.WardModel;
 import com.example.datasource.source.preference.PreferenceHelper;
 import com.example.datasource.source.remote.IRemoteDataSource;
 import com.example.datasource.source.remote.RemoteDataSource;
@@ -78,5 +81,17 @@ public class DataRepository {
 
     public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> responseBody) {
         return mRemoteDataSource.upLoadImageFilesMutilPart(responseBody);
+    }
+
+    public Observable<DataResponse<ProvinceModel>> getListProvince() {
+        return mRemoteDataSource.getListProvince();
+    }
+
+    public Observable<DataResponse<DistrictModel>> getDistrictViaProvince(String provinceid) {
+        return mRemoteDataSource.getDistrictViaProvince(provinceid);
+    }
+
+    public Observable<DataResponse<WardModel>> getWardViaDistrict(String districtid) {
+        return mRemoteDataSource.getWardViaDistrict(districtid);
     }
 }

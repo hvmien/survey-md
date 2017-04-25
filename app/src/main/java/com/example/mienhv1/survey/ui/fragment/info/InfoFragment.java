@@ -6,11 +6,17 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +25,11 @@ import com.esafirm.imagepicker.features.camera.CameraModule;
 import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
 import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
+import com.example.datasource.model.AddressModel;
+import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.DistrictModel;
+import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.WardModel;
 import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
@@ -39,7 +50,8 @@ import static android.app.Activity.RESULT_OK;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, View.OnClickListener, ProgressRequestBody.UploadCallbacks {
+public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
+        View.OnClickListener, ProgressRequestBody.UploadCallbacks {
 
     private ArrayList<Image> images = new ArrayList<>();
     private static final int RC_CODE_PICKER = 2000;
@@ -55,9 +67,17 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
     private ProgressBar mProgressBar;
     private ProgressBar mProgressBarPercent;
     private TextView txtProgress;
+    private Spinner provinceSpinner;
+    private Spinner districtSpinner;
+    private Spinner wardSpinner;
     private UpLoadImageFileUserCase mUpLoadImageFileUserCase;
     private List<String> mUriString = new ArrayList<>();
     private List<Uri> mUriUri = new ArrayList<>();
+    private String address = "";
+    private String province = "";
+    private String district = "";
+    private String ward = "";
+    private TextView addressTextView;
 
 
     @Override
@@ -74,7 +94,11 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress_upload);
         mProgressBarPercent = (ProgressBar) view.findViewById(R.id.progress_bar_percent);
         txtProgress = (TextView) view.findViewById(R.id.text_progress);
+        addressTextView = (TextView) view.findViewById(R.id.address_text_view);
         textView = (TextView) view.findViewById(R.id.text_view);
+        provinceSpinner = (Spinner) view.findViewById(R.id.spinner_province_id);
+        districtSpinner = (Spinner) view.findViewById(R.id.spinner_district_id);
+        wardSpinner = (Spinner) view.findViewById(R.id.spinner_ward_id);
     }
 
     @Override
@@ -83,6 +107,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         pickimageButton.setOnClickListener(this);
         cameraonlyButton.setOnClickListener(this);
         uploadimageButton.setOnClickListener(this);
+        presenter.getProvinceList();
 
 
     }
@@ -93,7 +118,11 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         presenter.start();
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.resume();
+    }
 
     @Override
     public void onPause() {
@@ -112,6 +141,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
 
     }
 
+
     @Override
     public void showProgress() {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -124,7 +154,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -168,7 +198,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
                 File files = new File(fileiPath);
                 listFile.add(files);
 //                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
-                    ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
+                ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
 
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
@@ -187,12 +217,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         }
 
         return null;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.resume();
     }
 
     private String getRealPathFromURI(Uri contentURI) {
@@ -305,5 +329,131 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView, Vi
         //mProgressBarPercent.setProgress(100);
         txtProgress.setText(count + "/" + mUriString.size());
         Log.d("InfomationFrag", "finish");
+    }
+
+    @Override
+    public void getListProvince(DataResponse<ProvinceModel> mdataRes) {
+        ArrayList<String> nameProvinceList = new ArrayList<>();
+        for (int i = 0; i < mdataRes.data.size(); i++) {
+            nameProvinceList.add(mdataRes.data.get(i).type + " - " + mdataRes.data.get(i).name);
+        }
+        setAdapterProvince(nameProvinceList, mdataRes.data);
+    }
+
+    @Override
+    public void getListDistrict(DataResponse<DistrictModel> mdataRes) {
+        ArrayList<String> nameDistrictList = new ArrayList<>();
+        for (int i = 0; i < mdataRes.data.size(); i++) {
+            nameDistrictList.add(mdataRes.data.get(i).type + " - " + mdataRes.data.get(i).name);
+        }
+        setAdapterDistrict(nameDistrictList, mdataRes.data);
+
+    }
+
+    @Override
+    public void getListWard(DataResponse<WardModel> mdataRes) {
+        ArrayList<String> nameWardList = new ArrayList<>();
+        for (int i = 0; i < mdataRes.data.size(); i++) {
+            nameWardList.add(mdataRes.data.get(i).type + " - " + mdataRes.data.get(i).name);
+        }
+        setAdapterWardList(nameWardList);
+    }
+
+    private void setAdapterWardList(ArrayList<String> nameWardList) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, nameWardList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        wardSpinner.setAdapter(adapter);
+        wardSpinner.setOnItemSelectedListener(new MyProcessEventWard());
+    }
+
+    private void setAdapterDistrict(ArrayList<String> nameDistrictList, final ArrayList<DistrictModel> data) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, nameDistrictList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        districtSpinner.setAdapter(adapter);
+        districtSpinner.setOnItemSelectedListener(new MyProcessEventDistrict(data));
+    }
+
+    boolean mConfigChange = false;
+
+    private void setAdapterProvince(final ArrayList<String> nameProvinceList, final ArrayList<ProvinceModel> data) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                nameProvinceList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        provinceSpinner.setAdapter(adapter);
+        provinceSpinner.setOnItemSelectedListener(new MyProcessEvent(data));
+    }
+
+    private int mGalleryInitializedCount = 0;
+    private int mGalleryCount = 7;
+
+    private class MyProcessEvent<T> implements AdapterView.OnItemSelectedListener {
+        ArrayList<ProvinceModel> nameProvinceList = new ArrayList<>();
+
+        public MyProcessEvent(ArrayList<ProvinceModel> nameprovincelist) {
+            this.nameProvinceList = nameprovincelist;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (adapterView.getId() == R.id.spinner_province_id) {
+//                    Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString() + "", Toast.LENGTH_SHORT).show();
+                    getDistristViaProvince(nameProvinceList.get(i));
+                    province = adapterView.getItemAtPosition(i).toString();
+                }
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    }
+
+    private void getDistristViaProvince(ProvinceModel pos) {
+        presenter.getDistristViaProvince(pos.provinceid);
+    }
+
+    private class MyProcessEventDistrict implements AdapterView.OnItemSelectedListener {
+        ArrayList<DistrictModel> nameDistrictList = new ArrayList<>();
+
+        public MyProcessEventDistrict(ArrayList<DistrictModel> data) {
+            this.nameDistrictList = data;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (adapterView.getId() == R.id.spinner_district_id) {
+//                Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString()+"", Toast.LENGTH_SHORT).show();
+                getWardViaDistrict(nameDistrictList.get(i));
+                district = adapterView.getItemAtPosition(i).toString();
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    }
+
+    private void getWardViaDistrict(DistrictModel pos) {
+        presenter.getWardViaDistrict(pos.districtid);
+    }
+
+    private class MyProcessEventWard implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (adapterView.getId() == R.id.spinner_ward_id) {
+//                Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString()+"", Toast.LENGTH_SHORT).show();
+                ward = adapterView.getItemAtPosition(i).toString();
+                addressTextView.setText(province + "," + district + "," + ward);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
     }
 }

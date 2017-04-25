@@ -74,10 +74,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         fragments.add(new InfoFragment());
         fragments.add(new InfoFragment());
         fragments.add(new InfoFragment());
-        fragments.add(new InfoFragment());
-        fragments.add(new InfoFragment());
-        fragments.add(new InfoFragment());
-        fragments.add(new InfoFragment());
+//        fragments.add(new InfoFragment());
+//        fragments.add(new InfoFragment());
+//        fragments.add(new InfoFragment());
+//        fragments.add(new InfoFragment());
 
 
         SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), fragments);
