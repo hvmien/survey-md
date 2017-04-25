@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.example.datasource.model.CheckboxModel;
+import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.R;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * Created by HVM on 4/23/2017.
  */
 
-public class CheckboxAdapter extends BaseViewAdapter<CheckboxModel> {
+public class CheckboxAdapter extends BaseViewAdapter<ItemAttributeModel> {
 
     public CheckboxAdapter(Context context, @LayoutRes int id, ViewGroup parent, ArrayList<CheckboxModel> data) {
         super(context, id, parent, data);
@@ -31,7 +32,7 @@ public class CheckboxAdapter extends BaseViewAdapter<CheckboxModel> {
     public void bindView(View view, int position) {
         CardView item = (CardView) view;
         CSCheckBox ck=(CSCheckBox) item.getChildAt(0);
-        ck.setText(mData.get(position).name);
+        ck.setText(mData.get(position).name_display);
         ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

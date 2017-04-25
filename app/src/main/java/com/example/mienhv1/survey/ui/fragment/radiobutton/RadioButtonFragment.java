@@ -1,17 +1,15 @@
-package com.example.mienhv1.survey.ui.fragment.checkbox;
+package com.example.mienhv1.survey.ui.fragment.radiobutton;
 
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.datasource.model.CheckboxModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
-import com.example.datasource.utils.Constant;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.utils.view.CSGroupCheckbox;
+import com.example.mienhv1.survey.utils.view.CSRadioGroup;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
 import java.util.ArrayList;
@@ -20,30 +18,28 @@ import java.util.ArrayList;
  * Created by HVM on 4/23/2017.
  */
 
-public class CheckboxFragment extends ItemBaseSurveyFragment {
+public class RadioButtonFragment extends ItemBaseSurveyFragment {
     private CSTextView txtTitle;
-    private CSGroupCheckbox grCheckboxParent;
+    private CSRadioGroup csRadioGroupParent;
 
-    public static CheckboxFragment newInstance(ItemQuestionModel item) {
+    public static RadioButtonFragment newInstance(ItemQuestionModel item) {
 
         Bundle args = new Bundle();
         args.putParcelable(Constants.ARG_ITEM_SURVEY, item);
-        CheckboxFragment fragment = new CheckboxFragment();
+        RadioButtonFragment fragment = new RadioButtonFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int getResourcesLayout() {
-        return R.layout.fragment_checkbox;
+        return R.layout.fragment_radiobutton;
     }
 
     @Override
     protected void mapView(View view) {
-        txtTitle = (CSTextView) view.findViewById(R.id.txt_title);
-        grCheckboxParent = (CSGroupCheckbox) view.findViewById(R.id.gr_checkbox);
-
-
+        txtTitle = (CSTextView) view.findViewById(R.id.txt_title_radio_group);
+        csRadioGroupParent = (CSRadioGroup) view.findViewById(R.id.gp_data);
     }
 
     @Override
@@ -67,8 +63,8 @@ public class CheckboxFragment extends ItemBaseSurveyFragment {
         item3.name_display = "Duong Pho";
         mList.add(item3);
 
-        CheckboxAdapter ckA = new CheckboxAdapter(getActivity(), R.layout.item_check_box_view, grCheckboxParent, mList);
-        grCheckboxParent.setAdapter(ckA);
+        RadioButtonAdapter ckA = new RadioButtonAdapter(getActivity(), R.layout.item_radio_button, csRadioGroupParent, mList);
+        csRadioGroupParent.setAdapter(ckA);
 
     }
 
@@ -79,6 +75,6 @@ public class CheckboxFragment extends ItemBaseSurveyFragment {
 
     @Override
     public EnumSurveyFragment fragmentType() {
-        return EnumSurveyFragment.CheckBox;
+        return EnumSurveyFragment.RadioButton;
     }
 }
