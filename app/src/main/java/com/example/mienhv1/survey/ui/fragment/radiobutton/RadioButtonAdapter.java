@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.example.datasource.model.CheckboxModel;
+import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.RadiobuttonModel;
 import com.example.datasource.model.RoadAhead;
 import com.example.mienhv1.survey.R;
@@ -21,8 +22,8 @@ import java.util.ArrayList;
  * Created by HVM on 4/23/2017.
  */
 
-public class RadioButtonAdapter extends BaseViewAdapter<RadiobuttonModel> {
-    OnUpdateListener<RadiobuttonModel> listener;
+public class RadioButtonAdapter extends BaseViewAdapter<ItemAttributeModel> {
+    OnUpdateListener<ItemAttributeModel> listener;
 
 
     public RadioButtonAdapter(Context context, @LayoutRes int id, ViewGroup parent, ArrayList<RadiobuttonModel> data) {
@@ -32,6 +33,6 @@ public class RadioButtonAdapter extends BaseViewAdapter<RadiobuttonModel> {
     @Override
     public void bindView(View view, final int position) {
         CSRadioButton item = (CSRadioButton) view;
-        item.setText(mData.get(position).name);
+        item.setText(mData.get(position).name_display);
     }
 }

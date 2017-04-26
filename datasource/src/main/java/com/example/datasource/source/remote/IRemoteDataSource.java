@@ -4,13 +4,13 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
-import com.example.datasource.model.Model;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.SurveyAttributeModel;
+import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -25,7 +25,7 @@ public interface IRemoteDataSource {
 
     Observable<Boolean> signOut();
 
-    Observable<List<Model>> getDatabase();
+    Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion();
 
     Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid);
 
@@ -36,4 +36,6 @@ public interface IRemoteDataSource {
     Observable<DataResponse<DistrictModel>> getDistrictViaProvince(String provinceid);
 
     Observable<DataResponse<WardModel>> getWardViaDistrict(String districtid);
+
+    Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(int tableid);
 }

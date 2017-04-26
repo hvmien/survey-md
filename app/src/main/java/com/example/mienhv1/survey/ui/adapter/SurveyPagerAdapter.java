@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
 
 import java.util.ArrayList;
 
@@ -15,9 +17,20 @@ import java.util.ArrayList;
 public class SurveyPagerAdapter extends FragmentPagerAdapter {
     ArrayList<ItemBaseSurveyFragment> fragments = new ArrayList<>();
 
-    public SurveyPagerAdapter(FragmentManager fm, ArrayList fragments) {
+    public SurveyPagerAdapter(FragmentManager fm, ArrayList<ItemQuestionModel> models) {
         super(fm);
-        this.fragments = fragments;
+        generateFragments(models);
+    }
+
+    private void generateFragments(ArrayList<ItemQuestionModel> models) {
+        for (int i = 0; i < models.size(); i++) {
+            switch (models.get(i).type) {
+                case 1:
+                    RadioButtonFragment f = RadioButtonFragment.newInstance(models.get(i));
+                    fragments.add(f);
+                    break;
+            }
+        }
     }
 
     @Override

@@ -6,13 +6,13 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
-import com.example.datasource.model.Model;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.SurveyAttributeModel;
+import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -67,19 +67,8 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<List<Model>> getDatabase() {
-        return Observable.create(new ObservableOnSubscribe<List<Model>>() {
-            @Override
-            public void subscribe(ObservableEmitter<List<Model>> e) throws Exception {
-                List<Model> mList = new ArrayList<Model>();
-                Model model = new Model();
-                model.name = "abc";
-                mList.add(model);
-                e.onNext(mList);
-                e.onComplete();
-                return;
-            }
-        });
+    public Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion() {
+        return mApiInterface.getDatabaseQuestion();
     }
 
     @Override
@@ -109,5 +98,10 @@ public class RemoteDataSource implements IRemoteDataSource {
     @Override
     public Observable<DataResponse<WardModel>> getWardViaDistrict(String districtid) {
         return mApiInterface.getWardViaDistrict(districtid);
+    }
+
+    @Override
+    public Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(int tableid) {
+        return mApiInterface.getSurveyAttribute(tableid);
     }
 }

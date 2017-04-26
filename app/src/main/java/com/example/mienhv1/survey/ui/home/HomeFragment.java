@@ -8,13 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
-import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.ui.fragment.info.InfoFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 
@@ -31,11 +30,11 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     private ProgressBar mProgressbar;
     private CSViewPageNoScroll mViewPager;
 
-    ArrayList<ItemBaseSurveyFragment> fragments;
 
     int curChildPosition = 0;
 
     CSTextView txtCurPage;
+    private ArrayList mListQuestion = new ArrayList();
 
     @Override
     public void onAttach(Context context) {
@@ -70,17 +69,22 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         mViewPager = (CSViewPageNoScroll) view.findViewById(R.id.viewpager);
         mViewPager.setScrolling(false);
 
-        fragments = new ArrayList<>();
-        fragments.add(new InfoFragment());
-        fragments.add(new InfoFragment());
-        fragments.add(new InfoFragment());
-//        fragments.add(new InfoFragment());
-//        fragments.add(new InfoFragment());
-//        fragments.add(new InfoFragment());
-//        fragments.add(new InfoFragment());
+        mListQuestion = new ArrayList();
+        ItemQuestionModel item1 = new ItemQuestionModel();
+        item1.id = 2;
+        item1.name = "roadahead";
+        item1.title = "Đường đi trước cửa hàng";
+        item1.type = 1;
+        mListQuestion.add(item1);
 
+        ItemQuestionModel item2 = new ItemQuestionModel();
+        item2.id = 3;
+        item2.name = "roaddirection";
+        item2.title = "Chiều của đường";
+        item2.type = 1;
+        mListQuestion.add(item2);
 
-        SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), fragments);
+        SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), mListQuestion);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(7);
 
@@ -88,7 +92,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         view.findViewById(R.id.btn_prev).setOnClickListener(this);
         view.findViewById(R.id.btn_next).setOnClickListener(this);
         txtCurPage = (CSTextView) view.findViewById(R.id.txt_cur_page);
-        txtCurPage.setText(1 + "/" + fragments.size());
+        txtCurPage.setText(1 + "/" + mListQuestion.size());
     }
 
     @Override
@@ -146,12 +150,12 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
             case R.id.btn_next:
 
-                if (curChildPosition + 1 >= fragments.size())
+                if (curChildPosition + 1 >= mListQuestion.size())
                     return;
 
                 curChildPosition++;
                 mViewPager.setCurrentItem(getItem(+1), true);
-                txtCurPage.setText(curChildPosition + 1 + "/" + fragments.size());
+                txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
 
                 break;
             case R.id.btn_prev:
@@ -160,7 +164,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
                 curChildPosition--;
                 mViewPager.setCurrentItem(getItem(-1), true);
-                txtCurPage.setText(curChildPosition + 1 + "/" + fragments.size());
+                txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
 
                 break;
         }

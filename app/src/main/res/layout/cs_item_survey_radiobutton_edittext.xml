@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.mienhv1.survey.utils.view.CSGroupCheckbox
-        android:id="@+id/gr_checkbox"
+    <com.example.mienhv1.survey.utils.view.CSRadioGroup
+        android:id="@+id/cs_gr_radio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <com.example.mienhv1.survey.utils.view.CSEditText
-            android:id="@+id/cs_edittext_checkbox"
+            android:id="@+id/cs_edittext_radio"
             style="@style/EdiText.Normal.SingLine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/textview_height"

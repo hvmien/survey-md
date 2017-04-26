@@ -11,42 +11,32 @@ import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.BaseViewAdapter;
 
 /**
- * Created by HVM on 4/23/2017.
+ * Created by MienHV1 on 4/26/2017.
  */
 
-public class CSGroupCheckboxEdittext extends LinearLayout {
-    private CSGroupCheckbox groupCheckbox;
+public class CSGroupRadiobuttonEdittext extends LinearLayout {
+    private CSRadioGroup groupRadio;
     private CSEditText csEditText;
 
-    public CSGroupCheckboxEdittext(Context context) {
-        super(context);
-//        this.setOrientation(VERTICAL);
-//        LayoutParams LLParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-//        this.setLayoutParams(LLParams);
-//        invalidate();
+    public CSGroupRadiobuttonEdittext(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
     }
 
-    public CSGroupCheckboxEdittext(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public CSGroupRadiobuttonEdittext(Context context) {
+
+        super(context);
         this.setOrientation(VERTICAL);
         LayoutParams LLParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         this.setLayoutParams(LLParams);
         mapView();
-
     }
 
     private void mapView() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View root= inflater.inflate(R.layout.cs_item_survey_checkbox_edittext,this,true);
-        groupCheckbox = (CSGroupCheckbox) root.findViewById(R.id.gr_checkbox);
-        csEditText = (CSEditText) root.findViewById(R.id.cs_edittext_checkbox);
+        View root= inflater.inflate(R.layout.cs_item_survey_radiobutton_edittext,this,true);
+        groupRadio = (CSRadioGroup) root.findViewById(R.id.cs_gr_radio);
+        csEditText = (CSEditText) root.findViewById(R.id.cs_edittext_radio);
     }
-
-    public void setOtherText(String text){
-
-    }
-
-
     public void setAdapter(BaseViewAdapter adapter) {
         for (int i = 0; i < adapter.getCount(); i++) {
 
