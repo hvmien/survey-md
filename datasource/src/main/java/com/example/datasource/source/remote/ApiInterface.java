@@ -4,9 +4,9 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
+import com.example.datasource.model.ItemAttributeModel;
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
-import com.example.datasource.model.SurveyAttributeModel;
-import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
@@ -28,7 +28,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("survey")
-    Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion();
+    Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion();
 
     @FormUrlEncoded
     @POST("login")
@@ -55,5 +55,5 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("table_attritute")
-    Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(@Field("table_id")int tableid);
+    Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(@Field("table_id")int tableid);
 }

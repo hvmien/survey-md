@@ -3,14 +3,21 @@ package com.example.datasource.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Forev on 17/04/25.
  */
 
 public class ItemQuestionModel implements Parcelable {
+
+    @SerializedName("id")
     public int id;
+    @SerializedName("name")
     public String name;
+    @SerializedName("title")
     public String title;
+    @SerializedName("type")
     public int type;
 
     public ItemQuestionModel(){}

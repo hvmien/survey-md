@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -23,7 +24,7 @@ public class LoginFragment extends BaseFragment implements LoginView, View.OnCli
     private ProgressBar mProgressBar;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private RelativeLayout mContainer;
+    private FrameLayout mContainer;
     private LoginPresenter mPresenter;
 
     @Override
@@ -36,7 +37,7 @@ public class LoginFragment extends BaseFragment implements LoginView, View.OnCli
         mProgressBar = (ProgressBar) view.findViewById(R.id.login_progress);
         mEmailView = (AutoCompleteTextView) view.findViewById(R.id.login_email_input);
         mPasswordView = (EditText) view.findViewById(R.id.login_password_input);
-        mContainer = (RelativeLayout) view.findViewById(R.id.login_container_view);
+        mContainer = (FrameLayout) view.findViewById(R.id.login_container_view);
         Button signInBtn = (Button) view.findViewById(R.id.login_signin_btn);
         signInBtn.setOnClickListener(this);
 

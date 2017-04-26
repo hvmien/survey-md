@@ -1,7 +1,7 @@
 package com.example.datasource.usercases;
 
 import com.example.datasource.model.DataResponse;
-import com.example.datasource.model.SurveyAttributeModel;
+import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.repository.DataRepository;
 
 import io.reactivex.Observable;
@@ -10,13 +10,13 @@ import io.reactivex.Observable;
  * Created by MienHV1 on 4/26/2017.
  */
 
-public class GetSurveyAttribute extends RxUserCase<DataResponse<SurveyAttributeModel>,GetSurveyAttribute.RequestValue> {
-    public GetSurveyAttribute(DataRepository dataRepository) {
+public class GetSurveyAttributeUsercase extends RxUserCase<DataResponse<ItemAttributeModel>,GetSurveyAttributeUsercase.RequestValue> {
+    public GetSurveyAttributeUsercase(DataRepository dataRepository) {
         super(dataRepository);
     }
 
     @Override
-    protected Observable<DataResponse<SurveyAttributeModel>> buildPagrams(RequestValue pagram) {
+    protected Observable<DataResponse<ItemAttributeModel>> buildPagrams(RequestValue pagram) {
         return mDataRepository.getSurveyAttribute(pagram.tableid);
     }
     public static class RequestValue implements RxUserCase.RequestValue{

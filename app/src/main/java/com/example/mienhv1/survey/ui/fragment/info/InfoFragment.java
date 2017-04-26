@@ -30,6 +30,7 @@ import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.utils.uploadimage.ProgressRequestBody;
+import com.example.mienhv1.survey.utils.view.CustomSpinnerAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -100,8 +101,16 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         cameraonlyButton.setOnClickListener(this);
         uploadimageButton.setOnClickListener(this);
         presenter.getProvinceList();
+        setDefaultValueSpinner(provinceSpinner, getResources().getString(R.string.default_value_province));
+        setDefaultValueSpinner(districtSpinner, getResources().getString(R.string.default_value_district));
+        setDefaultValueSpinner(wardSpinner, getResources().getString(R.string.default_value_ward));
+    }
 
-
+    private void setDefaultValueSpinner(Spinner spinner, String defaultvalue) {
+        ArrayList<String> TempList = new ArrayList<>();
+        TempList.add(defaultvalue);
+        ArrayAdapter adapter = new CustomSpinnerAdapter<>(getActivity(), android.R.layout.simple_spinner_item, TempList);
+        spinner.setAdapter(adapter);
     }
 
     @Override
@@ -238,7 +247,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
                 .start(RC_CODE_PICKER); // start image picker activity with request code
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -262,8 +270,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
                 }
             });
         }
-
-
     }
 
     private void printImages(List<Image> images) {
@@ -335,53 +341,71 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     }
 
     private void setAdapterWardList(ArrayList<String> nameWardList) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, nameWardList);
+        final ArrayList<String> tempList = new ArrayList<>();
+        tempList.add(getResources().getString(R.string.default_value_ward));
+        tempList.addAll(nameWardList);
+        ArrayAdapter<String> adapter = new CustomSpinnerAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                tempList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wardSpinner.setAdapter(adapter);
         wardSpinner.setOnItemSelectedListener(new MyProcessEventWard());
     }
 
     private void setAdapterDistrict(ArrayList<String> nameDistrictList, final ArrayList<DistrictModel> data) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, nameDistrictList);
+        final ArrayList<String> tempList = new ArrayList<>();
+        tempList.add(getResources().getString(R.string.default_value_district));
+        tempList.addAll(nameDistrictList);
+        ArrayAdapter<String> adapter = new CustomSpinnerAdapter<>(getActivity(),
+                android.R.layout.simple_spinner_item,
+                tempList);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         districtSpinner.setAdapter(adapter);
         districtSpinner.setOnItemSelectedListener(new MyProcessEventDistrict(data));
     }
 
     private void setAdapterProvince(final ArrayList<String> nameProvinceList, final ArrayList<ProvinceModel> data) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        final ArrayList<String> tempList = new ArrayList<>();
+        tempList.add(getResources().getString(R.string.default_value_province));
+        tempList.addAll(nameProvinceList);
+        ArrayAdapter<String> adapter = new CustomSpinnerAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item,
-                nameProvinceList);
+                tempList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         provinceSpinner.setAdapter(adapter);
         provinceSpinner.setOnItemSelectedListener(new MyProcessEvent(data));
     }
 
-    private class MyProcessEvent<T> implements AdapterView.OnItemSelectedListener {
+
+    private void getDistristViaProvince(ProvinceModel pos) {
+        presenter.getDistristViaProvince(pos.provinceid);
+    }
+
+    private void getWardViaDistrict(DistrictModel pos) {
+        presenter.getWardViaDistrict(pos.districtid);
+    }
+
+    // selected item spinner
+    private class MyProcessEvent implements AdapterView.OnItemSelectedListener {
         ArrayList<ProvinceModel> nameProvinceList = new ArrayList<>();
 
         public MyProcessEvent(ArrayList<ProvinceModel> nameprovincelist) {
-            this.nameProvinceList = nameprovincelist;
+            this.nameProvinceList.addAll(nameprovincelist);
         }
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (adapterView.getId() == R.id.spinner_province_id) {
-                    getDistristViaProvince(nameProvinceList.get(i));
-                    province = adapterView.getItemAtPosition(i).toString();
-                }
-
+            if (i > 0) {
+                getDistristViaProvince(nameProvinceList.get(i - 1));
+                province = adapterView.getItemAtPosition(i).toString();
+            }
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {
 
         }
-    }
-
-    private void getDistristViaProvince(ProvinceModel pos) {
-        presenter.getDistristViaProvince(pos.provinceid);
     }
 
     private class MyProcessEventDistrict implements AdapterView.OnItemSelectedListener {
@@ -393,8 +417,8 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            if (adapterView.getId() == R.id.spinner_district_id) {
-                getWardViaDistrict(nameDistrictList.get(i));
+            if (i > 0) {
+                getWardViaDistrict(nameDistrictList.get(i - 1));
                 district = adapterView.getItemAtPosition(i).toString();
             }
         }
@@ -405,14 +429,10 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         }
     }
 
-    private void getWardViaDistrict(DistrictModel pos) {
-        presenter.getWardViaDistrict(pos.districtid);
-    }
-
     private class MyProcessEventWard implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            if (adapterView.getId() == R.id.spinner_ward_id) {
+            if (i > 0) {
                 ward = adapterView.getItemAtPosition(i).toString();
                 addressTextView.setText(province + "," + district + "," + ward);
             }
