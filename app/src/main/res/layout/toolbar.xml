@@ -11,7 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@android:color/holo_red_dark"
+        android:background="#2E9EAC"
         app:theme="@style/Toolbar">
 
         <TextView

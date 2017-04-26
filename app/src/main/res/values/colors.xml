@@ -25,4 +25,5 @@
     <color name="default_windows_background">#FAFAFA</color>
     <color name="colorHintEdiText">#a8a8a8</color>
     <color name="colorBlueDark">#00688b</color>
+    <color name="colorApplication">#2E9EAC</color>
 </resources>
