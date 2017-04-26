@@ -5,9 +5,10 @@ package com.example.mienhv1.survey.ui.adapter;
  */
 
 public enum EnumSurveyFragment {
-    Common,
-    RadioButton,
-    CheckBox,
-    RadioButton_EditText,
-    CheckBox_EditText,
+    Common,//1
+    RadioButton,//2
+    CheckBox,//3
+    RadioButton_EditText,//4
+    CheckBox_EditText, //5
+    Editext,//6
 }

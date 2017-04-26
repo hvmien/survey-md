@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.checkbox.CheckboxFragment;
 import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
+import com.example.mienhv1.survey.ui.fragment.radiobuttontextfield.RadioButtonTextFieldFragment;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,28 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
                 case 1:
                     RadioButtonFragment f = RadioButtonFragment.newInstance(models.get(i));
                     fragments.add(f);
+                    break;
+                case 2:
+                    CheckboxFragment f2 = CheckboxFragment.newInstance(models.get(i));
+                    fragments.add(f2);
+                    break;
+
+                case  3:
+                    RadioButtonTextFieldFragment f3 = RadioButtonTextFieldFragment.newInstance(models.get(i));
+                    fragments.add(f3);
+                    break;
+
+                case  4:
+                    CheckboxFragment f4 = CheckboxFragment.newInstance(models.get(i));
+                    fragments.add(f4);
+                    break;
+                case 5:
+                    CheckboxFragment f5 = CheckboxFragment.newInstance(models.get(i));
+                    fragments.add(f5);
+                    break;
+                case 6:
+                    CheckboxFragment f6 = CheckboxFragment.newInstance(models.get(i));
+                    fragments.add(f6);
                     break;
             }
         }
