@@ -6,9 +6,9 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
+import com.example.datasource.model.ItemAttributeModel;
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
-import com.example.datasource.model.SurveyAttributeModel;
-import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
@@ -67,7 +67,7 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion() {
+    public Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion() {
         return mApiInterface.getDatabaseQuestion();
     }
 
@@ -101,7 +101,7 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(int tableid) {
+    public Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(int tableid) {
         return mApiInterface.getSurveyAttribute(tableid);
     }
 }

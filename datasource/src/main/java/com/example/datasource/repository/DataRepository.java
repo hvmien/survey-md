@@ -6,9 +6,9 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
+import com.example.datasource.model.ItemAttributeModel;
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
-import com.example.datasource.model.SurveyAttributeModel;
-import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 import com.example.datasource.source.preference.PreferenceHelper;
@@ -75,7 +75,7 @@ public class DataRepository {
         return mRemoteDataSource.signOut();
     }
 
-    public Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion() {
+    public Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion() {
         return mRemoteDataSource.getDatabaseQuestion();
     }
 
@@ -95,7 +95,7 @@ public class DataRepository {
         return mRemoteDataSource.getWardViaDistrict(districtid);
     }
 
-    public Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(int tableid) {
+    public Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(int tableid) {
         return mRemoteDataSource.getSurveyAttribute(tableid);
     }
 }
