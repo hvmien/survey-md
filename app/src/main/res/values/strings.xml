@@ -24,4 +24,7 @@
     <string name="title_survey">SURVEY</string>
     <string name="title_start_survey">Begin survey</string>
     <string name="error_missing_password">Password must at least 6 charactor</string>
+    <string name="default_value_district">Quận, Huyện,...</string>
+    <string name="default_value_province">Tỉnh, thành phố,...</string>
+    <string name="default_value_ward">Xã, phường,...</string>
 </resources>
