@@ -1,5 +1,7 @@
 package com.example.mienhv1.survey.ui.home;
 
+import com.example.datasource.model.DataResponse;
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.base.BaseView;
 
 /**
@@ -8,4 +10,5 @@ import com.example.mienhv1.survey.base.BaseView;
 
 public interface HomeView extends BaseView {
     void navigateToLoginPage();
+    void getListQuestion(DataResponse<ItemQuestionModel> data);
 }

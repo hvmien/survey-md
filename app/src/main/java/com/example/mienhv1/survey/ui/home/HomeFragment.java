@@ -7,7 +7,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
@@ -65,41 +67,25 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     protected void mapView(View view) {
-        mProgressbar = (ProgressBar) view.findViewById(R.id.home_progress);
+        mProgressbar = (ProgressBar) view.findViewById(R.id.home_progress_bar);
         mViewPager = (CSViewPageNoScroll) view.findViewById(R.id.viewpager);
-        mViewPager.setScrolling(false);
-
-        mListQuestion = new ArrayList();
-        ItemQuestionModel item1 = new ItemQuestionModel();
-        item1.id = 2;
-        item1.name = "roadahead";
-        item1.title = "Đường đi trước cửa hàng";
-        item1.type = 1;
-        mListQuestion.add(item1);
-
-        ItemQuestionModel item2 = new ItemQuestionModel();
-        item2.id = 3;
-        item2.name = "roaddirection";
-        item2.title = "Chiều của đường";
-        item2.type = 1;
-        mListQuestion.add(item2);
-
-        SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), mListQuestion);
-        mViewPager.setAdapter(adapter);
-        mViewPager.setOffscreenPageLimit(7);
-
 
         view.findViewById(R.id.btn_prev).setOnClickListener(this);
         view.findViewById(R.id.btn_next).setOnClickListener(this);
         txtCurPage = (CSTextView) view.findViewById(R.id.txt_cur_page);
-        txtCurPage.setText(1 + "/" + mListQuestion.size());
     }
 
     @Override
     protected void initData() {
+        mViewPager.setScrolling(false);
+
+
+
+
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
         mHomePresenter = new HomePresenter(dataRepository, this);
         setHasOptionsMenu(true);
+        mHomePresenter.createDatabase();
         //add viewpager this here
     }
 
@@ -110,17 +96,17 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     @Override
     public void showProgress() {
-
+        mProgressbar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        mProgressbar.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -142,6 +128,18 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     public void navigateToLoginPage() {
         mListener.onOpenLoginPage();
+    }
+
+    @Override
+    public void getListQuestion(DataResponse<ItemQuestionModel> datamodel) {
+        mListQuestion = new ArrayList();
+        if(datamodel.data!=null) {
+            mListQuestion.addAll(datamodel.data);
+            SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), mListQuestion);
+            mViewPager.setAdapter(adapter);
+            mViewPager.setOffscreenPageLimit(7);
+            txtCurPage.setText(1 + "/" + mListQuestion.size());
+        }
     }
 
     @Override

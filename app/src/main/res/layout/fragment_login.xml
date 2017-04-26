@@ -145,6 +145,8 @@
             android:orientation="vertical">
 
             <ProgressBar
+                android:minHeight="40dp"
+                android:maxHeight="40dp"
                 android:indeterminate="true"
                 android:indeterminateDrawable="@drawable/cs_progressbar"
                 android:id="@+id/login_progress"

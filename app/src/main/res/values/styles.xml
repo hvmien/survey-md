@@ -1,8 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.AppTheme">
-    </style>
+    <style name="AppTheme" parent="Base.AppTheme"></style>
 
     <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -10,7 +9,8 @@
         <item name="colorPrimaryDark">@android:color/background_dark</item>
         <item name="android:windowBackground">@color/default_windows_background</item>
     </style>
-    <style name="Toolbar"  parent="Theme.AppCompat.Light">
+
+    <style name="Toolbar" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@android:color/holo_blue_dark</item>
     </style>
@@ -26,12 +26,11 @@
         <item name="android:layout_margin">4dp</item>
         <item name="android:background">@drawable/bg_button_oval_gray</item>
     </style>
+
     <style name="ImagePickerTheme" parent="ef_BaseTheme">
         <item name="colorPrimary">#607D8B</item>
         <item name="colorPrimaryDark">#455A64</item>
         <item name="colorAccent">@color/ef_colorAccent</item>
     </style>
-
-
 
 </resources>

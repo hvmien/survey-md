@@ -26,7 +26,7 @@ import retrofit2.http.Part;
 
 public interface ApiInterface {
 
-    @FormUrlEncoded
+
     @POST("survey")
     Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion();
 
