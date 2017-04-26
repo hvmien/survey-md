@@ -6,12 +6,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,12 +22,10 @@ import com.esafirm.imagepicker.features.camera.CameraModule;
 import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
 import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
-import com.example.datasource.model.AddressModel;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.WardModel;
-import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
@@ -40,9 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -70,7 +63,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     private Spinner provinceSpinner;
     private Spinner districtSpinner;
     private Spinner wardSpinner;
-    private UpLoadImageFileUserCase mUpLoadImageFileUserCase;
     private List<String> mUriString = new ArrayList<>();
     private List<Uri> mUriUri = new ArrayList<>();
     private String address = "";
@@ -188,31 +180,18 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     private ArrayList<MultipartBody.Part> getMutilPart() {
         if (mUriString != null && mUriString.size() > 0) {
             ArrayList<MultipartBody.Part> listPart = new ArrayList<>();
-
-//            MultipartBody.Builder builder = new MultipartBody.Builder();
-//            builder.setType(MultipartBody.FORM);
             ArrayList<File> listFile = new ArrayList<>();
 
             for (int i = 0; i < mUriString.size(); i++) {
                 String fileiPath = mUriString.get(i);
                 File files = new File(fileiPath);
                 listFile.add(files);
-//                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), files);
                 ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
 
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
                 listPart.add(body);
             }
-
-//            ProgressRequestBody requestFile = new ProgressRequestBody(listFile, this);
-//
-//            for (int i = 0; i < mUriString.size(); i++) {
-//
-//                MultipartBody.Part body =
-//                        MultipartBody.Part.createFormData("photo", listFile.get(i).getName(), requestFile);
-//                listPart.add(body);
-//            }
             return listPart;
         }
 
@@ -239,9 +218,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     }
 
     private void start() {
-//        boolean returnAfterCapture = ((Switch) findViewById(R.id.ef_switch_return_after_capture)).isChecked();
-//        boolean isSingleMode = ((Switch) findViewById(R.id.ef_switch_single)).isChecked();
-
         ImagePicker imagePicker = ImagePicker.create(this)
                 .theme(R.style.ImagePickerTheme)
                 .returnAfterFirst(true) // set whether pick action or camera action should return immediate result or not. Only works in single mode for image picker
@@ -317,7 +293,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         Log.d("InfomationFrag", "percent : " + percentage + "/" + total);
     }
 
-
     @Override
     public void onError() {
         Toast.makeText(getActivity(), "Progress update error", Toast.LENGTH_SHORT).show();
@@ -326,7 +301,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     @Override
     public void onFinish() {
         count++;
-        //mProgressBarPercent.setProgress(100);
+        mProgressBarPercent.setProgress(100);
         txtProgress.setText(count + "/" + mUriString.size());
         Log.d("InfomationFrag", "finish");
     }
@@ -373,8 +348,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         districtSpinner.setOnItemSelectedListener(new MyProcessEventDistrict(data));
     }
 
-    boolean mConfigChange = false;
-
     private void setAdapterProvince(final ArrayList<String> nameProvinceList, final ArrayList<ProvinceModel> data) {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item,
@@ -383,9 +356,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         provinceSpinner.setAdapter(adapter);
         provinceSpinner.setOnItemSelectedListener(new MyProcessEvent(data));
     }
-
-    private int mGalleryInitializedCount = 0;
-    private int mGalleryCount = 7;
 
     private class MyProcessEvent<T> implements AdapterView.OnItemSelectedListener {
         ArrayList<ProvinceModel> nameProvinceList = new ArrayList<>();
@@ -398,7 +368,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (adapterView.getId() == R.id.spinner_province_id) {
-//                    Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString() + "", Toast.LENGTH_SHORT).show();
                     getDistristViaProvince(nameProvinceList.get(i));
                     province = adapterView.getItemAtPosition(i).toString();
                 }
@@ -425,7 +394,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if (adapterView.getId() == R.id.spinner_district_id) {
-//                Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString()+"", Toast.LENGTH_SHORT).show();
                 getWardViaDistrict(nameDistrictList.get(i));
                 district = adapterView.getItemAtPosition(i).toString();
             }
@@ -445,7 +413,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if (adapterView.getId() == R.id.spinner_ward_id) {
-//                Toast.makeText(getActivity(), adapterView.getItemAtPosition(i).toString()+"", Toast.LENGTH_SHORT).show();
                 ward = adapterView.getItemAtPosition(i).toString();
                 addressTextView.setText(province + "," + district + "," + ward);
             }

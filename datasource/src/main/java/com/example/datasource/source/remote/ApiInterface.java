@@ -5,6 +5,8 @@ import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.SurveyAttributeModel;
+import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
@@ -12,10 +14,8 @@ import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -25,8 +25,10 @@ import retrofit2.http.Part;
  */
 
 public interface ApiInterface {
-    @GET
-    Call<String> getDatabase();
+
+    @FormUrlEncoded
+    @POST("survey")
+    Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion();
 
     @FormUrlEncoded
     @POST("login")
@@ -50,4 +52,8 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("list_ward")
     Observable<DataResponse<WardModel>> getWardViaDistrict(@Field("district_id") String districtid);
+
+    @FormUrlEncoded
+    @POST("table_attritute")
+    Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(@Field("table_id")int tableid);
 }

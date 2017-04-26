@@ -14,8 +14,6 @@ import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
-import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.ui.fragment.info.InfoFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 

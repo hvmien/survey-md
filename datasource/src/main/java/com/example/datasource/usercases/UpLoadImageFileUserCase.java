@@ -16,7 +16,7 @@ import okhttp3.MultipartBody;
  * Created by MienHV1 on 4/24/2017.
  */
 
-public class UpLoadImageFileUserCase extends RxUserCase<DataResponse<ImageRespone>,UpLoadImageFileUserCase.RequestValue> {
+public class UpLoadImageFileUserCase extends RxUserCase<DataResponse<ImageRespone>, UpLoadImageFileUserCase.RequestValue> {
     public UpLoadImageFileUserCase(DataRepository dataRepository) {
         super(dataRepository);
     }
@@ -28,14 +28,15 @@ public class UpLoadImageFileUserCase extends RxUserCase<DataResponse<ImageRespon
                 .map(new Function<DataResponse<ImageRespone>, DataResponse<ImageRespone>>() {
                     @Override
                     public DataResponse<ImageRespone> apply(@NonNull DataResponse<ImageRespone> imageResponeDataResponse) throws Exception {
-                        return imageResponeDataResponse;
+                            return imageResponeDataResponse;
                     }
                 });
     }
-    public static class RequestValue implements RxUserCase.RequestValue{
+
+    public static class RequestValue implements RxUserCase.RequestValue {
         ArrayList<MultipartBody.Part> files;
 
-        public RequestValue( ArrayList<MultipartBody.Part> files) {
+        public RequestValue(ArrayList<MultipartBody.Part> files) {
             this.files = files;
         }
     }

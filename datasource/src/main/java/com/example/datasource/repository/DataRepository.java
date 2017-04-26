@@ -6,8 +6,9 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ImageRespone;
-import com.example.datasource.model.Model;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.SurveyAttributeModel;
+import com.example.datasource.model.SurveyTableModel;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 import com.example.datasource.source.preference.PreferenceHelper;
@@ -15,7 +16,6 @@ import com.example.datasource.source.remote.IRemoteDataSource;
 import com.example.datasource.source.remote.RemoteDataSource;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -75,8 +75,8 @@ public class DataRepository {
         return mRemoteDataSource.signOut();
     }
 
-    public Observable<List<Model>> getDatabase() {
-        return mRemoteDataSource.getDatabase();
+    public Observable<DataResponse<SurveyTableModel>> getDatabaseQuestion() {
+        return mRemoteDataSource.getDatabaseQuestion();
     }
 
     public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> responseBody) {
@@ -93,5 +93,9 @@ public class DataRepository {
 
     public Observable<DataResponse<WardModel>> getWardViaDistrict(String districtid) {
         return mRemoteDataSource.getWardViaDistrict(districtid);
+    }
+
+    public Observable<DataResponse<SurveyAttributeModel>> getSurveyAttribute(int tableid) {
+        return mRemoteDataSource.getSurveyAttribute(tableid);
     }
 }
