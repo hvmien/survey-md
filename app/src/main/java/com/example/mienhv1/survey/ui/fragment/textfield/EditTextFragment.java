@@ -1,21 +1,26 @@
 package com.example.mienhv1.survey.ui.fragment.textfield;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
+import com.example.mienhv1.survey.ui.adapter.EditTexAdapter;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Forev on 17/04/26.
  */
 
-public class EditTextFragment extends ItemBaseSurveyFragment{
+public class EditTextFragment extends ItemBaseSurveyFragment {
 
     public static EditTextFragment newInstance(ItemQuestionModel model) {
 
@@ -27,6 +32,8 @@ public class EditTextFragment extends ItemBaseSurveyFragment{
     }
 
     CSTextView txtTitle;
+    RecyclerView rcQuestion;
+
     @Override
     public EnumSurveyFragment fragmentType() {
         return EnumSurveyFragment.Editext;
@@ -39,12 +46,25 @@ public class EditTextFragment extends ItemBaseSurveyFragment{
 
     @Override
     protected void mapView(View view) {
-        txtTitle = (CSTextView) view.findViewById(R.id.title);
+        txtTitle = (CSTextView) view.findViewById(R.id.txt_title);
+        rcQuestion = (RecyclerView) view.findViewById(R.id.rc_question);
+        rcQuestion.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
     protected void initData() {
+        super.initData();
+        ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
+        txtTitle.setText(item.title);
+    }
 
+
+    @Override
+    protected void onDataListen(ArrayList<ItemAttributeModel> data) {
+        super.onDataListen(data);
+        EditTexAdapter adapter = new EditTexAdapter(getContext(), null);
+        adapter.setData(data);
+        rcQuestion.setAdapter(adapter);
     }
 
     @Override

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.example.mienhv1.survey.utils.view.CSTextView
-        style="@style/TextView.Normal"
+        android:id="@+id/txt_title"
+        style="@style/TextView.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/title"/>
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/title_address"
+        app:textAllCaps="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_question"

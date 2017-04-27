@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.mienhv1.survey.R;
+import com.example.mienhv1.survey.utils.view.CSEditText;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class EditTexAdapter extends BaseAdapter<ItemAttributeModel, EditTexAdapt
 
     public class ViewHolder extends BaseViewHolder<ItemAttributeModel> {
 
-        CSTextView txtAtt;
+        CSEditText txtAtt;
 
         public ViewHolder(Context ctx, View itemView) {
             super(ctx, itemView);
@@ -42,7 +43,7 @@ public class EditTexAdapter extends BaseAdapter<ItemAttributeModel, EditTexAdapt
 
         @Override
         protected void bindView() {
-            txtAtt = (CSTextView) itemView.findViewById(R.id.txt_att_name);
+            txtAtt = (CSEditText) itemView.findViewById(R.id.txt_att_name);
         }
 
         @Override

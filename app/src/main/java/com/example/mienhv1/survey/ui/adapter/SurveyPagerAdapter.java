@@ -9,6 +9,7 @@ import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.checkbox.CheckboxFragment;
 import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
 import com.example.mienhv1.survey.ui.fragment.radiobuttontextfield.RadioButtonTextFieldFragment;
+import com.example.mienhv1.survey.ui.fragment.textfield.EditTextFragment;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
                     fragments.add(f5);
                     break;
                 case 6:
-                    CheckboxFragment f6 = CheckboxFragment.newInstance(models.get(i));
+                    EditTextFragment f6 = EditTextFragment.newInstance(models.get(i));
                     fragments.add(f6);
                     break;
             }
