@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
@@ -12,6 +13,8 @@ import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.adapter.RecyclerViewItemListener;
 import com.example.mienhv1.survey.ui.adapter.upload.UploadAdapter;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created by Forev on 17/04/28.
@@ -58,5 +61,25 @@ public class UploadFragment extends ItemBaseSurveyFragment {
     @Override
     public EnumSurveyFragment fragmentType() {
         return EnumSurveyFragment.Uploads;
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    @Override
+    public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
+
     }
 }
