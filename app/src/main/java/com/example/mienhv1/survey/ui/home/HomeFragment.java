@@ -78,10 +78,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     @Override
     protected void initData() {
         mViewPager.setScrolling(false);
-
-
-
-
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
         mHomePresenter = new HomePresenter(dataRepository, this);
         setHasOptionsMenu(true);

@@ -24,6 +24,7 @@ import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
+import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.WardModel;
 import com.example.mienhv1.survey.R;
@@ -384,6 +385,11 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
 
     private void getWardViaDistrict(DistrictModel pos) {
         presenter.getWardViaDistrict(pos.districtid);
+    }
+
+    @Override
+    public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
+
     }
 
     // selected item spinner

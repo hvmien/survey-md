@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
+import com.example.mienhv1.survey.ui.fragment.store.StoreActivity;
 import com.example.mienhv1.survey.ui.home.HomeActivity;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
@@ -48,6 +49,14 @@ public class SplashActivity extends BaseActivity implements SplashView{
     @Override
     public void navigateToLoginPage() {
         openLoginPage();
+        finish();
+    }
+
+    @Override
+    public void navigateToStoreListPage() {
+        Intent intent = new Intent(this, StoreActivity.class);
+        startActivity(intent);
+        finish();
         finish();
     }
 

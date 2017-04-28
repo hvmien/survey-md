@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.example.mienhv1.survey.utils.view.CSTextView
-        android:id="@+id/txt_title_radio_group"
-        style="@style/TextView.Title"
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.example.mienhv1.survey.utils.view.CSTextView
+            android:id="@+id/txt_title_radio_group"
+            style="@style/TextView.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/title_address"
+            app:textAllCaps="true" />
+
+        <com.example.mienhv1.survey.utils.view.CSRadioGroup
+            android:id="@+id/gp_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/radiobutton_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/title_address"
-        app:textAllCaps="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/cs_progressbar"
+        android:maxHeight="40dp"
+        android:minHeight="40dp"
+        android:visibility="gone" />
 
-    <com.example.mienhv1.survey.utils.view.CSRadioGroup
-        android:id="@+id/gp_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
-
-</LinearLayout>
+</RelativeLayout>

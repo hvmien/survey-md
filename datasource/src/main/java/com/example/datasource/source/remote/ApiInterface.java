@@ -7,6 +7,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
@@ -26,6 +27,8 @@ import retrofit2.http.Part;
 
 public interface ApiInterface {
 
+    @POST("list_store")
+    Observable<DataResponse<StoreSystem>> getListStore();
 
     @POST("survey")
     Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion();

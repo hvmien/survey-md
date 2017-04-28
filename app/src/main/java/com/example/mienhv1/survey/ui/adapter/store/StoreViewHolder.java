@@ -36,9 +36,15 @@ public class StoreViewHolder extends BaseViewHolder<StoreSystem> {
     }
 
     @Override
-    public void bind(int position, StoreSystem data, RecyclerViewItemListener listener) {
+    public void bind(final int position, StoreSystem data, final RecyclerViewItemListener listener) {
         txtNameStore.setText(data.name);
         if (!TextUtils.isEmpty(data.img_thumb))
             Picasso.with(mContext).load(data.img_thumb).into(ivThumb);
+        cvWrapContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(position);
+            }
+        });
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
@@ -58,17 +59,30 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
         txtTitle.setText(item.title);
     }
 
-
-    @Override
-    protected void onDataListen(ArrayList<ItemAttributeModel> data) {
-        super.onDataListen(data);
-        EditTexAdapter adapter = new EditTexAdapter(getContext(), null);
-        adapter.setData(data);
-        rcQuestion.setAdapter(adapter);
-    }
-
     @Override
     protected void destroyView() {
 
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
+        EditTexAdapter adapter = new EditTexAdapter(getContext(), null);
+        adapter.updateData(data);
+        rcQuestion.setAdapter(adapter);
     }
 }

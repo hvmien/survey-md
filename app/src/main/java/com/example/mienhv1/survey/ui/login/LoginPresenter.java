@@ -108,7 +108,7 @@ public class LoginPresenter implements BasePresenter {
         public void onNext(DataLoginResponse<User> user) {
             if (mLoginView != null) {
                 mLoginView.hideProgress();
-                mLoginView.navigateToHomePage();
+                mLoginView.navigateToStoreListPage();
 
             }
         }
