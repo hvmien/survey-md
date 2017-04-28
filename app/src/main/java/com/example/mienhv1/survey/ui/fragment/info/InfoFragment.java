@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.WardModel;
+import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
@@ -72,6 +74,14 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     private String district = "";
     private String ward = "";
     private TextView addressTextView;
+
+    public static InfoFragment newInstance(ItemQuestionModel mode) {
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.ARG_ITEM_SURVEY, mode);
+        InfoFragment fragment = new InfoFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Override

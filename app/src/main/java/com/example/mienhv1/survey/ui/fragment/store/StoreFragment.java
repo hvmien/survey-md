@@ -27,6 +27,11 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
     ArrayList<StoreSystem> dataStoreSystem = new ArrayList<>();
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected int getResourcesLayout() {
         return R.layout.fragment_store_system;
     }
