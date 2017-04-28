@@ -47,6 +47,8 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeLis
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        HomeActivity.super.onBackPressed();
+                        finish();
                     }
                 });
 
