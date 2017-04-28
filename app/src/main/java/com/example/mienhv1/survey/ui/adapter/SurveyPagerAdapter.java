@@ -11,6 +11,7 @@ import com.example.mienhv1.survey.ui.fragment.info.InfoFragment;
 import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
 import com.example.mienhv1.survey.ui.fragment.radiobuttontextfield.RadioButtonTextFieldFragment;
 import com.example.mienhv1.survey.ui.fragment.textfield.EditTextFragment;
+import com.example.mienhv1.survey.ui.fragment.upload.UploadFragment;
 
 import java.util.ArrayList;
 
@@ -58,6 +59,10 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
                 case 6:
                     EditTextFragment f6 = EditTextFragment.newInstance(models.get(i));
                     fragments.add(f6);
+                    break;
+                case  7:
+                    UploadFragment f7 = UploadFragment.newInstance(models.get(i));
+                    fragments.add(f7);
                     break;
             }
         }

@@ -10,5 +10,6 @@ public enum EnumSurveyFragment {
     CheckBox,//3
     RadioButton_EditText,//4
     CheckBox_EditText, //5
-    Editext,//6
+    Editext, //6
+    Uploads,//7
 }
