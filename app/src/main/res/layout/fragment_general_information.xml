@@ -25,6 +25,7 @@
                 app:cardCornerRadius="0dp">
 
                 <com.example.mienhv1.survey.utils.view.CSTextView
+                    android:id="@+id/txt_title"
                     style="@style/TextView.Header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -56,7 +56,7 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     protected void initData() {
         super.initData();
         ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
-        txtTitle.setText(item.title);
+        txtTitle.setText(item.order_rank+ ". " +item.title);
     }
 
     @Override

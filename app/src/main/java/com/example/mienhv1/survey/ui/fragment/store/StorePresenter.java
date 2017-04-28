@@ -1,7 +1,6 @@
 package com.example.mienhv1.survey.ui.fragment.store;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.StoreSystem;
@@ -9,8 +8,6 @@ import com.example.datasource.repository.DataRepository;
 import com.example.datasource.usercases.GetListStoreUserCase;
 import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.base.BasePresenter;
-
-import java.util.ArrayList;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -34,11 +31,11 @@ public class StorePresenter implements BasePresenter {
 
     @Override
     public void create() {
-        ArrayList<StoreSystem> data = new ArrayList<>();
-        data.add(new StoreSystem());
-        data.add(new StoreSystem());
-        data.add(new StoreSystem());
-        storeView.initStoreData(data);
+//        ArrayList<StoreSystem> data = new ArrayList<>();
+//        data.add(new StoreSystem());
+//        data.add(new StoreSystem());
+//        data.add(new StoreSystem());
+//        storeView.initStoreData(data);
     }
 
     @Override
@@ -67,13 +64,14 @@ public class StorePresenter implements BasePresenter {
     }
 
     public void getListStoreForRecyclerView() {
+        storeView.showProgress();
         getListStoreUserCase.execute(new GetListStoreObserver(),null);
     }
 
     private class GetListStoreObserver extends DisposableObserver<DataResponse<StoreSystem>> {
         @Override
         public void onNext(DataResponse<StoreSystem> listStoreModelDataResponse) {
-            Toast.makeText(mContext, listStoreModelDataResponse.data.size()+"", Toast.LENGTH_SHORT).show();
+            storeView.hideProgress();
             if(listStoreModelDataResponse.data!=null&&listStoreModelDataResponse.data.size()>0){
                 storeView.initStoreData(listStoreModelDataResponse.data);
             }
@@ -81,12 +79,12 @@ public class StorePresenter implements BasePresenter {
 
         @Override
         public void onError(Throwable e) {
-
+        storeView.showError(e.getMessage());
         }
 
         @Override
         public void onComplete() {
-
+            storeView.hideProgress();
         }
     }
 }

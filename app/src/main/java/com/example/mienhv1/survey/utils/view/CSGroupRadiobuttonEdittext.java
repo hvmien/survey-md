@@ -1,15 +1,18 @@
 package com.example.mienhv1.survey.utils.view;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import com.example.datasource.model.ItemAttributeModel;
+import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.R;
-import com.example.mienhv1.survey.ui.adapter.BaseViewAdapter;
 import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonAdapter;
 
 import java.util.ArrayList;
@@ -21,12 +24,15 @@ import java.util.ArrayList;
 public class CSGroupRadiobuttonEdittext extends LinearLayout {
     private CSRadioGroup groupRadio;
     private CSEditText csEditText;
+    ArrayList<ItemAttributeModel> dataRb = new ArrayList<>();
+    private Context mContext;
 
     public CSGroupRadiobuttonEdittext(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        mContext = MyApplication.getInstance().getApplicationContext();
         mapView();
+        clearRadiobuttonFocussEditText();
     }
-
 
     private void mapView() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,7 +41,33 @@ public class CSGroupRadiobuttonEdittext extends LinearLayout {
         csEditText = (CSEditText) root.findViewById(R.id.cs_edittext_radio);
     }
 
+    private void clearRadiobuttonFocussEditText() {
+        csEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                groupRadio.clearCheck();
+            }
+        });
+        groupRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                csEditText.setText("");
+                csEditText.setFocusable(true);
+                csEditText.setFocusableInTouchMode(true);
+                hideKeyboard();
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)
+                mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(
+                csEditText.getWindowToken(), 0);
+    }
+
     public void setData(ArrayList<ItemAttributeModel> data) {
+        dataRb = data;
         ArrayList mList = new ArrayList();
         for (int i = 0; i < data.size() - 1; i++)
             mList.add(data.get(i));
@@ -43,8 +75,6 @@ public class CSGroupRadiobuttonEdittext extends LinearLayout {
         groupRadio.setAdapter(adapter);
         if (data.size() > 1)
             csEditText.setHint(data.get(data.size() - 1).name_display);
-
-
         invalidate();
     }
 }

@@ -27,4 +27,5 @@
     <string name="default_value_district">Quận, Huyện,...</string>
     <string name="default_value_province">Tỉnh, thành phố,...</string>
     <string name="default_value_ward">Xã, phường,...</string>
+    <string name="stop_stuck_question_exit_survey">Bạn muốn dừng khảo sát này?</string>
 </resources>

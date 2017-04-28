@@ -133,7 +133,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
             mListQuestion.addAll(datamodel.data);
             SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), mListQuestion);
             mViewPager.setAdapter(adapter);
-            mViewPager.setOffscreenPageLimit(7);
+            mViewPager.setOffscreenPageLimit(mListQuestion.size());
             txtCurPage.setText(1 + "/" + mListQuestion.size());
         }
     }
