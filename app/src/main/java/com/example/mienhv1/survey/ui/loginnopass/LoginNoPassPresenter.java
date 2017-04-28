@@ -8,17 +8,13 @@ import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.User;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.usercases.SigInNoPassUserCase;
-import com.example.datasource.usercases.SignInUserCase;
 import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BasePresenter;
-import com.example.mienhv1.survey.ui.login.LoginPresenter;
 import com.example.mienhv1.survey.ui.splash.SplashView;
 import com.example.mienhv1.survey.utils.Utils;
 
 import io.reactivex.observers.DisposableObserver;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by HVM on 4/20/2017.
@@ -101,7 +97,7 @@ public class LoginNoPassPresenter implements BasePresenter {
         public void onNext(DataLoginResponse<User> userDataResponse) {
             if (mLoginNoPassView != null) {
                 mLoginNoPassView.hideProgress();
-                mLoginNoPassView.navigateToHomePage();
+                mLoginNoPassView.navigateToStoreListPage();
                 mLoginNoPassView.callbackFinishActivity();
 
             }

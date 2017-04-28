@@ -7,13 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
-import com.example.mienhv1.survey.ui.home.HomeActivity;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
+import com.example.mienhv1.survey.ui.fragment.store.StoreActivity;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -94,7 +93,14 @@ public class LoginFragment extends BaseFragment implements LoginView, View.OnCli
 
     @Override
     public void navigateToHomePage() {
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
+//        Intent intent = new Intent(getActivity(), HomeActivity.class);
+//        startActivity(intent);
+//        getActivity().finish();
+    }
+
+    @Override
+    public void navigateToStoreListPage() {
+        Intent intent = new Intent(getActivity(), StoreActivity.class);
         startActivity(intent);
         getActivity().finish();
     }

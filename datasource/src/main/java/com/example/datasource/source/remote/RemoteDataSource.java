@@ -9,6 +9,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
@@ -103,5 +104,10 @@ public class RemoteDataSource implements IRemoteDataSource {
     @Override
     public Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(int tableid) {
         return mApiInterface.getSurveyAttribute(tableid);
+    }
+
+    @Override
+    public Observable<DataResponse<StoreSystem>> getListStore() {
+        return mApiInterface.getListStore();
     }
 }

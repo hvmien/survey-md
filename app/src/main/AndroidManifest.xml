@@ -32,6 +32,7 @@
 
         <activity android:name="com.example.mienhv1.survey.ui.login.LoginActivity" />
         <activity android:name=".ui.loginnopass.LoginNoPassActivity"/>
+        <activity android:name=".ui.fragment.store.StoreActivity"/>
 
     </application>
 

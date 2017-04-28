@@ -9,6 +9,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 import com.example.datasource.source.preference.PreferenceHelper;
@@ -97,5 +98,10 @@ public class DataRepository {
 
     public Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(int tableid) {
         return mRemoteDataSource.getSurveyAttribute(tableid);
+    }
+
+
+    public Observable<DataResponse<StoreSystem>> getListStore() {
+        return mRemoteDataSource.getListStore();
     }
 }

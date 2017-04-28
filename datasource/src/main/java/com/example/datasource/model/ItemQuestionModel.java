@@ -19,6 +19,8 @@ public class ItemQuestionModel implements Parcelable {
     public String title;
     @SerializedName("type")
     public int type;
+    @SerializedName("order")
+    public int order_rank;
 
     public ItemQuestionModel(){}
 
@@ -27,6 +29,7 @@ public class ItemQuestionModel implements Parcelable {
         name = in.readString();
         title = in.readString();
         type = in.readInt();
+        order_rank = in.readInt();
     }
 
     public static final Creator<ItemQuestionModel> CREATOR = new Creator<ItemQuestionModel>() {
@@ -52,5 +55,6 @@ public class ItemQuestionModel implements Parcelable {
         dest.writeString(name);
         dest.writeString(title);
         dest.writeInt(type);
+        dest.writeInt(order_rank);
     }
 }

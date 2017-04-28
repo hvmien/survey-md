@@ -8,4 +8,5 @@ import com.example.mienhv1.survey.base.BaseView;
 
 public interface LoginNoPassView extends BaseView {
     void navigateToHomePage();
+    void navigateToStoreListPage();
 }

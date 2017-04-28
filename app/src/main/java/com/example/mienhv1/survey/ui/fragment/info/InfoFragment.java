@@ -25,6 +25,7 @@ import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
+import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
 import com.example.datasource.model.WardModel;
@@ -74,6 +75,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     private String district = "";
     private String ward = "";
     private TextView addressTextView;
+    private TextView titleQuestion;
 
     public static InfoFragment newInstance(ItemQuestionModel mode) {
         Bundle args = new Bundle();
@@ -100,6 +102,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         txtProgress = (TextView) view.findViewById(R.id.text_progress);
         addressTextView = (TextView) view.findViewById(R.id.address_text_view);
         textView = (TextView) view.findViewById(R.id.text_view);
+        titleQuestion = (TextView) view.findViewById(R.id.txt_title);
         provinceSpinner = (Spinner) view.findViewById(R.id.spinner_province_id);
         districtSpinner = (Spinner) view.findViewById(R.id.spinner_district_id);
         wardSpinner = (Spinner) view.findViewById(R.id.spinner_ward_id);
@@ -115,6 +118,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         setDefaultValueSpinner(provinceSpinner, getResources().getString(R.string.default_value_province));
         setDefaultValueSpinner(districtSpinner, getResources().getString(R.string.default_value_district));
         setDefaultValueSpinner(wardSpinner, getResources().getString(R.string.default_value_ward));
+        titleQuestion.setText("1.Thông tin chung");
     }
 
     private void setDefaultValueSpinner(Spinner spinner, String defaultvalue) {
@@ -395,6 +399,11 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
 
     private void getWardViaDistrict(DistrictModel pos) {
         presenter.getWardViaDistrict(pos.districtid);
+    }
+
+    @Override
+    public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
+
     }
 
     // selected item spinner

@@ -7,6 +7,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
 
@@ -38,4 +39,6 @@ public interface IRemoteDataSource {
     Observable<DataResponse<WardModel>> getWardViaDistrict(String districtid);
 
     Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(int tableid);
+
+    Observable<DataResponse<StoreSystem>> getListStore();
 }

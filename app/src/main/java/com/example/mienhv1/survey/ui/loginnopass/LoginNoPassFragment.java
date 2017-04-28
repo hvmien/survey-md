@@ -4,16 +4,13 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.example.datasource.repository.DataRepository;
-import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
+import com.example.mienhv1.survey.ui.fragment.store.StoreActivity;
 import com.example.mienhv1.survey.ui.home.HomeActivity;
-import com.example.mienhv1.survey.ui.login.LoginPresenter;
 
 /**
  * Created by HVM on 4/20/2017.
@@ -61,6 +58,13 @@ public class LoginNoPassFragment extends BaseFragment implements LoginNoPassView
     }
 
     @Override
+    public void navigateToStoreListPage() {
+        Intent intent = new Intent(getActivity(), StoreActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_no_pass_signin_btn:
@@ -73,7 +77,6 @@ public class LoginNoPassFragment extends BaseFragment implements LoginNoPassView
 
     private void attemplogin() {
         mEmailView.setError(null);
-
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
 
