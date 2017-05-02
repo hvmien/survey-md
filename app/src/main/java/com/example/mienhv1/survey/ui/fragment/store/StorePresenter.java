@@ -6,8 +6,10 @@ import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.StoreSystem;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.usercases.GetListStoreUserCase;
+import com.example.datasource.usercases.SignOutUserCase;
 import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.base.BasePresenter;
+import com.example.mienhv1.survey.ui.home.HomePresenter;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -17,6 +19,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class StorePresenter implements BasePresenter {
     Context mContext;
+    private SignOutUserCase mSignOutUserCase;
     GetListStoreUserCase getListStoreUserCase;
     DataRepository dataRepository;
     StoreView storeView;
@@ -24,6 +27,7 @@ public class StorePresenter implements BasePresenter {
     public StorePresenter(DataRepository data, StoreView view) {
         this.storeView = view;
         this.dataRepository = data;
+        mSignOutUserCase = new SignOutUserCase(dataRepository);
         getListStoreUserCase = new GetListStoreUserCase(this.dataRepository);
         mContext= MyApplication.getInstance().getApplicationContext();
     }
@@ -62,6 +66,9 @@ public class StorePresenter implements BasePresenter {
     public void destroy() {
 
     }
+    public void signOut() {
+        mSignOutUserCase.execute(new SignOutObserver(), null);
+    }
 
     public void getListStoreForRecyclerView() {
         storeView.showProgress();
@@ -85,6 +92,27 @@ public class StorePresenter implements BasePresenter {
         @Override
         public void onComplete() {
             storeView.hideProgress();
+        }
+    }
+
+    private class SignOutObserver extends DisposableObserver<Boolean> {
+        @Override
+        public void onNext(Boolean aBoolean) {
+            if (storeView != null) {
+                storeView.navigateToLoginPage();
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            if (storeView != null) {
+                storeView.showError(e.toString());
+            }
+        }
+
+        @Override
+        public void onComplete() {
+
         }
     }
 }

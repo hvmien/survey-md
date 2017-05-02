@@ -28,4 +28,11 @@
     <string name="default_value_province">Tỉnh, thành phố,...</string>
     <string name="default_value_ward">Xã, phường,...</string>
     <string name="stop_stuck_question_exit_survey">Bạn muốn dừng khảo sát này?</string>
+    <string name="title_wellcome">Wellcome to</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="title_button_login">Login</string>
+    <string name="title_text_forgot_password">Forgot your password?</string>
+    <string name="title_text_or">or</string>
+    <string name="title_no_have_account">Do not have account? Sign up</string>
 </resources>

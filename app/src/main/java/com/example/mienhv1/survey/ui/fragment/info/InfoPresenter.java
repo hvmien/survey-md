@@ -175,7 +175,6 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
                 break;
             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-
                 break;
         }
 

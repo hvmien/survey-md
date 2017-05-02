@@ -6,7 +6,7 @@ import android.support.v7.app.AlertDialog;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
 
-public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeListener {
+public class HomeActivity extends BaseActivity {
 
 
     @Override
@@ -27,11 +27,6 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeLis
     @Override
     protected void initData() {
 
-    }
-
-    @Override
-    public void onOpenLoginPage() {
-        openLoginPage();
     }
 
     @Override

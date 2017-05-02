@@ -48,28 +48,15 @@ import static android.app.Activity.RESULT_OK;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
-        View.OnClickListener, ProgressRequestBody.UploadCallbacks {
-
-    private ArrayList<Image> images = new ArrayList<>();
-    private static final int RC_CODE_PICKER = 2000;
-    private static final int RC_CAMERA = 3000;
-    private TextView textView;
-    private CameraModule cameraModule;
+public class InfoFragment extends ItemBaseSurveyFragment implements InfoView{
 
     InfoPresenter presenter;
     private String TAG = "InfoFragment";
-    private Button pickimageButton;
-    private Button uploadimageButton;
-    private Button cameraonlyButton;
     private ProgressBar mProgressBar;
-    private ProgressBar mProgressBarPercent;
-    private TextView txtProgress;
     private Spinner provinceSpinner;
     private Spinner districtSpinner;
     private Spinner wardSpinner;
-    private List<String> mUriString = new ArrayList<>();
-    private List<Uri> mUriUri = new ArrayList<>();
+
     private String address = "";
     private String province = "";
     private String district = "";
@@ -85,7 +72,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
         return fragment;
     }
 
-
     @Override
     protected int getResourcesLayout() {
         return R.layout.fragment_general_information;
@@ -94,15 +80,10 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     @Override
     protected void mapView(View view) {
         presenter = new InfoPresenter(getActivity(), this);
-        pickimageButton = (Button) view.findViewById(R.id.pick_image);
-        cameraonlyButton = (Button) view.findViewById(R.id.camera_only);
-        uploadimageButton = (Button) view.findViewById(R.id.upload_image);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress_upload);
-        mProgressBarPercent = (ProgressBar) view.findViewById(R.id.progress_bar_percent);
-        txtProgress = (TextView) view.findViewById(R.id.text_progress);
         addressTextView = (TextView) view.findViewById(R.id.address_text_view);
-        textView = (TextView) view.findViewById(R.id.text_view);
         titleQuestion = (TextView) view.findViewById(R.id.txt_title);
+
         provinceSpinner = (Spinner) view.findViewById(R.id.spinner_province_id);
         districtSpinner = (Spinner) view.findViewById(R.id.spinner_district_id);
         wardSpinner = (Spinner) view.findViewById(R.id.spinner_ward_id);
@@ -111,9 +92,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     @Override
     protected void initData() {
         presenter.create();
-        pickimageButton.setOnClickListener(this);
-        cameraonlyButton.setOnClickListener(this);
-        uploadimageButton.setOnClickListener(this);
         presenter.getProvinceList();
         setDefaultValueSpinner(provinceSpinner, getResources().getString(R.string.default_value_province));
         setDefaultValueSpinner(districtSpinner, getResources().getString(R.string.default_value_district));
@@ -157,7 +135,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
 
     }
 
-
     @Override
     public void showProgress() {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -176,155 +153,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView,
     @Override
     public EnumSurveyFragment fragmentType() {
         return EnumSurveyFragment.Common;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.pick_image) {
-            start();
-        }
-        if (v.getId() == R.id.camera_only) {
-            final String[] permissions = new String[]{Manifest.permission.CAMERA};
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), permissions, RC_CAMERA);
-            } else {
-                captureImage();
-            }
-        }
-        if (v.getId() == R.id.upload_image) {
-            if (getMutilPart() != null) {
-                count = 0;
-                txtProgress.setText("0/" + mUriString.size());
-                presenter.uploadImage(getMutilPart());
-
-            }
-        }
-    }
-
-    private ArrayList<MultipartBody.Part> getMutilPart() {
-        if (mUriString != null && mUriString.size() > 0) {
-            ArrayList<MultipartBody.Part> listPart = new ArrayList<>();
-            ArrayList<File> listFile = new ArrayList<>();
-
-            for (int i = 0; i < mUriString.size(); i++) {
-                String fileiPath = mUriString.get(i);
-                File files = new File(fileiPath);
-                listFile.add(files);
-                ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
-
-                MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
-                listPart.add(body);
-            }
-            return listPart;
-        }
-
-        return null;
-    }
-
-    private String getRealPathFromURI(Uri contentURI) {
-        String result;
-        Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) {
-            result = contentURI.getPath();
-        } else {
-            cursor.moveToFirst();
-            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            result = cursor.getString(idx);
-            cursor.close();
-        }
-        return result;
-    }
-
-    private void captureImage() {
-        startActivityForResult(
-                getCameraModule().getCameraIntent(getActivity()), RC_CAMERA);
-    }
-
-    private void start() {
-        ImagePicker imagePicker = ImagePicker.create(this)
-                .theme(R.style.ImagePickerTheme)
-                .returnAfterFirst(true) // set whether pick action or camera action should return immediate result or not. Only works in single mode for image picker
-                .folderMode(true) // set folder mode (false by default)
-                .folderTitle("Folder") // folder selection title
-                .imageTitle("Tap to select"); // image selection title
-
-        if (false) {
-            imagePicker.single();
-        } else {
-            imagePicker.multi(); // multi mode (default mode)
-        }
-
-        imagePicker.limit(10) // max images can be selected (99 by default)
-                .showCamera(true) // show camera or not (true by default)
-                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
-                .origin(images) // original selected images, used in multi mode
-                .start(RC_CODE_PICKER); // start image picker activity with request code
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_CODE_PICKER && resultCode == RESULT_OK && data != null) {
-            images = (ArrayList<Image>) ImagePicker.getImages(data);
-            mUriUri = (List<Uri>) data.getData();
-            for (int i = 0; i < images.size(); i++) {
-                mUriString.add(images.get(i).getPath());
-            }
-            printImages(images);
-            return;
-        }
-
-        if (requestCode == RC_CAMERA && resultCode == RESULT_OK) {
-            getCameraModule().getImage(getActivity(), data, new OnImageReadyListener() {
-                @Override
-                public void onImageReady(List<Image> resultImages) {
-                    images = (ArrayList<Image>) resultImages;
-                    printImages(images);
-                }
-            });
-        }
-    }
-
-    private void printImages(List<Image> images) {
-        if (images == null) return;
-
-        StringBuilder stringBuffer = new StringBuilder();
-        for (int i = 0, l = images.size(); i < l; i++) {
-            stringBuffer.append(images.get(i).getPath()).append("\n");
-        }
-        textView.setText(stringBuffer.toString());
-    }
-
-    private ImmediateCameraModule getCameraModule() {
-        if (cameraModule == null) {
-            cameraModule = new ImmediateCameraModule();
-        }
-        return (ImmediateCameraModule) cameraModule;
-    }
-
-    int count = 0;
-
-    //test update progress
-    @Override
-    public void onProgressUpdate(int percentage, int total) {
-        mProgressBarPercent.setProgress(percentage);
-
-        Log.d("InfomationFrag", "percent : " + percentage + "/" + total);
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(getActivity(), "Progress update error", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFinish() {
-        count++;
-        mProgressBarPercent.setProgress(100);
-        txtProgress.setText(count + "/" + mUriString.size());
-        Log.d("InfomationFrag", "finish");
     }
 
     @Override

@@ -1,163 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/apk/res-auto"
     android:id="@+id/login_container_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_backgound_login1"
-         />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/cs_login_background" />
-
-    <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="#80000000" />-->
-
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/login_form"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:id="@+id/login_email_form"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="60dp"
-                    android:src="@drawable/ic_logo_icon2" />
-
-                <LinearLayout
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:textColor="@color/ef_white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center"
-                        android:text="@string/prompt_header_login"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <AutoCompleteTextView
-                        android:textColorHint="@color/ef_white"
-                        android:id="@+id/login_email_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@drawable/background_black_border"
-                        android:hint="@string/prompt_email"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:singleLine="true">
-
-                    </AutoCompleteTextView>
-
-
-                    <EditText
-                        android:textColorHint="@color/ef_white"
-                        android:id="@+id/login_password_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/background_black_border"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@+id/login"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:padding="10dp"
-                        android:singleLine="true">
-
-                    </EditText>
-
-                    <Button
-                        android:textAllCaps="false"
-                        android:id="@+id/login_signin_btn"
-                        style="?android:textAppearanceSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:background="#ed6d6e"
-                        android:paddingBottom="15dp"
-                        android:paddingTop="15dp"
-                        android:text="@string/action_sign_in"
-                        android:textColor="@color/colorWhite"
-                        android:textStyle="bold" />
-                    <LinearLayout
-
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textColor="@color/ef_white"
-                            android:layout_gravity="left"
-                            android:textAllCaps="false"
-                            android:text="Forget Login?"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:gravity="right"
-                            android:textColor="@color/ef_white"
-                            android:textAllCaps="false"
-                            android:text="Don't have account, Sign up?"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                </LinearLayout>
-                </LinearLayout>
-
-        </ScrollView>
-
         <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <ProgressBar
-                android:minHeight="40dp"
-                android:maxHeight="40dp"
-                android:indeterminate="true"
-                android:indeterminateDrawable="@drawable/cs_progressbar"
-                android:id="@+id/login_progress"
-                style="?android:attr/progressBarStyleLarge"
+            <com.example.mienhv1.survey.utils.view.CSTextView
+                style="@style/CSTextView.Light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center"
-                android:visibility="gone" />
-        </LinearLayout>
+                android:text="@string/title_wellcome"
+                android:textSize="18sp" />
 
-    </RelativeLayout>
-</FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_logo_icon2" />
+
+                <com.example.mienhv1.survey.utils.view.CSTextView
+                    android:id="@+id/txt_app_name"
+                    style="@style/CSTextView.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    android:transitionName="appname" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn_sign_up"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/header"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center_horizontal"
+                    android:minWidth="300dp"
+                    android:orientation="vertical">
+
+                    <!--email-->
+                    <com.example.mienhv1.survey.utils.view.CSEditText
+                        android:drawableLeft="@mipmap/ic_email"
+                        android:id="@+id/login_email_input"
+                        style="@style/CSEdiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/hint_email"
+                        android:imeOptions="actionNext"
+                        android:inputType="textWebEmailAddress" />
+
+                    <!--pass-->
+                    <com.example.mienhv1.survey.utils.view.CSEditText
+                        android:drawableLeft="@mipmap/ic_password"
+                        android:id="@+id/login_password_input"
+                        style="@style/CSEdiText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="@string/hint_password"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword" />
+
+                    <!--buttonlogin-->
+                    <com.example.mienhv1.survey.utils.view.CSButton
+                        android:id="@+id/login_signin_btn"
+                        style="@style/CSButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/title_button_login" />
+
+                    <com.example.mienhv1.survey.utils.view.CSTextView
+                        android:id="@+id/txt_forger_password"
+                        style="@style/CSTextView.LinkLight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/title_text_forgot_password" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/colorApplication" />
+
+                        <com.example.mienhv1.survey.utils.view.CSTextView
+                            style="@style/CSTextView.Light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="4dp"
+                            android:text="@string/title_text_or" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            android:background="@color/colorApplication" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:src="@drawable/ic_facebook" />
+
+                        <ImageView
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/ic_google_plus" />
+                    </LinearLayout>
+
+                    <com.example.mienhv1.survey.utils.view.CSTextView
+                        android:id="@+id/btn_sign_up"
+                        style="@style/CSTextView.Link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="bottom"
+                        android:text="@string/title_no_have_account" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/cs_progressbar"
+            android:maxHeight="40dp"
+            android:minHeight="40dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

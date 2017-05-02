@@ -1,10 +1,14 @@
 package com.example.mienhv1.survey.ui.fragment.store;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,6 +21,7 @@ import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.RecyclerViewItemListener;
 import com.example.mienhv1.survey.ui.adapter.store.StoreAdapter;
 import com.example.mienhv1.survey.ui.home.HomeActivity;
+import com.example.mienhv1.survey.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -25,15 +30,33 @@ import java.util.ArrayList;
  */
 
 public class StoreFragment extends BaseFragment implements StoreView, RecyclerViewItemListener {
+    private OnStoreListener mListener;
     RecyclerView rcStore;
     StoreAdapter storeAdapter;
     StorePresenter presenter;
     ArrayList<StoreSystem> dataStoreSystem = new ArrayList<>();
     ProgressBar storeProgerssbar;
+    interface OnStoreListener {
+        void onOpenLoginPage();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnStoreListener) {
+            mListener = (OnStoreListener) activity;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -61,7 +84,7 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
         presenter.getListStoreForRecyclerView();
 
         storeAdapter = new StoreAdapter(getActivity(), this);
-
+        setHasOptionsMenu(true);
         rcStore.setLayoutManager(new LinearLayoutManager(getActivity()));
         rcStore.setAdapter(storeAdapter);
     }
@@ -97,9 +120,35 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
     }
 
     @Override
+    public void navigateToLoginPage() {
+        mListener.onOpenLoginPage();
+    }
+
+    @Override
     public void onItemClick(int position) {
         //check gps this here
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemClickElement(String titleElement, int position) {
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_home, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_signout:
+                presenter.signOut();
+                return true;
+        }
+        return true;
     }
 }

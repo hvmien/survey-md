@@ -1,10 +1,12 @@
 package com.example.mienhv1.survey.ui.fragment.store;
 
+import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.widget.Toast;
 
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
@@ -13,8 +15,9 @@ import com.example.mienhv1.survey.base.BaseActivity;
  * Created by MienHV1 on 4/28/2017.
  */
 
-public class StoreActivity extends BaseActivity {
+public class StoreActivity extends BaseActivity implements StoreFragment.OnStoreListener {
     private DrawerLayout drawer;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void setScreenOrientation(boolean isTablet) {
@@ -44,7 +47,6 @@ public class StoreActivity extends BaseActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayUseLogoEnabled(true);
-
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
     }
@@ -54,7 +56,26 @@ public class StoreActivity extends BaseActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(Gravity.LEFT);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
         }
+    }
+
+    @Override
+    public void onOpenLoginPage() {
+        openLoginPage();
     }
 }

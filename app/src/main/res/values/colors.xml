@@ -26,4 +26,8 @@
     <color name="colorHintEdiText">#a8a8a8</color>
     <color name="colorBlueDark">#00688b</color>
     <color name="colorApplication">#2E9EAC</color>
+    <color name="colorButtonLogin">#ed6d6e</color>
+    <color name="colorGrayLight">#dfdfdf</color>
+    <color name="colorButtonPress">#f2f2f2</color>
+
 </resources>

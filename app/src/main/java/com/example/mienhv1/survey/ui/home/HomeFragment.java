@@ -28,7 +28,7 @@ import java.util.ArrayList;
 public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener {
 
     private HomePresenter mHomePresenter;
-    private OnHomeListener mListener;
+
     private ProgressBar mProgressbar;
     private CSViewPageNoScroll mViewPager;
 
@@ -37,28 +37,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     CSTextView txtCurPage;
     private ArrayList mListQuestion = new ArrayList();
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnHomeListener) {
-            mListener = (OnHomeListener) context;
-        }
-    }
-
-    @Override
-    public void onAttach(Activity actvity) {
-        super.onAttach(actvity);
-        if (actvity instanceof OnHomeListener) {
-            mListener = (OnHomeListener) actvity;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     @Override
     protected int getResourcesLayout() {
@@ -80,7 +58,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         mViewPager.setScrolling(false);
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
         mHomePresenter = new HomePresenter(dataRepository, this);
-        setHasOptionsMenu(true);
+
         mHomePresenter.createDatabase();
         //add viewpager this here
     }
@@ -106,24 +84,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_home, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_signout:
-                mHomePresenter.signOut();
-                return true;
-        }
-        return true;
-    }
-
-    @Override
     public void navigateToLoginPage() {
-        mListener.onOpenLoginPage();
+
     }
 
     @Override
@@ -169,7 +131,5 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         return mViewPager.getCurrentItem() + i;
     }
 
-    interface OnHomeListener {
-        void onOpenLoginPage();
-    }
+
 }

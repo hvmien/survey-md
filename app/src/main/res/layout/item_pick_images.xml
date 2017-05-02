@@ -1,25 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="120dp"
-    android:layout_height="120dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_margin="1dp">
-
-        <ImageView
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_store_system"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v7.widget.CardView>
-
-    <com.example.mienhv1.survey.utils.view.CSTextView
-        android:background="@color/dark_light"
-        style="@style/TextView.Title"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="title" />
-</RelativeLayout>
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_wrap_content_upload"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_margin="1dp"
+            android:clickable="true">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/item_pick_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_store_system" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.example.mienhv1.survey.utils.view.CSButton
+                        android:id="@+id/pick_image_upload"
+                        style="@style/CSButtonPickImage"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content" />
+
+                    <com.example.mienhv1.survey.utils.view.CSButton
+                        android:id="@+id/camera_only_upload"
+                        style="@style/CSButtonCameraOnly"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <com.example.mienhv1.survey.utils.view.CSTextView
+            android:id="@+id/txt_title_item_upload_image"
+            style="@style/TextView.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/dark_light"
+            android:text="title" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -11,4 +11,5 @@ import java.util.ArrayList;
 
 public interface StoreView extends BaseView {
     void initStoreData(ArrayList<StoreSystem> data);
+    void navigateToLoginPage();
 }

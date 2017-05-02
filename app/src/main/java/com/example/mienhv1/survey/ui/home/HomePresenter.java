@@ -22,12 +22,11 @@ public class HomePresenter implements BasePresenter {
 
     private HomeView mHomeView;
     private Context mContext;
-    private SignOutUserCase mSignOutUserCase;
+
     private GetSurveyQuestionUserCase getSurveyQuestionUserCase;
 
     public HomePresenter(DataRepository dataRepository, HomeView homeView) {
         mHomeView = homeView;
-        mSignOutUserCase = new SignOutUserCase(dataRepository);
         getSurveyQuestionUserCase = new GetSurveyQuestionUserCase(dataRepository);
         mContext = MyApplication.getInstance().getApplicationContext();
     }
@@ -62,34 +61,11 @@ public class HomePresenter implements BasePresenter {
 
     }
 
-    public void signOut() {
-        mSignOutUserCase.execute(new SignOutObserver(), null);
-    }
+
 
     public void createDatabase() {
         mHomeView.showProgress();
         getSurveyQuestionUserCase.execute(new GetSurveyQuestionObserver(), null);
-    }
-
-    private class SignOutObserver extends DisposableObserver<Boolean> {
-        @Override
-        public void onNext(Boolean aBoolean) {
-            if (mHomeView != null) {
-                mHomeView.navigateToLoginPage();
-            }
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            if (mHomeView != null) {
-                mHomeView.showError(e.toString());
-            }
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
     }
 
     private class GetSurveyQuestionObserver extends DisposableObserver<DataResponse<ItemQuestionModel>> {

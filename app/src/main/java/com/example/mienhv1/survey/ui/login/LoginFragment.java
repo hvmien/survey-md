@@ -7,12 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.fragment.store.StoreActivity;
+import com.example.mienhv1.survey.utils.view.CSButton;
+import com.example.mienhv1.survey.utils.view.CSEditText;
+import com.example.mienhv1.survey.utils.view.CSTextView;
 
 /**
  * Created by MienHV1 on 4/11/2017.
@@ -21,9 +25,9 @@ import com.example.mienhv1.survey.ui.fragment.store.StoreActivity;
 public class LoginFragment extends BaseFragment implements LoginView, View.OnClickListener {
 
     private ProgressBar mProgressBar;
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
-    private FrameLayout mContainer;
+    private CSEditText mEmailView;
+    private CSEditText mPasswordView;
+    private RelativeLayout mContainer;
     private LoginPresenter mPresenter;
 
     @Override
@@ -34,10 +38,10 @@ public class LoginFragment extends BaseFragment implements LoginView, View.OnCli
     @Override
     protected void mapView(View view) {
         mProgressBar = (ProgressBar) view.findViewById(R.id.login_progress);
-        mEmailView = (AutoCompleteTextView) view.findViewById(R.id.login_email_input);
-        mPasswordView = (EditText) view.findViewById(R.id.login_password_input);
-        mContainer = (FrameLayout) view.findViewById(R.id.login_container_view);
-        Button signInBtn = (Button) view.findViewById(R.id.login_signin_btn);
+        mEmailView = (CSEditText) view.findViewById(R.id.login_email_input);
+        mPasswordView = (CSEditText) view.findViewById(R.id.login_password_input);
+        mContainer = (RelativeLayout) view.findViewById(R.id.login_container_view);
+        CSButton signInBtn = (CSButton) view.findViewById(R.id.login_signin_btn);
         signInBtn.setOnClickListener(this);
 
     }

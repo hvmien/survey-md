@@ -33,4 +33,55 @@
         <item name="colorAccent">@color/ef_colorAccent</item>
     </style>
 
+    <style name="CSTextView">
+        <item name="android:textColor">@color/colorApplication</item>
+        <item name="font">@string/Roboto_Regular</item>
+    </style>
+
+    <style name="CSTextView.Light">
+        <item name="font">@string/Roboto_Light</item>
+    </style>
+    <style name="CSTextView.Medium">
+        <item name="font">@string/Roboto_Medium</item>
+    </style>
+
+    <style name="CSEdiText">
+        <item name="android:textSize">14sp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:background">@drawable/bg_cs_edit_text</item>
+    </style>
+    <style name="CSButton">
+        <item name="android:textColor">@color/colorApplication</item>
+        <item name="android:height">38dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:background">@drawable/bg_button</item>
+    </style>
+
+    <style name="CSTextView.Link">
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@drawable/link_selector</item>
+    </style>
+
+    <style name="CSTextView.LinkLight">
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@drawable/link_selector_light</item>
+    </style>
+
+    <style name="CSButtonPickImage">
+        <item name="android:textColor">@color/colorApplication</item>
+        <item name="android:height">38dp</item>
+        <item name="android:width">38dp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:background">@mipmap/ic_pickimage</item>
+    </style>
+    <style name="CSButtonCameraOnly">
+        <item name="android:textColor">@color/colorApplication</item>
+        <item name="android:height">38dp</item>
+        <item name="android:width">38dp</item>
+        <item name="font">@string/Roboto_Regular</item>
+        <item name="android:background">@mipmap/ic_cameraonly</item>
+    </style>
 </resources>

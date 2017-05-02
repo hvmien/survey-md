@@ -11,278 +11,240 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="1dp"
-                app:cardBackgroundColor="@color/colorBlueDark"
-                app:cardCornerRadius="0dp">
-
-                <com.example.mienhv1.survey.utils.view.CSTextView
-                    android:id="@+id/txt_title"
-                    style="@style/TextView.Header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Thông tin chung"
-                    android:textAllCaps="true" />
-            </android.support.v7.widget.CardView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="4dp">
-
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.example.mienhv1.survey.utils.view.CSEditText
-                        style="@style/EdiText.Normal.SingLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/textview_height"
-                        android:hint="@string/store_name"
-                        android:imeOptions="actionNext" />
-                </android.support.v7.widget.CardView>
-
-
-                <com.example.mienhv1.survey.utils.view.CSTextView
-                    style="@style/TextView.Title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/title_address"
-                    app:textAllCaps="true" />
-
-                <!--TP-->
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_province_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="4dp"/>
-                </android.support.v7.widget.CardView>
-
-                <!--Quận-->
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_district_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="4dp"/>
-                </android.support.v7.widget.CardView>
-
-                <!--Phuong-->
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatSpinner
-                        android:id="@+id/spinner_ward_id"
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="4dp"/>
-                </android.support.v7.widget.CardView>
-
-                <TextView
-                    android:id="@+id/address_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <!--Dia chi-->
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.example.mienhv1.survey.utils.view.CSEditText
-                        style="@style/EdiText.Normal.SingLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/textview_height"
-                        android:hint="@string/title_stresst"
-                        android:imeOptions="actionNext" />
-                </android.support.v7.widget.CardView>
-
-                <!--ngay khao sat-->
+                android:layout_height="wrap_content">
+                <!--layout content-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:gravity="right"
-                    android:orientation="horizontal">
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
 
-                    <com.example.mienhv1.survey.utils.view.CSTextView
-                        android:id="@+id/CSTextView"
-                        style="@style/TextView.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text="@string/date_of_survey" />
 
-                    <com.example.mienhv1.survey.utils.view.CSTextView
-                        style="@style/TextView.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="23-12-2014"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="italic" />
-                </LinearLayout>
-                <!--nguoi khao sat-->
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.example.mienhv1.survey.utils.view.CSEditText
-                        style="@style/EdiText.Normal.SingLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/textview_height"
-                        android:hint="@string/person_survey"
-                        android:imeOptions="actionNext" />
-                </android.support.v7.widget.CardView>
-
-                <android.support.v7.widget.CardView
-                    style="@style/CardView.WrapEdiText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:elevation="1dp"
+                        app:cardBackgroundColor="@color/colorBlueDark"
+                        app:cardCornerRadius="0dp">
 
                         <com.example.mienhv1.survey.utils.view.CSTextView
-                            style="@style/TextView.Normal"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/txt_title"
+                            style="@style/TextView.Header"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="GPS" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1">
-
-                            <com.example.mienhv1.survey.utils.view.CSTextView
-                                style="@style/TextView.Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:text="[" />
-
-                            <com.example.mienhv1.survey.utils.view.CSTextView
-                                style="@style/TextView.Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1" />
-
-                            <com.example.mienhv1.survey.utils.view.CSTextView
-                                style="@style/TextView.Normal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="]" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:clickable="true"
-                            android:foreground="?selectableItemBackground"
-                            android:src="@drawable/ic_action_gps" />
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-                <ProgressBar
-                    android:id="@+id/progress_bar_percent"
-                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp" />
-                <TextView
-                    android:layout_gravity="center"
-                    android:text=""
-                    android:id="@+id/text_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/camera_only"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Camera only" />
-
-                    <Button
-                        android:id="@+id/pick_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="Pick image"
-                        android:textAllCaps="false" />
-
-                    <Button
-                        android:id="@+id/upload_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:text="Up image"
-                        android:textAllCaps="false" />
-                </LinearLayout>
-
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Thông tin chung"
+                            android:textAllCaps="true" />
+                    </android.support.v7.widget.CardView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
-                        <TextView
-                            android:id="@+id/text_view"
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.example.mienhv1.survey.utils.view.CSEditText
+                                style="@style/EdiText.Normal.SingLine"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/textview_height"
+                                android:hint="@string/store_name"
+                                android:imeOptions="actionNext" />
+                        </android.support.v7.widget.CardView>
+
+
+                        <com.example.mienhv1.survey.utils.view.CSTextView
+                            style="@style/TextView.Title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="image" />
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/title_address"
+                            app:textAllCaps="true" />
+
+                        <!--TP-->
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_province_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="36dp"
+                                android:layout_marginTop="4dp" />
+                        </android.support.v7.widget.CardView>
+
+                        <!--Quận-->
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_district_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="36dp"
+                                android:layout_marginTop="4dp" />
+                        </android.support.v7.widget.CardView>
+
+                        <!--Phuong-->
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <android.support.v7.widget.AppCompatSpinner
+                                android:id="@+id/spinner_ward_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="36dp"
+                                android:layout_marginTop="4dp" />
+                        </android.support.v7.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/address_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <!--Dia chi-->
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.example.mienhv1.survey.utils.view.CSEditText
+                                style="@style/EdiText.Normal.SingLine"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/textview_height"
+                                android:hint="@string/title_stresst"
+                                android:imeOptions="actionNext" />
+                        </android.support.v7.widget.CardView>
+
+                        <!--ngay khao sat-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:gravity="right"
+                            android:orientation="horizontal">
+
+                            <com.example.mienhv1.survey.utils.view.CSTextView
+                                android:id="@+id/CSTextView"
+                                style="@style/TextView.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="4dp"
+                                android:text="@string/date_of_survey" />
+
+                            <com.example.mienhv1.survey.utils.view.CSTextView
+                                style="@style/TextView.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:text="23-12-2014"
+                                android:textColor="@color/colorAccent"
+                                android:textStyle="italic" />
+                        </LinearLayout>
+                        <!--nguoi khao sat-->
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.example.mienhv1.survey.utils.view.CSEditText
+                                style="@style/EdiText.Normal.SingLine"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/textview_height"
+                                android:hint="@string/person_survey"
+                                android:imeOptions="actionNext" />
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            style="@style/CardView.WrapEdiText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.example.mienhv1.survey.utils.view.CSTextView
+                                    style="@style/TextView.Normal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="GPS" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="1">
+
+                                    <com.example.mienhv1.survey.utils.view.CSTextView
+                                        style="@style/TextView.Normal"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="[" />
+
+                                    <com.example.mienhv1.survey.utils.view.CSTextView
+                                        style="@style/TextView.Normal"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1" />
+
+                                    <com.example.mienhv1.survey.utils.view.CSTextView
+                                        style="@style/TextView.Normal"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="]" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="8dp"
+                                    android:clickable="true"
+                                    android:foreground="?selectableItemBackground"
+                                    android:src="@drawable/ic_action_gps" />
+
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
                     </LinearLayout>
-                </ScrollView>
-            </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_upload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progress_upload"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/cs_progressbar"
+                    android:maxHeight="40dp"
+                    android:minHeight="40dp"
+                    android:visibility="gone" />
+            </FrameLayout>
+
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

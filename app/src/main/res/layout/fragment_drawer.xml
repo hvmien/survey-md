@@ -166,6 +166,38 @@
             android:paddingTop="5dp">
 
             <ImageView
+                android:id="@+id/img_ic_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/img_ic_5"
+                android:layout_weight="10"
+                android:text="Xem lịch sử khảo sát"
+                android:textAllCaps="false"
+                android:textColor="@color/colorItemTextDrawer" />
+        </RelativeLayout>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/colorGray" />
+
+        <RelativeLayout
+            android:clickable="true"
+            android:background="@drawable/background_layout_item_drawermenu_focussed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <ImageView
                 android:id="@+id/img_ic_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

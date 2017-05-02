@@ -6,4 +6,5 @@ package com.example.mienhv1.survey.ui.adapter;
 
 public interface RecyclerViewItemListener {
     void onItemClick(int position);
+    void onItemClickElement(String titleElement, int position);
 }
