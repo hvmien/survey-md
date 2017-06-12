@@ -1,10 +1,12 @@
 package com.example.mienhv1.survey.ui.adapter.upload;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.PickImageModel;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 
 public class UploadAdapter extends BaseAdapter<PickImageModel, UploadAdapter.UploadViewHolder> implements View.OnClickListener {
 
+    Bitmap bitmap;
 
     public UploadAdapter(Context ctx, RecyclerViewItemListener l) {
         super(ctx, l);
@@ -36,6 +39,10 @@ public class UploadAdapter extends BaseAdapter<PickImageModel, UploadAdapter.Upl
     @Override
     public UploadViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new UploadViewHolder(mContext, LayoutInflater.from(mContext).inflate(R.layout.item_pick_images, parent, false));
+    }
+
+    public void setBiMap(Bitmap biMap) {
+        bitmap = biMap;
     }
 
     @Override
@@ -52,6 +59,11 @@ public class UploadAdapter extends BaseAdapter<PickImageModel, UploadAdapter.Upl
         CSButton cameraonly;
         CSTextView txtTitle;
         CardView cvWrapContent;
+        public ImageView image;
+
+        public ImageView getImage() {
+            return image;
+        }
 
 
         public UploadViewHolder(Context ctx, View itemView) {
@@ -62,6 +74,7 @@ public class UploadAdapter extends BaseAdapter<PickImageModel, UploadAdapter.Upl
         @Override
         protected void bindView() {
             txtTitle = (CSTextView) itemView.findViewById(R.id.txt_title_item_upload_image);
+            image = (ImageView) itemView.findViewById(R.id.item_pick_image);
             pickImage = (CSButton) itemView.findViewById(R.id.pick_image_upload);
             cameraonly = (CSButton) itemView.findViewById(R.id.camera_only_upload);
             cvWrapContent = (CardView) itemView.findViewById(R.id.cv_wrap_content_upload);
@@ -71,6 +84,7 @@ public class UploadAdapter extends BaseAdapter<PickImageModel, UploadAdapter.Upl
         @Override
         public void bind(final int position, PickImageModel data, final RecyclerViewItemListener listener) {
             txtTitle.setText(position + 1 + ". " + data.title);
+
             cvWrapContent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -81,17 +95,18 @@ public class UploadAdapter extends BaseAdapter<PickImageModel, UploadAdapter.Upl
             pickImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClickElement(Constants.CHOOSE_OPTION_PICK_IMAGE,position);
+                    listener.onItemClickElement(Constants.CHOOSE_OPTION_PICK_IMAGE, position);
                 }
             });
             cameraonly.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClickElement(Constants.CHOOSE_OPTION_CAMERA_ONLY,position);
+                    listener.onItemClickElement(Constants.CHOOSE_OPTION_CAMERA_ONLY, position);
                 }
             });
-
-
+            if (bitmap != null) {
+                image.setImageBitmap(bitmap);
+            }
         }
     }
 }

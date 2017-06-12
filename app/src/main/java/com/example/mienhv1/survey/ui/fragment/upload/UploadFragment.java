@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.camera.CameraModule;
 import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
+import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
@@ -39,6 +42,7 @@ import com.example.mienhv1.survey.utils.view.CSTextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,6 +66,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     private CameraModule cameraModule;
 
     RecyclerView rcUploads;
+    UploadAdapter adapter;
     CSTextView txtTitle;
     CSTextView textView;
     CSButton buttonHoanThanh;
@@ -98,7 +103,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         list.add(new PickImageModel("Đường đi bên phải"));
         list.add(new PickImageModel("Tổng thể bên trong"));
 
-        UploadAdapter adapter = new UploadAdapter(getContext(), this);
+        adapter = new UploadAdapter(getContext(), this);
         adapter.updateData(list);
 
         rcUploads.setAdapter(adapter);
@@ -149,7 +154,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
     @Override
     public void onItemClickElement(String titleElement, int position) {
-        Toast.makeText(getContext(), titleElement + "at: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), titleElement + "at: " + position, Toast.LENGTH_SHORT).show();
 //        if (titleElement.equals(Constants.CHOOSE_OPTION_PICK_IMAGE)) {
 //            start();
 //        }
@@ -157,6 +162,22 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
         if (ActivityCompat.checkSelfPermission(activity,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity,permissions, RC_CAMERA);
+            if (ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Should we show an explanation?
+                if (shouldShowRequestPermissionRationale(
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    // Explain to the user why we need to read the contacts
+                }
+
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        100);
+
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant that should be quite unique
+
+            }
         } else {
             captureImage();
         }
@@ -191,21 +212,11 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     private void captureImage() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-
-        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "WorkingWithPhotosApp");
-        imagesFolder.mkdirs();
-        File image = new File(imagesFolder, "QR_" + timeStamp + ".png");
-        Uri uriSavedImage = Uri.fromFile(image);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-//        File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-//                Uri.fromFile(photo));
-//        imageUri = Uri.fromFile(photo);
-        startActivityForResult(intent, RC_CAMERA);
-//        getActivity().startActivityFromFragment(this,getCameraModule().getCameraIntent(getActivity()), RC_CAMERA);
+        Intent cameraIntent = new Intent(
+                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(
+                cameraIntent,
+                RC_CAMERA);
     }
 
     @Override
@@ -220,8 +231,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             images = (ArrayList<Image>) ImagePicker.getImages(data);
             mUriUri = (List<Uri>) data.getData();
@@ -235,11 +245,26 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         if (requestCode == RC_CAMERA && resultCode == RESULT_OK ) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageview.setImageBitmap(photo);
+            adapter.setBiMap(photo);
+
             // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
             Uri selectedImage = getImageUri(getActivity(), photo);
             String realPath=getRealPathFromURI(selectedImage);
             selectedImage = Uri.parse(realPath);
             Log.d("Upload",selectedImage.toString());
+            File file = new File(String.valueOf(selectedImage));
+            long length = file.length();
+            Log.d("Upload",length/1024+"");
+
+
+
+
+            Bitmap bitmap = photo;
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] imageInByte = stream.toByteArray();
+            long lengthbmp = imageInByte.length;
+            Log.d("Upload1",(float)lengthbmp/(1024*1024)+"");
 //            getCameraModule().getImage(getActivity(), data, new OnImageReadyListener() {
 //                @Override
 //                public void onImageReady(List<Image> resultImages) {
@@ -248,12 +273,13 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 //                }
 //            });
         }
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        String path;
+        path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
 
@@ -280,7 +306,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         }
         File file = new File(images.get(0).getPath());
         long length = file.length() / 1024;
-        Log.d("home",length+"");
+        Log.d("Upload",length+"");
         textView.setText(stringBuffer.toString());
     }
 

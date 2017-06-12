@@ -1,6 +1,7 @@
 package com.example.mienhv1.survey.ui.home;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
 import com.example.mienhv1.survey.R;
@@ -58,4 +59,5 @@ public class HomeActivity extends BaseActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
 }
