@@ -5,7 +5,6 @@ import com.example.datasource.model.User;
 import com.example.datasource.repository.DataRepository;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;

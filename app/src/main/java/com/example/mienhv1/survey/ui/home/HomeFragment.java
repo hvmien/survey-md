@@ -1,10 +1,6 @@
 package com.example.mienhv1.survey.ui.home;
 
-import android.app.Activity;
-import android.content.Context;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -31,7 +27,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     private ProgressBar mProgressbar;
     private CSViewPageNoScroll mViewPager;
-
+    View viewBtnNext;
+    View viewBtnPre;
 
     int curChildPosition = 0;
 
@@ -47,7 +44,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     protected void mapView(View view) {
         mProgressbar = (ProgressBar) view.findViewById(R.id.home_progress_bar);
         mViewPager = (CSViewPageNoScroll) view.findViewById(R.id.viewpager);
-
+        viewBtnNext=view.findViewById(R.id.btn_next);
+        viewBtnPre=view.findViewById(R.id.btn_prev);
         view.findViewById(R.id.btn_prev).setOnClickListener(this);
         view.findViewById(R.id.btn_next).setOnClickListener(this);
         txtCurPage = (CSTextView) view.findViewById(R.id.txt_cur_page);
@@ -60,6 +58,11 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         mHomePresenter = new HomePresenter(dataRepository, this);
 
         mHomePresenter.createDatabase();
+        if(curChildPosition + 1==1)
+        {
+            viewBtnPre.setVisibility(View.GONE);
+        }
+//        mViewPager.setCurrentItem(mViewPager.getAdapter().getCount());
         //add viewpager this here
     }
 
@@ -112,6 +115,18 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 curChildPosition++;
                 mViewPager.setCurrentItem(getItem(+1), true);
                 txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
+                if(curChildPosition + 1==mViewPager.getAdapter().getCount())
+                {
+                    Log.d("home",mViewPager.getAdapter().getCount()+"");
+                    viewBtnNext.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    viewBtnNext.setVisibility(View.VISIBLE);
+                }
+                if(curChildPosition + 1>1)
+                {
+                    viewBtnPre.setVisibility(View.VISIBLE);
+                }
 
                 break;
             case R.id.btn_prev:
@@ -122,6 +137,22 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 mViewPager.setCurrentItem(getItem(-1), true);
                 txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
 
+                if(curChildPosition + 1==mViewPager.getAdapter().getCount())
+                {
+
+                    viewBtnPre.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    viewBtnPre.setVisibility(View.VISIBLE);
+                }
+                if(curChildPosition + 1<mViewPager.getAdapter().getCount())
+                {
+                    viewBtnNext.setVisibility(View.VISIBLE);
+                }
+                if(curChildPosition + 1==1)
+                {
+                    viewBtnPre.setVisibility(View.GONE);
+                }
                 break;
         }
 

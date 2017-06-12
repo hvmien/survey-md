@@ -17,6 +17,7 @@ import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -45,7 +46,7 @@ public interface ApiInterface {
     @POST("upload_images")
     Observable<DataResponse<ImageRespone>> uploadImageFileMutilPart(@Part ArrayList<MultipartBody.Part> files);
 
-    @POST("list_province")
+    @GET("list_province")
     Observable<DataResponse<ProvinceModel>> getListProvince();
 
     @FormUrlEncoded

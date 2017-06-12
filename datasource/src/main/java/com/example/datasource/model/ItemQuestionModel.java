@@ -19,7 +19,7 @@ public class ItemQuestionModel implements Parcelable {
     public String title;
     @SerializedName("type")
     public int type;
-    @SerializedName("order")
+    @SerializedName("sttvalue")
     public int order_rank;
 
     public ItemQuestionModel(){}

@@ -35,6 +35,7 @@
                     android:orientation="vertical">
 
                     <com.example.mienhv1.survey.utils.view.CSButton
+                        android:visibility="gone"
                         android:id="@+id/pick_image_upload"
                         style="@style/CSButtonPickImage"
                         android:layout_width="80dp"

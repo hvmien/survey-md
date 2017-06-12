@@ -1,20 +1,28 @@
 package com.example.mienhv1.survey.ui.fragment.upload;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.camera.CameraModule;
 import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
-import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
@@ -26,10 +34,14 @@ import com.example.mienhv1.survey.ui.adapter.RecyclerViewItemListener;
 import com.example.mienhv1.survey.ui.adapter.upload.UploadAdapter;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.utils.uploadimage.ProgressRequestBody;
+import com.example.mienhv1.survey.utils.view.CSButton;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -40,7 +52,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by Forev on 17/04/28.
  */
 
-public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerViewItemListener, ProgressRequestBody.UploadCallbacks {
+public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerViewItemListener, ProgressRequestBody.UploadCallbacks,View.OnClickListener {
 
     private ArrayList<Image> images = new ArrayList<>();
     private List<String> mUriString = new ArrayList<>();
@@ -52,6 +64,9 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     RecyclerView rcUploads;
     CSTextView txtTitle;
     CSTextView textView;
+    CSButton buttonHoanThanh;
+    private Uri imageUri;
+    private ImageView imageview;
 
     public static UploadFragment newInstance(ItemQuestionModel model) {
 
@@ -71,6 +86,9 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     protected void mapView(View view) {
         txtTitle = (CSTextView) view.findViewById(R.id.txt_title_upload_image);
         textView = (CSTextView) view.findViewById(R.id.txt_title_value_image);
+        imageview = (ImageView) view.findViewById(R.id.image);
+        buttonHoanThanh = (CSButton) view.findViewById(R.id.btn_hoan_thanh);
+        buttonHoanThanh.setOnClickListener(this);
         rcUploads = (RecyclerView) view.findViewById(R.id.rc_uploads);
         rcUploads.setLayoutManager(new GridLayoutManager(getContext(), 3));
         ArrayList<PickImageModel> list = new ArrayList<>();
@@ -132,8 +150,15 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     @Override
     public void onItemClickElement(String titleElement, int position) {
         Toast.makeText(getContext(), titleElement + "at: " + position, Toast.LENGTH_SHORT).show();
-        if (titleElement.equals(Constants.CHOOSE_OPTION_PICK_IMAGE)) {
-            start();
+//        if (titleElement.equals(Constants.CHOOSE_OPTION_PICK_IMAGE)) {
+//            start();
+//        }
+        final Activity activity = getActivity();
+        final String[] permissions = new String[]{Manifest.permission.CAMERA};
+        if (ActivityCompat.checkSelfPermission(activity,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,permissions, RC_CAMERA);
+        } else {
+            captureImage();
         }
     }
 
@@ -166,13 +191,36 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     private void captureImage() {
-        startActivityForResult(
-                getCameraModule().getCameraIntent(getActivity()), RC_CAMERA);
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+        File imagesFolder = new File(Environment.getExternalStorageDirectory(), "WorkingWithPhotosApp");
+        imagesFolder.mkdirs();
+        File image = new File(imagesFolder, "QR_" + timeStamp + ".png");
+        Uri uriSavedImage = Uri.fromFile(image);
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+//        File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT,
+//                Uri.fromFile(photo));
+//        imageUri = Uri.fromFile(photo);
+        startActivityForResult(intent, RC_CAMERA);
+//        getActivity().startActivityFromFragment(this,getCameraModule().getCameraIntent(getActivity()), RC_CAMERA);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == RC_CAMERA) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                captureImage();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+
 
         if (requestCode == RC_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             images = (ArrayList<Image>) ImagePicker.getImages(data);
@@ -184,17 +232,45 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
             return;
         }
 
-        if (requestCode == RC_CAMERA && resultCode == RESULT_OK) {
-            getCameraModule().getImage(getActivity(), data, new OnImageReadyListener() {
-                @Override
-                public void onImageReady(List<Image> resultImages) {
-                    images = (ArrayList<Image>) resultImages;
-                    printImages(images);
-                }
-            });
+        if (requestCode == RC_CAMERA && resultCode == RESULT_OK ) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            imageview.setImageBitmap(photo);
+            // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+            Uri selectedImage = getImageUri(getActivity(), photo);
+            String realPath=getRealPathFromURI(selectedImage);
+            selectedImage = Uri.parse(realPath);
+            Log.d("Upload",selectedImage.toString());
+//            getCameraModule().getImage(getActivity(), data, new OnImageReadyListener() {
+//                @Override
+//                public void onImageReady(List<Image> resultImages) {
+//                    images = (ArrayList<Image>) resultImages;
+//                    printImages(images);
+//                }
+//            });
         }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
+    public String getRealPathFromURI(Uri contentUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = getActivity().getContentResolver().query(contentUri,  proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
     private void printImages(List<Image> images) {
         if (images == null) return;
 
@@ -202,6 +278,9 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         for (int i = 0, l = images.size(); i < l; i++) {
             stringBuffer.append(images.get(i).getPath()).append("\n");
         }
+        File file = new File(images.get(0).getPath());
+        long length = file.length() / 1024;
+        Log.d("home",length+"");
         textView.setText(stringBuffer.toString());
     }
 
@@ -249,4 +328,10 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         Log.d("InfomationFrag", "finish");
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.btn_hoan_thanh){
+
+        }
+    }
 }

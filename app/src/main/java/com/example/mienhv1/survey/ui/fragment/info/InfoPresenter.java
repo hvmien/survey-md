@@ -162,7 +162,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, connectionResult.getErrorMessage());
+       // Log.d(TAG, connectionResult.getErrorMessage());
     }
 
     @Override

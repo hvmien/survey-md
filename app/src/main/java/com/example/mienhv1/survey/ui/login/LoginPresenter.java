@@ -3,6 +3,7 @@ package com.example.mienhv1.survey.ui.login;
 import android.content.Context;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.User;
@@ -21,6 +22,7 @@ import io.reactivex.observers.DisposableObserver;
 
 public class LoginPresenter implements BasePresenter {
 
+    private static final String TAG = LoginPresenter.class.getSimpleName();
     private DataRepository mDataRepository;
     private LoginView mLoginView;
     private SignInUserCase mSignInUserCase;
@@ -106,6 +108,7 @@ public class LoginPresenter implements BasePresenter {
     private class SignInObserver extends DisposableObserver<DataLoginResponse<User>> {
         @Override
         public void onNext(DataLoginResponse<User> user) {
+
             if (mLoginView != null) {
                 mLoginView.hideProgress();
                 mLoginView.navigateToStoreListPage();
@@ -115,6 +118,7 @@ public class LoginPresenter implements BasePresenter {
 
         @Override
         public void onError(Throwable e) {
+            Log.e(TAG,e.getMessage());
             if (mLoginView != null) {
                 mLoginView.hideProgress();
                 mLoginView.showError(mContext.getString(R.string.error_invalid_login));
