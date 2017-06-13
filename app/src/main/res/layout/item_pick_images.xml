@@ -11,7 +11,7 @@
         <android.support.v7.widget.CardView
             android:id="@+id/cv_wrap_content_upload"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="150dp"
             android:layout_margin="1dp"
             android:clickable="true">
 
@@ -23,9 +23,9 @@
                 <ImageView
                     android:id="@+id/item_pick_image"
                     android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_height="150dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_store_system" />
+                    android:src="@drawable/item_default_image" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -51,7 +51,12 @@
 
 
             </RelativeLayout>
-
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/item_recyc_progress_bar"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </android.support.v7.widget.CardView>
 
         <com.example.mienhv1.survey.utils.view.CSTextView

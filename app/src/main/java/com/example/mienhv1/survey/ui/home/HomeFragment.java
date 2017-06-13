@@ -113,8 +113,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     return;
 
                 curChildPosition++;
-//                mViewPager.setCurrentItem(getItem(+1), true);
-                mViewPager.setCurrentItem(mViewPager.getAdapter().getCount()-1,true);
+                mViewPager.setCurrentItem(getItem(+1), true);
+                //mViewPager.setCurrentItem(mViewPager.getAdapter().getCount()-1,true);
                 txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
                 if(curChildPosition + 1==mViewPager.getAdapter().getCount())
                 {

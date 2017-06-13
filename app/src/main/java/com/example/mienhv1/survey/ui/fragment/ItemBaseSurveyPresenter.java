@@ -2,6 +2,7 @@ package com.example.mienhv1.survey.ui.fragment;
 
 import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ItemAttributeModel;
@@ -17,6 +18,7 @@ import io.reactivex.observers.DisposableObserver;
  */
 
 public class ItemBaseSurveyPresenter implements BasePresenter {
+    private final static String TAG = ItemBaseSurveyPresenter.class.getSimpleName();
     private GetSurveyAttributeUsercase getSurveyAttributeUsercase;
     Activity activity;
     ItemBaseSurveyView mView;
@@ -24,8 +26,9 @@ public class ItemBaseSurveyPresenter implements BasePresenter {
         this.activity = activity;
         mView= mview;
     }
-
+int ID;
     public void initUserCase(int id) {
+        ID=id;
         mView.showProgress();
         DataRepository data = DataRepositoryFactory.createDataRepository((activity));
         getSurveyAttributeUsercase = new GetSurveyAttributeUsercase(data);
@@ -45,8 +48,9 @@ public class ItemBaseSurveyPresenter implements BasePresenter {
 
         @Override
         public void onError(Throwable e) {
+            Log.d(TAG,ID+"");
             mView.hideProgress();
-            mView.showError(e.getMessage());
+            mView.showError(TAG+e.getMessage());
         }
 
         @Override

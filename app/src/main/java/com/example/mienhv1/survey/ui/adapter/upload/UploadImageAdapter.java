@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.datasource.model.PickImageModel;
 import com.example.mienhv1.survey.Constants;
@@ -51,7 +52,7 @@ public class UploadImageAdapter extends BaseCSAdapter<PickImageModel, UploadImag
                     @Override
                     public void onClick(View v) {
                         if (mPosListener != null) {
-                            mPosListener.onElementItemClick(Constants.CHOOSE_OPTION_CAMERA_ONLY, position);
+                            mPosListener.onElementItemClick(holder.itemProgress,Constants.CHOOSE_OPTION_CAMERA_ONLY, position);
 
                         }
                         if (mListener != null) {
@@ -84,6 +85,7 @@ public class UploadImageAdapter extends BaseCSAdapter<PickImageModel, UploadImag
         private CSTextView txtTitle;
         private CardView cvWrapContent;
         private ImageView image;
+        private ProgressBar itemProgress;
 
         public UploadViewHolder(View itemView, Context context) {
             super(itemView);
@@ -97,6 +99,7 @@ public class UploadImageAdapter extends BaseCSAdapter<PickImageModel, UploadImag
         private void bindView() {
             txtTitle = (CSTextView) itemView.findViewById(R.id.txt_title_item_upload_image);
             image = (ImageView) itemView.findViewById(R.id.item_pick_image);
+            itemProgress = (ProgressBar) itemView.findViewById(R.id.item_recyc_progress_bar);
             pickImage = (CSButton) itemView.findViewById(R.id.pick_image_upload);
             cameraonly = (CSButton) itemView.findViewById(R.id.camera_only_upload);
             cvWrapContent = (CardView) itemView.findViewById(R.id.cv_wrap_content_upload);

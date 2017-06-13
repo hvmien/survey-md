@@ -53,7 +53,7 @@
         android:layout_height="wrap_content" />
 
     <ProgressBar
-        android:id="@+id/checkbox_progress_upload"
+        android:id="@+id/progress_upload"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -6,8 +6,9 @@ package com.example.datasource.model;
 
 public class PickImageModel {
     public String title;
+    public String pos;
 
-    public PickImageModel(String s) {
-        title=s;
-    }
+//    public PickImageModel(String s) {
+//        title=s;
+//    }
 }

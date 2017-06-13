@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.esafirm.imagepicker.features.ImagePicker;
@@ -27,14 +26,11 @@ import com.esafirm.imagepicker.features.camera.CameraModule;
 import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
 import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
-import com.example.datasource.model.DataResponse;
-import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.PickImageModel;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
-import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
@@ -44,22 +40,16 @@ import com.example.mienhv1.survey.ui.adapter.RecyclerViewItemListener;
 import com.example.mienhv1.survey.ui.adapter.upload.UploadAdapter;
 import com.example.mienhv1.survey.ui.adapter.upload.UploadImageAdapter;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.ui.fragment.info.InfoPresenter;
+import com.example.mienhv1.survey.utils.Utils;
 import com.example.mienhv1.survey.utils.uploadimage.ProgressRequestBody;
 import com.example.mienhv1.survey.utils.view.CSButton;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.observers.DisposableObserver;
 import okhttp3.MultipartBody;
 
 import static android.app.Activity.RESULT_OK;
@@ -68,15 +58,15 @@ import static android.app.Activity.RESULT_OK;
  * Created by Forev on 17/04/28.
  */
 
-public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerViewItemListener, ProgressRequestBody.UploadCallbacks, View.OnClickListener, OnposItemRecyclerClickListener, OnItemRecyclerClickListener {
+public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerViewItemListener,
+        ProgressRequestBody.UploadCallbacks, View.OnClickListener,
+        OnposItemRecyclerClickListener, OnItemRecyclerClickListener,UploadView {
 
     private ArrayList<Image> images = new ArrayList<>();
     private List<String> mUriString = new ArrayList<>();
-    private List<Uri> mUriUri = new ArrayList<>();
     private static final int RC_CODE_PICKER = 2000;
     private static final int RC_CAMERA = 3000;
     private CameraModule cameraModule;
-    private Handler mHandler;
 
     RecyclerView rcUploads;
     UploadAdapter adapter;
@@ -84,10 +74,12 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     CSTextView txtTitle;
     CSTextView textView;
     CSButton buttonHoanThanh;
-    private Uri mCaptureUri;
+    ProgressBar mProgressBarUploadImg;
+    ProgressBar mProgressItemRecyc;
     private ImageAndPos imageviewPos = new ImageAndPos();
     private ArrayList<UriPostModel> bmList = new ArrayList<>();
-    private UpLoadImageFileUserCase upLoadImageFileUserCase;
+
+    private UploadPresenter mUploadPresenter;
 
     public static UploadFragment newInstance(ItemQuestionModel model) {
 
@@ -106,31 +98,19 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     @Override
     protected void mapView(View view) {
         txtTitle = (CSTextView) view.findViewById(R.id.txt_title_upload_image);
+        mProgressBarUploadImg = (ProgressBar) view.findViewById(R.id.progress_upload);
         textView = (CSTextView) view.findViewById(R.id.txt_title_value_image);
         buttonHoanThanh = (CSButton) view.findViewById(R.id.btn_hoan_thanh);
         buttonHoanThanh.setOnClickListener(this);
         rcUploads = (RecyclerView) view.findViewById(R.id.rc_uploads);
         rcUploads.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        ArrayList<PickImageModel> list = new ArrayList<>();
-        list.add(new PickImageModel("Mặt Tiền"));
-        list.add(new PickImageModel("Đường đi đối diện"));
-        list.add(new PickImageModel("Đường đi bên trái"));
-        list.add(new PickImageModel("Đường đi bên phải"));
-        list.add(new PickImageModel("Tổng thể bên trong"));
 
-        adapter = new UploadAdapter(getContext(), this);
-        upLoadAdapter = new UploadImageAdapter(getContext());
-        upLoadAdapter.setOnPosItemRecyclerClickListener(this);
-        upLoadAdapter.setOnItemRecyclerClickListener(this);
-        upLoadAdapter.updatesItem(list);
-        rcUploads.setAdapter(upLoadAdapter);
 
     }
 
     @Override
     protected void initData() {
         super.initData();
-        mHandler = new Handler();
         ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
         txtTitle.setText(item.order_rank + ". " + item.title);
     }
@@ -147,22 +127,37 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
     @Override
     public void showProgress() {
-
+        mProgressBarUploadImg.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        mProgressBarUploadImg.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String error) {
-
+        Log.d("Upload",error);
+        Toast.makeText(getActivity(), error+"", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
-
+        if(data!=null) {
+            ArrayList<PickImageModel> list = new ArrayList<>();
+            for (int i = 0; i < data.size(); i++) {
+                PickImageModel m =new PickImageModel();
+                m.title=data.get(i).name_display;
+                m.pos=i+1+"";
+                list.add(m);
+            }
+            adapter = new UploadAdapter(getContext(), this);
+            upLoadAdapter = new UploadImageAdapter(getContext());
+            upLoadAdapter.setOnPosItemRecyclerClickListener(this);
+            upLoadAdapter.setOnItemRecyclerClickListener(this);
+            upLoadAdapter.updatesItem(list);
+            rcUploads.setAdapter(upLoadAdapter);
+        }
     }
 
     @Override
@@ -183,27 +178,6 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
             captureImage();
         }
-    }
-
-    private void start() {
-        ImagePicker imagePicker = ImagePicker.create(this)
-                .theme(R.style.ImagePickerTheme)
-                .returnAfterFirst(true) // set whether pick action or camera action should return immediate result or not. Only works in single mode for image picker
-                .folderMode(true) // set folder mode (false by default)
-                .folderTitle("Folder") // folder selection title
-                .imageTitle("Tap to select"); // image selection title
-
-        if (false) {
-            imagePicker.single();
-        } else {
-            imagePicker.multi(); // multi mode (default mode)
-        }
-
-        imagePicker.limit(10) // max images can be selected (99 by default)
-                .showCamera(true) // show camera or not (true by default)
-                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
-                .origin(images) // original selected images, used in multi mode
-                .start(RC_CODE_PICKER); // start image picker activity with request code
     }
 
     private ImmediateCameraModule getCameraModule() {
@@ -232,88 +206,21 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     @Override
     public void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_CODE_PICKER && resultCode == RESULT_OK && data != null) {
-            images = (ArrayList<Image>) ImagePicker.getImages(data);
-            mUriUri = (List<Uri>) data.getData();
-            for (int i = 0; i < images.size(); i++) {
-                mUriString.add(images.get(i).getPath());
-            }
-            printImages(images);
-            return;
-        }
-
-
+        //from camera
         if (requestCode == RC_CAMERA && resultCode == RESULT_OK) {
             getCameraModule().getImage(getActivity(), data, new OnImageReadyListener() {
                 @Override
                 public void onImageReady(List<Image> resultImages) {
                     images = (ArrayList<Image>) resultImages;
                     new GetImageTask().execute();
-                    printImages(images);
 
                 }
             });
-
-
-//            Uri selectedImage = getImageUri(getActivity(), photo);
-//            String realPath = getRealPathFromURI(selectedImage);
-//            selectedImage = Uri.parse(realPath);
-//            UriPostModel m = new UriPostModel();
-//            m.uri = selectedImage;
-//            m.positionimage = imageviewPos.posImage;
-//            m.titleImage = imageviewPos.titleImage;
-//
-//            checkContainData(m);
-//            bmList.add(m);
-//
-//            Toast.makeText(getActivity(), bmList.size() + "", Toast.LENGTH_SHORT).show();
-
-//            Log.d("Upload", selectedImage.toString());
-//            File file = new File(String.valueOf(selectedImage));
-//            long length = file.length();
-//            Log.d("Upload", length / 1024 + "");
-//
-//
-//            Bitmap bitmap = photo;
-//            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-//            byte[] imageInByte = stream.toByteArray();
-//            long lengthbmp = imageInByte.length;
-//            Log.d("Upload1", (float) lengthbmp / (1024 * 1024) + "");
         }
 
     }
 
-    public Bitmap loadBitmap(String url) {
-        Bitmap bm = null;
-        InputStream is = null;
-        BufferedInputStream bis = null;
-        try {
-            URLConnection conn = new URL(url).openConnection();
-            conn.connect();
-            is = conn.getInputStream();
-            bis = new BufferedInputStream(is, 8192);
-            bm = BitmapFactory.decodeStream(bis);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (bis != null) {
-                try {
-                    bis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return bm;
-    }
+
 
     private void checkContainData(UriPostModel model) {
         if (bmList != null && bmList.size() > 0) {
@@ -329,7 +236,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
         String path;
         path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
@@ -348,19 +255,6 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
                 cursor.close();
             }
         }
-    }
-
-    private void printImages(List<Image> images) {
-        if (images == null) return;
-
-        StringBuilder stringBuffer = new StringBuilder();
-        for (int i = 0, l = images.size(); i < l; i++) {
-            stringBuffer.append(images.get(i).getPath()).append("\n");
-        }
-        File file = new File(images.get(0).getPath());
-        long length = file.length() / 1024;
-        Log.d("Upload", length + "");
-        textView.setText(stringBuffer.toString());
     }
 
     private ArrayList<MultipartBody.Part> getMutilPart(List<String> uriStringList) {
@@ -402,30 +296,26 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     @Override
     public void onFinish() {
         count++;
-//        mProgressBarPercent.setProgress(100);
-//        txtProgress.setText(count + "/" + mUriString.size());
-        Log.d("InfomationFrag", "finish");
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_hoan_thanh) {
+            DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
+            mUploadPresenter = new UploadPresenter(dataRepository,this);
+
             if(bmList.size()>0){
                 for (int i = 0; i < bmList.size(); i++) {
                     mUriString.add(bmList.get(i).uri.toString());
                 }
-                uploadImage(getMutilPart(mUriString));
+                bmList.clear();
+                mUploadPresenter.uploadImage(getMutilPart(mUriString));
 
             }
 
         }
     }
-    public void uploadImage( ArrayList<MultipartBody.Part> files) {
-        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
-        upLoadImageFileUserCase = new UpLoadImageFileUserCase(dataRepository);
-        UpLoadImageFileUserCase.RequestValue requestValue = new UpLoadImageFileUserCase.RequestValue(files);
-        upLoadImageFileUserCase.execute(new UpLoadImageFileObserver(),requestValue);
-    }
+
     //cs upload adapter
     @Override
     public void onItemClick(Object o, int position) {
@@ -433,7 +323,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     @Override
-    public void onElementItemClick(String string, int position) {
+    public void onElementItemClick(ProgressBar progress, String string, int position) {
         final Activity activity = getActivity();
         final String[] permissions = new String[]{Manifest.permission.CAMERA};
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -445,6 +335,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
             captureImage();
         }
+        mProgressItemRecyc =progress;
     }
 
     @Override
@@ -458,13 +349,25 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         imageviewPos.imageView = timage;
         imageviewPos.posImage = pos;
     }
+
+    @Override
+    public void showProgressItemRecyc() {
+
+    }
+
     class GetImageTask extends AsyncTask<String, int[], Bitmap> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressItemRecyc.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected Bitmap doInBackground(String... params) {
-            Bitmap photo = loadBitmap(images.get(0).getPath());
+
+            Bitmap photo = Utils.loadBitmap(images.get(0).getPath());
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            photo.compress(Bitmap.CompressFormat.JPEG, 50, stream);
             //convert bitmap to uri
 
             Uri selectedImage = getImageUri(getActivity(), photo);
@@ -488,31 +391,8 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
             super.onPostExecute(bitmapResult);
             // This is back on your UI thread - Add your image to your view
             Toast.makeText(getActivity(), bmList.size() + "", Toast.LENGTH_SHORT).show();
+            mProgressItemRecyc.setVisibility(View.GONE);
             imageviewPos.imageView.setImageBitmap(bitmapResult);
-        }
-    }
-
-    private class UpLoadImageFileObserver extends DisposableObserver<DataResponse<ImageRespone>> {
-        @Override
-        public void onNext(DataResponse<ImageRespone> responseBody) {
-            ArrayList<ImageRespone> list = responseBody.data;
-            if(list!=null&&list.size()>0){
-                for (int i = 0; i < list.size(); i++) {
-                    Log.d("OnNext",list.get(i).image+"");
-                }
-            }
-
-            Toast.makeText(getActivity(), "onNext: " +responseBody.msg, Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            Toast.makeText(getActivity(), "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onComplete() {
-
         }
     }
 }
