@@ -22,7 +22,7 @@
 
                 <ImageView
                     android:id="@+id/item_pick_image"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_store_system" />
