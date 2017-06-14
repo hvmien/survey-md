@@ -10,12 +10,13 @@ import android.widget.Toast;
 
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
+import com.example.mienhv1.survey.ui.fragment.DrawerMenuFragment;
 
 /**
  * Created by MienHV1 on 4/28/2017.
  */
 
-public class StoreActivity extends BaseActivity implements StoreFragment.OnStoreListener {
+public class StoreActivity extends BaseActivity implements StoreFragment.OnStoreListener, DrawerMenuFragment.OnCallbackDataFromNavi {
     private DrawerLayout drawer;
     private boolean doubleBackToExitPressedOnce = false;
 
@@ -41,6 +42,8 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
         toggle.setDrawerIndicatorEnabled(true);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        DrawerMenuFragment fragment = (DrawerMenuFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+        fragment.setLogoutlayoutPress(this);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
 
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
         }
@@ -78,5 +81,11 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
     @Override
     public void onOpenLoginPage() {
         openLoginPage();
+    }
+
+    @Override
+    public void onLogoutPress() {
+        StoreFragment fragment = (StoreFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_home);
+        fragment.logoutPrensenter();
     }
 }

@@ -28,13 +28,14 @@ import java.util.ArrayList;
  * Created by Forev on 17/04/18.
  */
 
-public class StoreFragment extends BaseFragment implements StoreView, RecyclerViewItemListener {
+public class StoreFragment extends BaseFragment implements StoreView, RecyclerViewItemListener{
     private OnStoreListener mListener;
     RecyclerView rcStore;
     StoreAdapter storeAdapter;
     StorePresenter presenter;
     ArrayList<StoreSystem> dataStoreSystem = new ArrayList<>();
     ProgressBar storeProgerssbar;
+
     interface OnStoreListener {
         void onOpenLoginPage();
     }
@@ -140,7 +141,11 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_home, menu);
     }
-
+public void logoutPrensenter(){
+    if(presenter!=null){
+        presenter.signOut();
+    }
+}
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -150,4 +155,5 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
         }
         return true;
     }
+
 }
