@@ -9,18 +9,16 @@
         android:id="@+id/home_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="#2E9EAC"
-        app:theme="@style/Toolbar">
+        android:background="@drawable/cs_toolbar_backdround"
+        android:minHeight="?attr/actionBarSize">
 
         <TextView
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Trang Chủ"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/colorApp"
+            android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

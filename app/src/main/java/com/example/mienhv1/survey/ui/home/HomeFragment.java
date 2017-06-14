@@ -1,7 +1,7 @@
 package com.example.mienhv1.survey.ui.home;
 
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,8 +27,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     private ProgressBar mProgressbar;
     private CSViewPageNoScroll mViewPager;
-    View viewBtnNext;
-    View viewBtnPre;
+    ImageView viewBtnNext;
+    ImageView viewBtnPre;
 
     int curChildPosition = 0;
 
@@ -44,8 +44,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     protected void mapView(View view) {
         mProgressbar = (ProgressBar) view.findViewById(R.id.home_progress_bar);
         mViewPager = (CSViewPageNoScroll) view.findViewById(R.id.viewpager);
-        viewBtnNext=view.findViewById(R.id.btn_next);
-        viewBtnPre=view.findViewById(R.id.btn_prev);
+        viewBtnNext= (ImageView) view.findViewById(R.id.btn_next);
+        viewBtnPre= (ImageView) view.findViewById(R.id.btn_prev);
         view.findViewById(R.id.btn_prev).setOnClickListener(this);
         view.findViewById(R.id.btn_next).setOnClickListener(this);
         txtCurPage = (CSTextView) view.findViewById(R.id.txt_cur_page);
@@ -60,10 +60,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         mHomePresenter.createDatabase();
         if(curChildPosition + 1==1)
         {
-            viewBtnPre.setVisibility(View.GONE);
+            viewBtnPre.setClickable(false);
         }
-
-        //add viewpager this here
     }
 
     @Override
@@ -114,23 +112,25 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
                 curChildPosition++;
                 mViewPager.setCurrentItem(getItem(+1), true);
-                //mViewPager.setCurrentItem(mViewPager.getAdapter().getCount()-1,true);
                 txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
                 if(curChildPosition + 1==mViewPager.getAdapter().getCount())
                 {
-                    Log.d("home",mViewPager.getAdapter().getCount()+"");
-                    viewBtnNext.setVisibility(View.INVISIBLE);
+                    viewBtnPre.setClickable(true);
+                    viewBtnNext.setImageResource(R.drawable.checked_done);
                 }
                 else {
-                    viewBtnNext.setVisibility(View.VISIBLE);
+                    viewBtnPre.setClickable(true);
+                    viewBtnNext.setImageResource(R.drawable.ic_arrow_right_gray);
                 }
                 if(curChildPosition + 1>1)
                 {
-                    viewBtnPre.setVisibility(View.VISIBLE);
+                    viewBtnPre.setImageResource(R.drawable.ic_arrow_left_active);
+                    viewBtnPre.setClickable(true);
                 }
 
                 break;
             case R.id.btn_prev:
+
                 if (curChildPosition - 1 < 0)
                     return;
 
@@ -138,21 +138,23 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 mViewPager.setCurrentItem(getItem(-1), true);
                 txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
 
-                if(curChildPosition + 1==mViewPager.getAdapter().getCount())
-                {
-
-                    viewBtnPre.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    viewBtnPre.setVisibility(View.VISIBLE);
-                }
+//                if(curChildPosition + 1==mViewPager.getAdapter().getCount())
+//                {
+//
+//                    viewBtnPre.setVisibility(View.INVISIBLE);
+//                }
+//                else {
+//                    viewBtnPre.setVisibility(View.VISIBLE);
+//                }
                 if(curChildPosition + 1<mViewPager.getAdapter().getCount())
                 {
-                    viewBtnNext.setVisibility(View.VISIBLE);
+                    viewBtnNext.setImageResource(R.drawable.ic_arrow_right_gray);
+                    viewBtnNext.setClickable(true);
                 }
                 if(curChildPosition + 1==1)
                 {
-                    viewBtnPre.setVisibility(View.GONE);
+                    viewBtnPre.setImageResource(R.drawable.ic_arrow_left_gray);
+                    viewBtnPre.setClickable(false);
                 }
                 break;
         }

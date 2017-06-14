@@ -31,10 +31,11 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
 
     @Override
     protected void mapView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(true);

@@ -21,7 +21,6 @@ import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.RecyclerViewItemListener;
 import com.example.mienhv1.survey.ui.adapter.store.StoreAdapter;
 import com.example.mienhv1.survey.ui.home.HomeActivity;
-import com.example.mienhv1.survey.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -145,8 +144,8 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_signout:
-                presenter.signOut();
+            case R.id.menu_item1:
+                Toast.makeText(getActivity(), "Receive notify", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return true;

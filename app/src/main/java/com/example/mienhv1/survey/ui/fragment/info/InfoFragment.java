@@ -1,28 +1,15 @@
 package com.example.mienhv1.survey.ui.fragment.info;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.features.camera.CameraModule;
-import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
-import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
-import com.esafirm.imagepicker.model.Image;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ItemAttributeModel;
@@ -33,22 +20,15 @@ import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.utils.uploadimage.ProgressRequestBody;
 import com.example.mienhv1.survey.utils.view.CustomSpinnerAdapter;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.MultipartBody;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends ItemBaseSurveyFragment implements InfoView{
+public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
 
     InfoPresenter presenter;
     private String TAG = "InfoFragment";
@@ -91,12 +71,14 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView{
 
     @Override
     protected void initData() {
+        super.initData();
         presenter.create();
         presenter.getProvinceList();
+        ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
+        titleQuestion.setText(item.order_rank+ ". " +item.title);
         setDefaultValueSpinner(provinceSpinner, getResources().getString(R.string.default_value_province));
         setDefaultValueSpinner(districtSpinner, getResources().getString(R.string.default_value_district));
         setDefaultValueSpinner(wardSpinner, getResources().getString(R.string.default_value_ward));
-        titleQuestion.setText("1.Thông tin chung");
     }
 
     private void setDefaultValueSpinner(Spinner spinner, String defaultvalue) {
@@ -133,6 +115,14 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView{
     @Override
     protected void destroyView() {
 
+    }
+
+    @Override
+    public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
+        if (data != null) {
+            String a = "ádfsd";
+            Log.d("", "");
+        }
     }
 
     @Override
@@ -227,11 +217,6 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView{
 
     private void getWardViaDistrict(DistrictModel pos) {
         presenter.getWardViaDistrict(pos.districtid);
-    }
-
-    @Override
-    public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
-
     }
 
     // selected item spinner
