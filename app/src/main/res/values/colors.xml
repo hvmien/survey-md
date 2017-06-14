@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="colorApp">#F0661A</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">@android:color/black</color>
@@ -29,5 +30,6 @@
     <color name="colorButtonLogin">#ed6d6e</color>
     <color name="colorGrayLight">#dfdfdf</color>
     <color name="colorButtonPress">#f2f2f2</color>
+    <color name="colorVer1">#2E9EAC</color>
 
 </resources>

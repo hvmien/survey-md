@@ -2,8 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_signout"
+        android:id="@+id/menu_item1"
         android:title="@string/title_sign_out"
-        app:showAsAction="collapseActionView" />
+        android:icon="@drawable/bell_2_32"
+        app:showAsAction="ifRoom" />
 
 </menu>

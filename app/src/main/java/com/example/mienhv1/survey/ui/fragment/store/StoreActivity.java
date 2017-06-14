@@ -10,12 +10,13 @@ import android.widget.Toast;
 
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
+import com.example.mienhv1.survey.ui.fragment.DrawerMenuFragment;
 
 /**
  * Created by MienHV1 on 4/28/2017.
  */
 
-public class StoreActivity extends BaseActivity implements StoreFragment.OnStoreListener {
+public class StoreActivity extends BaseActivity implements StoreFragment.OnStoreListener, DrawerMenuFragment.OnCallbackDataFromNavi {
     private DrawerLayout drawer;
     private boolean doubleBackToExitPressedOnce = false;
 
@@ -31,15 +32,18 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
 
     @Override
     protected void mapView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(true);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        DrawerMenuFragment fragment = (DrawerMenuFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+        fragment.setLogoutlayoutPress(this);
     }
 
     @Override
@@ -68,7 +72,7 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
 
                 @Override
                 public void run() {
-                    doubleBackToExitPressedOnce=false;
+                    doubleBackToExitPressedOnce = false;
                 }
             }, 2000);
         }
@@ -77,5 +81,11 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
     @Override
     public void onOpenLoginPage() {
         openLoginPage();
+    }
+
+    @Override
+    public void onLogoutPress() {
+        StoreFragment fragment = (StoreFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_home);
+        fragment.logoutPrensenter();
     }
 }
