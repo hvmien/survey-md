@@ -16,7 +16,7 @@
 
 
         <fragment
-            android:id="@+id/fragment_home"
+            android:id="@+id/fragment_store"
             android:name="com.example.mienhv1.survey.ui.fragment.store.StoreFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></fragment>

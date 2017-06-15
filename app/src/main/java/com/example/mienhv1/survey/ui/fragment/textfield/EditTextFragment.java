@@ -41,6 +41,11 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     }
 
     @Override
+    protected void returnDataFromFragment() {
+
+    }
+
+    @Override
     protected int getResourcesLayout() {
         return R.layout.fragment_only_editext_question;
     }

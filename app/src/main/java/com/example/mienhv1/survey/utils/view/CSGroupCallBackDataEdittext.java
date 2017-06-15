@@ -11,8 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.example.datasource.model.ItemAttributeModel;
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.MyApplication;
 import com.example.mienhv1.survey.R;
+import com.example.mienhv1.survey.ui.adapter.CallBackDataListener;
 import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonAdapter;
 
 import java.util.ArrayList;
@@ -21,13 +23,13 @@ import java.util.ArrayList;
  * Created by MienHV1 on 4/26/2017.
  */
 
-public class CSGroupRadiobuttonEdittext extends LinearLayout {
+public class CSGroupCallBackDataEdittext extends LinearLayout implements CallBackDataListener {
     private CSRadioGroup groupRadio;
     private CSEditText csEditText;
     ArrayList<ItemAttributeModel> dataRb = new ArrayList<>();
     private Context mContext;
 
-    public CSGroupRadiobuttonEdittext(Context context, @Nullable AttributeSet attrs) {
+    public CSGroupCallBackDataEdittext(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = MyApplication.getInstance().getApplicationContext();
         mapView();
@@ -66,15 +68,20 @@ public class CSGroupRadiobuttonEdittext extends LinearLayout {
                 csEditText.getWindowToken(), 0);
     }
 
-    public void setData(ArrayList<ItemAttributeModel> data) {
+    public void setData(ArrayList<ItemAttributeModel> data, ItemQuestionModel item) {
         dataRb = data;
         ArrayList mList = new ArrayList();
         for (int i = 0; i < data.size() - 1; i++)
             mList.add(data.get(i));
-        RadioButtonAdapter adapter = new RadioButtonAdapter(getContext(), R.layout.item_radio_button, groupRadio, mList);
+        RadioButtonAdapter adapter = new RadioButtonAdapter(getContext(), R.layout.item_radio_button, groupRadio, mList,this,item);
         groupRadio.setAdapter(adapter);
         if (data.size() > 1)
             csEditText.setHint(data.get(data.size() - 1).name_display);
         invalidate();
+    }
+
+    @Override
+    public void onItemClick(ItemQuestionModel item,int id) {
+
     }
 }

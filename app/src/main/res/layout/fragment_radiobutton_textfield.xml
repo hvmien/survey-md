@@ -19,7 +19,7 @@
             android:text="@string/title_address"
             app:textAllCaps="true" />
 
-        <com.example.mienhv1.survey.utils.view.CSGroupRadiobuttonEdittext
+        <com.example.mienhv1.survey.utils.view.CSGroupCallBackDataEdittext
             android:id="@+id/gr_radiobutton_text_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

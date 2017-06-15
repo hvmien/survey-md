@@ -1,5 +1,7 @@
 package com.example.mienhv1.survey.ui.fragment.radiobutton;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -10,7 +12,9 @@ import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
+import com.example.mienhv1.survey.ui.adapter.CallBackDataListener;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.utils.BlankFragment;
 import com.example.mienhv1.survey.utils.view.CSRadioGroup;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
@@ -20,10 +24,11 @@ import java.util.ArrayList;
  * Created by HVM on 4/23/2017.
  */
 
-public class RadioButtonFragment extends ItemBaseSurveyFragment {
+public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.OnClickListener, CallBackDataListener {
     private CSTextView txtTitle;
     private CSRadioGroup csRadioGroupParent;
     private ProgressBar radiobuttonProgress;
+    private ArrayList mList;
 
     public static RadioButtonFragment newInstance(ItemQuestionModel item) {
 
@@ -44,13 +49,16 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment {
         radiobuttonProgress = (ProgressBar) view.findViewById(R.id.radiobutton_progress);
         txtTitle = (CSTextView) view.findViewById(R.id.txt_title_radio_group);
         csRadioGroupParent = (CSRadioGroup) view.findViewById(R.id.gp_data);
+        csRadioGroupParent.setOnClickListener(this);
     }
+
+    ItemQuestionModel item;
 
     @Override
     protected void initData() {
         super.initData();
-        ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
-        txtTitle.setText(item.order_rank+ ". " +item.title);
+        item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
+        txtTitle.setText(item.order_rank + ". " + item.title);
     }
 
 
@@ -62,6 +70,11 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment {
     @Override
     public EnumSurveyFragment fragmentType() {
         return EnumSurveyFragment.RadioButton;
+    }
+
+    @Override
+    protected void returnDataFromFragment() {
+
     }
 
     @Override
@@ -83,10 +96,25 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment {
     public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
         if (data != null) {
             //goi toi api /table_attritute params{table_id} lay table_id trong getArguments()
-            ArrayList mList = new ArrayList<>();
+            mList = new ArrayList<>();
             mList.addAll(data);
-            RadioButtonAdapter ckA = new RadioButtonAdapter(getActivity(), R.layout.item_radio_button, csRadioGroupParent, mList);
+            RadioButtonAdapter ckA = new RadioButtonAdapter(getActivity(), R.layout.item_radio_button, csRadioGroupParent, mList, this, item);
             csRadioGroupParent.setAdapter(ckA);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.gp_data) {
+
+        }
+    }
+
+    @Override
+    public void onItemClick(ItemQuestionModel item, int id) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(item,id);
+        }
+
     }
 }

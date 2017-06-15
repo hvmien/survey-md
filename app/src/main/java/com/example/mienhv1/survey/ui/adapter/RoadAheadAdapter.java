@@ -1,16 +1,12 @@
 package com.example.mienhv1.survey.ui.adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.RoadAhead;
-import com.example.mienhv1.survey.R;
-import com.example.mienhv1.survey.ui.adapter.BaseViewAdapter;
 import com.example.mienhv1.survey.utils.view.CSRadioButton;
 
 import java.util.ArrayList;
@@ -28,12 +24,12 @@ public class RoadAheadAdapter extends BaseViewAdapter<RoadAhead> {
         this.listener = l;
     }
 
-    public RoadAheadAdapter(Context context, int id, ViewGroup parent, ArrayList data) {
-        super(context, id, parent, data);
+    public RoadAheadAdapter(Context context, int id, ViewGroup parent, ArrayList data,CallBackDataListener listener,ItemQuestionModel itemmodel) {
+        super(context, id, parent, data,listener,itemmodel);
     }
 
     @Override
-    public void bindView(View view, final int position) {
+    public void bindView(View view, final int position, CallBackDataListener listeneritem) {
         CSRadioButton item = (CSRadioButton) view;
         item.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -50,6 +46,4 @@ public class RoadAheadAdapter extends BaseViewAdapter<RoadAhead> {
         });
         item.setText(mData.get(position).name);
     }
-
-
 }

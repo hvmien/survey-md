@@ -85,7 +85,7 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
 
     @Override
     public void onLogoutPress() {
-        StoreFragment fragment = (StoreFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_home);
+        StoreFragment fragment = (StoreFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_store);
         fragment.logoutPrensenter();
     }
 }

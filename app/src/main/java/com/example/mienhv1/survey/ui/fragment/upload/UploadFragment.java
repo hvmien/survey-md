@@ -125,6 +125,11 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     @Override
+    protected void returnDataFromFragment() {
+
+    }
+
+    @Override
     public void showProgress() {
         mProgressBarUploadImg.setVisibility(View.VISIBLE);
     }

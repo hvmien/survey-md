@@ -1,16 +1,12 @@
 package com.example.mienhv1.survey.ui.adapter;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
-import com.example.mienhv1.survey.R;
+import com.example.datasource.model.ItemQuestionModel;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +18,9 @@ public abstract class BaseViewAdapter<T>  {
     public int resourceId;
     public Context mContext;
     public ViewGroup mParent;
+    public CallBackDataListener listener;
+    public ItemQuestionModel itemModel;
+
 
     public ArrayList<View> getViews() {
         return views;
@@ -30,11 +29,13 @@ public abstract class BaseViewAdapter<T>  {
     ArrayList<View> views = new ArrayList<>();
     protected ArrayList<T> mData = new ArrayList<>();
 
-    public BaseViewAdapter(Context context, int id, ViewGroup parent, ArrayList data) {
+    public BaseViewAdapter(Context context, int id, ViewGroup parent, ArrayList data,CallBackDataListener listeneritem,ItemQuestionModel itemmodel) {
         this.mContext = context;
         resourceId = id;
         mParent = parent;
         mData = data;
+        listener=listeneritem;
+        itemModel = itemmodel;
 
         for (int i = 0; i < mData.size(); i++) {
             View view = initView(i);
@@ -49,9 +50,9 @@ public abstract class BaseViewAdapter<T>  {
 
     public View initView(int position) {
         View root = LayoutInflater.from(mContext).inflate(resourceId, mParent, false);
-        bindView(root, position);
+        bindView(root, position,listener);
         return root;
     }
 
-    public abstract void bindView(View view, int position);
+    public abstract void bindView(View view, int position, CallBackDataListener listeneritem);
 }

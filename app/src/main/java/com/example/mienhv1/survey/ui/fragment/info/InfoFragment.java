@@ -146,6 +146,11 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
     }
 
     @Override
+    protected void returnDataFromFragment() {
+
+    }
+
+    @Override
     public void getListProvince(DataResponse<ProvinceModel> mdataRes) {
         ArrayList<String> nameProvinceList = new ArrayList<>();
         for (int i = 0; i < mdataRes.data.size(); i++) {

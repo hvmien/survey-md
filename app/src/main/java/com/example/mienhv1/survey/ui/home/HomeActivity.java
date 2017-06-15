@@ -3,11 +3,15 @@ package com.example.mienhv1.survey.ui.home;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
+import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
+import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements ItemBaseSurveyFragment.OnFragmentInteractionListener{
 
 
     @Override
@@ -60,4 +64,8 @@ public class HomeActivity extends BaseActivity {
         alert.show();
     }
 
+    @Override
+    public void onFragmentInteraction(ItemQuestionModel model,int id) {
+        Toast.makeText(this, "radio"+id, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.mienhv1.survey.ui.fragment.checkbox;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -10,7 +11,9 @@ import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
+import com.example.mienhv1.survey.ui.adapter.CallBackDataListener;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
 import com.example.mienhv1.survey.utils.view.CSGroupCheckbox;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
@@ -20,10 +23,11 @@ import java.util.ArrayList;
  * Created by HVM on 4/23/2017.
  */
 
-public class CheckboxFragment extends ItemBaseSurveyFragment {
+public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBackDataListener {
     private CSTextView txtTitle;
     private CSGroupCheckbox grCheckboxParent;
     private ProgressBar checkboxProgressbar;
+
 
     public static CheckboxFragment newInstance(ItemQuestionModel item) {
 
@@ -33,6 +37,8 @@ public class CheckboxFragment extends ItemBaseSurveyFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     protected int getResourcesLayout() {
@@ -46,11 +52,13 @@ public class CheckboxFragment extends ItemBaseSurveyFragment {
         grCheckboxParent = (CSGroupCheckbox) view.findViewById(R.id.gr_checkbox);
     }
 
+    ItemQuestionModel item;
+
     @Override
     protected void initData() {
         super.initData();
-        ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
-        txtTitle.setText(item.order_rank+ ". " +item.title);
+        item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
+        txtTitle.setText(item.order_rank + ". " + item.title);
     }
 
     @Override
@@ -61,6 +69,11 @@ public class CheckboxFragment extends ItemBaseSurveyFragment {
     @Override
     public EnumSurveyFragment fragmentType() {
         return EnumSurveyFragment.CheckBox;
+    }
+
+    @Override
+    protected void returnDataFromFragment() {
+
     }
 
     @Override
@@ -80,12 +93,21 @@ public class CheckboxFragment extends ItemBaseSurveyFragment {
 
     @Override
     public void onGetDataListenner(ArrayList<ItemAttributeModel> dataAtt) {
-        if (dataAtt!= null) {
+        if (dataAtt != null) {
             //goi toi api /table_attritute params{table_id} lay table_id trong getArguments()
             ArrayList mList = new ArrayList<>();
             mList.addAll(dataAtt);
-            CheckboxAdapter ckA = new CheckboxAdapter(getActivity(), R.layout.item_check_box_view, grCheckboxParent, mList);
+            CheckboxAdapter ckA = new CheckboxAdapter(getActivity(), R.layout.item_check_box_view, grCheckboxParent, mList, this, item);
             grCheckboxParent.setAdapter(ckA);
         }
     }
+
+    @Override
+    public void onItemClick(ItemQuestionModel item, int id) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(item,id);
+        }
+    }
+
+
 }

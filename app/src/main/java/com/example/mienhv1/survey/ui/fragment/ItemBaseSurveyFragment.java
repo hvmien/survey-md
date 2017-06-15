@@ -1,5 +1,7 @@
 package com.example.mienhv1.survey.ui.fragment;
 
+import android.app.Activity;
+
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.base.BaseFragment;
@@ -12,7 +14,7 @@ import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 
 public abstract class ItemBaseSurveyFragment extends BaseFragment implements ItemBaseSurveyView {
     public EnumSurveyFragment fType;
-    protected ItemBaseSurveyPresenter presenter = new ItemBaseSurveyPresenter(getActivity(),this);
+    protected ItemBaseSurveyPresenter presenter = new ItemBaseSurveyPresenter(getActivity(), this);
 
     public abstract EnumSurveyFragment fragmentType();
 
@@ -20,12 +22,26 @@ public abstract class ItemBaseSurveyFragment extends BaseFragment implements Ite
         return fType;
     }
 
-
+    protected abstract void returnDataFromFragment();
+    public OnFragmentInteractionListener mListener;
 
     @Override
     protected void initData() {
         ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
         presenter.initUserCase(item.id);
+    }
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(ItemQuestionModel item,int id);
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) activity;
+        } else {
+            throw new RuntimeException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
 }
