@@ -55,6 +55,7 @@
                             android:layout_height="wrap_content">
 
                             <com.example.mienhv1.survey.utils.view.CSEditText
+                                android:id="@+id/name_store_editext"
                                 style="@style/EdiText.Normal.SingLine"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/textview_height"
@@ -123,6 +124,7 @@
                             android:layout_height="wrap_content">
 
                             <com.example.mienhv1.survey.utils.view.CSEditText
+                                android:id="@+id/name_street"
                                 style="@style/EdiText.Normal.SingLine"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/textview_height"
@@ -162,6 +164,7 @@
                             android:layout_height="wrap_content">
 
                             <com.example.mienhv1.survey.utils.view.CSEditText
+                                android:id="@+id/name_user_survey"
                                 style="@style/EdiText.Normal.SingLine"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/textview_height"

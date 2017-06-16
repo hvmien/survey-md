@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
@@ -66,8 +67,13 @@ ItemQuestionModel item;
     }
 
     @Override
-    protected void returnDataFromFragment() {
+    public boolean checkData() {
+return false;
+    }
 
+    @Override
+    public AnswerModel getDataFromUserHandle() {
+        return null;
     }
 
     @Override

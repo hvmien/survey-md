@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.repository.DataRepository;
@@ -12,6 +13,7 @@ import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
+import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 
@@ -34,6 +36,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     CSTextView txtCurPage;
     private ArrayList mListQuestion = new ArrayList();
+    private ArrayList mListAnswer = new ArrayList();
 
     @Override
     protected int getResourcesLayout() {
@@ -61,6 +64,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         if(curChildPosition + 1==1)
         {
             viewBtnPre.setClickable(false);
+            viewBtnNext.setImageResource(R.drawable.ic_arrow_right_active);
         }
     }
 
@@ -88,13 +92,14 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     public void navigateToLoginPage() {
 
     }
-
+    SurveyPagerAdapter adapter;
     @Override
     public void getListQuestion(DataResponse<ItemQuestionModel> datamodel) {
         mListQuestion = new ArrayList();
         if(datamodel.data!=null) {
             mListQuestion.addAll(datamodel.data);
-            SurveyPagerAdapter adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), mListQuestion);
+            adapter = new SurveyPagerAdapter(this.getChildFragmentManager(), mListQuestion);
+
             mViewPager.setAdapter(adapter);
             mViewPager.setOffscreenPageLimit(mListQuestion.size());
             txtCurPage.setText(1 + "/" + mListQuestion.size());
@@ -106,28 +111,32 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         switch (v.getId()) {
 
             case R.id.btn_next:
+                if(checkHaveData()) {
+                    ItemBaseSurveyFragment item =(ItemBaseSurveyFragment) adapter.getItem(curChildPosition);
 
-                if (curChildPosition + 1 >= mListQuestion.size())
-                    return;
+                    AnswerModel m= item.getDataFromUserHandle();
+                    mListAnswer.add(m);
+                    if (curChildPosition + 1 >= mListQuestion.size())
+                        return;
 
-                curChildPosition++;
-                mViewPager.setCurrentItem(getItem(+1), true);
-                txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
-                if(curChildPosition + 1==mViewPager.getAdapter().getCount())
-                {
-                    viewBtnPre.setClickable(true);
-                    viewBtnNext.setImageResource(R.drawable.checked_done);
+                    curChildPosition++;
+                    mViewPager.setCurrentItem(getItem(+1), true);
+                    txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
+                    if (curChildPosition + 1 == mViewPager.getAdapter().getCount()) {
+                        viewBtnPre.setClickable(true);
+                        viewBtnNext.setImageResource(R.drawable.checked_done);
+                    } else {
+                        viewBtnPre.setClickable(true);
+                        viewBtnNext.setImageResource(R.drawable.ic_arrow_right_active);
+                    }
+                    if (curChildPosition + 1 > 1) {
+                        viewBtnPre.setImageResource(R.drawable.ic_arrow_left_active);
+                        viewBtnPre.setClickable(true);
+                    }
+//                    Toast.makeText(getActivity(), adapter.getItem(curChildPosition).getClass().getSimpleName() + "", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), "Chua dien day du thong tin", Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    viewBtnPre.setClickable(true);
-                    viewBtnNext.setImageResource(R.drawable.ic_arrow_right_gray);
-                }
-                if(curChildPosition + 1>1)
-                {
-                    viewBtnPre.setImageResource(R.drawable.ic_arrow_left_active);
-                    viewBtnPre.setClickable(true);
-                }
-
                 break;
             case R.id.btn_prev:
 
@@ -159,6 +168,13 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 break;
         }
 
+    }
+
+    private boolean checkHaveData() {
+        ItemBaseSurveyFragment item =(ItemBaseSurveyFragment) adapter.getItem(curChildPosition);
+        //if(item.checkData())
+            return true;
+        //return false;
     }
 
     private int getItem(int i) {

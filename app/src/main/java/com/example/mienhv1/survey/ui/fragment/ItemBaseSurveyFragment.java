@@ -2,6 +2,7 @@ package com.example.mienhv1.survey.ui.fragment;
 
 import android.app.Activity;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.base.BaseFragment;
@@ -12,7 +13,7 @@ import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
  * Created by Forev on 17/04/23.
  */
 
-public abstract class ItemBaseSurveyFragment extends BaseFragment implements ItemBaseSurveyView {
+public abstract class ItemBaseSurveyFragment<T> extends BaseFragment implements ItemBaseSurveyView {
     public EnumSurveyFragment fType;
     protected ItemBaseSurveyPresenter presenter = new ItemBaseSurveyPresenter(getActivity(), this);
 
@@ -22,7 +23,9 @@ public abstract class ItemBaseSurveyFragment extends BaseFragment implements Ite
         return fType;
     }
 
-    protected abstract void returnDataFromFragment();
+    public abstract boolean checkData();
+    public abstract AnswerModel<T> getDataFromUserHandle();
+
     public OnFragmentInteractionListener mListener;
 
     @Override

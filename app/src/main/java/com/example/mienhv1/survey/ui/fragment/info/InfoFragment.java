@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ItemAttributeModel;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
  * Created by Forev on 17/04/20.
  */
 
-public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
+public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView {
 
     InfoPresenter presenter;
     private String TAG = "InfoFragment";
@@ -43,6 +45,11 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
     private String ward = "";
     private TextView addressTextView;
     private TextView titleQuestion;
+    private TextView nameStoreEditText;
+    private TextView addressAll;
+    private TextView nameUserSurvey;
+    public static final String BLANK_SPACE="";
+    private ItemQuestionModel item;
 
     public static InfoFragment newInstance(ItemQuestionModel mode) {
         Bundle args = new Bundle();
@@ -62,7 +69,10 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
         presenter = new InfoPresenter(getActivity(), this);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress_upload);
         addressTextView = (TextView) view.findViewById(R.id.address_text_view);
+        addressAll = (TextView) view.findViewById(R.id.name_street);
         titleQuestion = (TextView) view.findViewById(R.id.txt_title);
+        nameStoreEditText = (EditText) view.findViewById(R.id.name_store_editext);
+        nameUserSurvey = (EditText) view.findViewById(R.id.name_user_survey);
 
         provinceSpinner = (Spinner) view.findViewById(R.id.spinner_province_id);
         districtSpinner = (Spinner) view.findViewById(R.id.spinner_district_id);
@@ -74,7 +84,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
         super.initData();
         presenter.create();
         presenter.getProvinceList();
-        ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
+        item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
         titleQuestion.setText(item.order_rank+ ". " +item.title);
         setDefaultValueSpinner(provinceSpinner, getResources().getString(R.string.default_value_province));
         setDefaultValueSpinner(districtSpinner, getResources().getString(R.string.default_value_district));
@@ -146,9 +156,27 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
     }
 
     @Override
-    protected void returnDataFromFragment() {
-
+    public boolean checkData() {
+        if(nameStoreEditText.getText().toString().equals(BLANK_SPACE)){
+            return false;
+        }
+        return true;
     }
+
+    @Override
+    public AnswerModel<T> getDataFromUserHandle() {
+        AnswerModel result = new AnswerModel();
+        InforModel inforModel = new InforModel();
+        inforModel.nameStore=nameStoreEditText.getText().toString();
+        inforModel.address = address;
+        inforModel.datemake ="-06-16-2017";
+        inforModel.nameStore=nameUserSurvey.getText().toString();
+        inforModel.GPS = "GPS";
+        result.idTypeQuestion=item.order_rank;
+        result.modelQuestion=inforModel;
+        return result;
+    }
+
 
     @Override
     public void getListProvince(DataResponse<ProvinceModel> mdataRes) {
@@ -273,6 +301,7 @@ public class InfoFragment extends ItemBaseSurveyFragment implements InfoView {
             if (i > 0) {
                 ward = adapterView.getItemAtPosition(i).toString();
                 addressTextView.setText(province + "," + district + "," + ward);
+                address=addressTextView.getText().toString()+addressAll.getText().toString();
             }
         }
 

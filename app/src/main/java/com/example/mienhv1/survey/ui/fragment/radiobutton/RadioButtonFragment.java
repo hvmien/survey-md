@@ -1,20 +1,18 @@
 package com.example.mienhv1.survey.ui.fragment.radiobutton;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
-import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.adapter.CallBackDataListener;
+import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.utils.BlankFragment;
 import com.example.mienhv1.survey.utils.view.CSRadioGroup;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
@@ -29,6 +27,7 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     private CSRadioGroup csRadioGroupParent;
     private ProgressBar radiobuttonProgress;
     private ArrayList mList;
+    private int mID = -1;
 
     public static RadioButtonFragment newInstance(ItemQuestionModel item) {
 
@@ -73,8 +72,15 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     }
 
     @Override
-    protected void returnDataFromFragment() {
+    public boolean checkData() {
+        if (mID == -1)
+            return false;
+        return true;
+    }
 
+    @Override
+    public AnswerModel getDataFromUserHandle() {
+        return null;
     }
 
     @Override
@@ -113,7 +119,8 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     @Override
     public void onItemClick(ItemQuestionModel item, int id) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(item,id);
+            mID = id;
+            mListener.onFragmentInteraction(item, id);
         }
 
     }

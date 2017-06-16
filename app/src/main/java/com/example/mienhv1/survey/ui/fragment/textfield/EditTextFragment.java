@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
@@ -41,8 +42,13 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     }
 
     @Override
-    protected void returnDataFromFragment() {
+    public boolean checkData() {
+        return false;
+    }
 
+    @Override
+    public AnswerModel getDataFromUserHandle() {
+        return null;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     protected void initData() {
         super.initData();
         ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
-        txtTitle.setText(item.order_rank+ ". " +item.title);
+        txtTitle.setText(item.order_rank + ". " + item.title);
     }
 
     @Override

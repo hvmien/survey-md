@@ -25,6 +25,7 @@ import com.esafirm.imagepicker.features.camera.CameraModule;
 import com.esafirm.imagepicker.features.camera.ImmediateCameraModule;
 import com.esafirm.imagepicker.features.camera.OnImageReadyListener;
 import com.esafirm.imagepicker.model.Image;
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.PickImageModel;
@@ -125,8 +126,13 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     @Override
-    protected void returnDataFromFragment() {
+    public boolean checkData() {
+        return false;
+    }
 
+    @Override
+    public AnswerModel getDataFromUserHandle() {
+        return null;
     }
 
     @Override

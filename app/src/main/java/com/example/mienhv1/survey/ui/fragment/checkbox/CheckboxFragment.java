@@ -1,19 +1,18 @@
 package com.example.mienhv1.survey.ui.fragment.checkbox;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
-import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.adapter.CallBackDataListener;
+import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
-import com.example.mienhv1.survey.ui.fragment.radiobutton.RadioButtonFragment;
 import com.example.mienhv1.survey.utils.view.CSGroupCheckbox;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
@@ -37,7 +36,6 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     @Override
@@ -72,8 +70,13 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
     }
 
     @Override
-    protected void returnDataFromFragment() {
+    public boolean checkData() {
+        return false;
+    }
 
+    @Override
+    public AnswerModel getDataFromUserHandle() {
+        return null;
     }
 
     @Override
@@ -105,7 +108,7 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
     @Override
     public void onItemClick(ItemQuestionModel item, int id) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(item,id);
+            mListener.onFragmentInteraction(item, id);
         }
     }
 
