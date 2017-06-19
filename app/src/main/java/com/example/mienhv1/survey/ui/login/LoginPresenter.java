@@ -121,7 +121,7 @@ public class LoginPresenter implements BasePresenter {
             Log.e(TAG,e.getMessage());
             if (mLoginView != null) {
                 mLoginView.hideProgress();
-                mLoginView.showError(mContext.getString(R.string.error_invalid_login));
+                mLoginView.showError(e.getMessage());
             }
         }
 

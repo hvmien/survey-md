@@ -16,6 +16,7 @@ import com.example.mienhv1.survey.utils.view.CSGroupCallBackDataEdittext;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by HVM on 4/23/2017.
@@ -40,12 +41,14 @@ public class RadioButtonTextFieldFragment extends ItemBaseSurveyFragment {
         txtTitle = (CSTextView) view.findViewById(R.id.txt_title);
         groupRadiobuttonEdittext = (CSGroupCallBackDataEdittext) view.findViewById(R.id.gr_radiobutton_text_field);
     }
-ItemQuestionModel item;
+
+    ItemQuestionModel item;
+
     @Override
     protected void initData() {
         super.initData();
         item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
-        txtTitle.setText(item.order_rank+ ". " +item.title);
+        txtTitle.setText(item.order_rank + ". " + item.title);
     }
 
     @Override
@@ -68,12 +71,15 @@ ItemQuestionModel item;
 
     @Override
     public boolean checkData() {
-return false;
+        return false;
     }
 
     @Override
     public AnswerModel getDataFromUserHandle() {
-        return null;
+        AnswerModel m =new AnswerModel();
+        m.idTypeQuestion=item.order_rank;
+        m.modelQuestion=getData();
+        return m;
     }
 
     @Override
@@ -93,6 +99,9 @@ return false;
 
     @Override
     public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
-        groupRadiobuttonEdittext.setData(data,item);
+        groupRadiobuttonEdittext.setData(data, item);
+    }
+    public HashMap<String,String> getData(){
+        return groupRadiobuttonEdittext.getDataFromUser();
     }
 }

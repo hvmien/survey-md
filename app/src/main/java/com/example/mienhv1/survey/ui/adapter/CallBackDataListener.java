@@ -7,5 +7,5 @@ import com.example.datasource.model.ItemQuestionModel;
  */
 
 public interface CallBackDataListener {
-    void onItemClick(ItemQuestionModel item,int id);
+    void onItemClick(ItemQuestionModel item,int id,boolean b);
 }

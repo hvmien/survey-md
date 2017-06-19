@@ -46,7 +46,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     private TextView addressTextView;
     private TextView titleQuestion;
     private TextView nameStoreEditText;
-    private TextView addressAll;
+    private TextView homeNumberStreet;
     private TextView nameUserSurvey;
     public static final String BLANK_SPACE="";
     private ItemQuestionModel item;
@@ -69,7 +69,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
         presenter = new InfoPresenter(getActivity(), this);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress_upload);
         addressTextView = (TextView) view.findViewById(R.id.address_text_view);
-        addressAll = (TextView) view.findViewById(R.id.name_street);
+        homeNumberStreet = (TextView) view.findViewById(R.id.name_street);
         titleQuestion = (TextView) view.findViewById(R.id.txt_title);
         nameStoreEditText = (EditText) view.findViewById(R.id.name_store_editext);
         nameUserSurvey = (EditText) view.findViewById(R.id.name_user_survey);
@@ -169,8 +169,13 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
         InforModel inforModel = new InforModel();
         inforModel.nameStore=nameStoreEditText.getText().toString();
         inforModel.address = address;
-        inforModel.datemake ="-06-16-2017";
-        inforModel.nameStore=nameUserSurvey.getText().toString();
+        inforModel.province = province;
+        inforModel.district = district;
+        inforModel.ward = ward;
+        inforModel.homenumberstreet = homeNumberStreet.getText().toString();
+
+        inforModel.datemake ="06-17-2017";
+        inforModel.namePersonSurvey=nameUserSurvey.getText().toString();
         inforModel.GPS = "GPS";
         result.idTypeQuestion=item.order_rank;
         result.modelQuestion=inforModel;
@@ -301,7 +306,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
             if (i > 0) {
                 ward = adapterView.getItemAtPosition(i).toString();
                 addressTextView.setText(province + "," + district + "," + ward);
-                address=addressTextView.getText().toString()+addressAll.getText().toString();
+                address=addressTextView.getText().toString()+homeNumberStreet.getText().toString();
             }
         }
 

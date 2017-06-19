@@ -6,18 +6,26 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.datasource.model.AnswerModel;
+import com.example.datasource.model.DataAnswerText;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ItemQuestionModel;
+import com.example.datasource.model.ResponeDataText;
+import com.example.datasource.model.StoreSystem;
 import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
+import com.example.datasource.usercases.SignInUserCase;
+import com.example.datasource.usercases.UploadDataAnswerTextUserCase;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.login.LoginPresenter;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 
 import java.util.ArrayList;
+
+import io.reactivex.observers.DisposableObserver;
 
 /**
  * Created by MienHV1 on 4/12/2017.
@@ -125,6 +133,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     if (curChildPosition + 1 == mViewPager.getAdapter().getCount()) {
                         viewBtnPre.setClickable(true);
                         viewBtnNext.setImageResource(R.drawable.checked_done);
+                        DataAnswerText datatext =new DataAnswerText();
+                        datatext.userid=10;
+                        datatext.answerModelArrayList=mListAnswer;
+                        uploaddata(datatext);
                     } else {
                         viewBtnPre.setClickable(true);
                         viewBtnNext.setImageResource(R.drawable.ic_arrow_right_active);
@@ -133,7 +145,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                         viewBtnPre.setImageResource(R.drawable.ic_arrow_left_active);
                         viewBtnPre.setClickable(true);
                     }
-//                    Toast.makeText(getActivity(), adapter.getItem(curChildPosition).getClass().getSimpleName() + "", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getActivity(), "Chua dien day du thong tin", Toast.LENGTH_SHORT).show();
                 }
@@ -157,7 +168,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //                }
                 if(curChildPosition + 1<mViewPager.getAdapter().getCount())
                 {
-                    viewBtnNext.setImageResource(R.drawable.ic_arrow_right_gray);
+                    viewBtnNext.setImageResource(R.drawable.ic_arrow_right_active);
                     viewBtnNext.setClickable(true);
                 }
                 if(curChildPosition + 1==1)
@@ -168,6 +179,13 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                 break;
         }
 
+    }
+
+    private void uploaddata(DataAnswerText order) {
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
+        UploadDataAnswerTextUserCase uploadDataAnswerTextUserCase = new UploadDataAnswerTextUserCase(dataRepository);
+        UploadDataAnswerTextUserCase.RequestValue requestValue = new UploadDataAnswerTextUserCase.RequestValue(order);
+        uploadDataAnswerTextUserCase.execute(new UploadDataObserver(), requestValue);
     }
 
     private boolean checkHaveData() {
@@ -182,4 +200,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
 
+    private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> {
+        @Override
+        public void onNext(DataResponse<ResponeDataText> storeSystemDataResponse) {
+            Toast.makeText(getActivity(), "onNext UploadDataObserver"+storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Toast.makeText(getActivity(), "onError "+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    }
 }

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class CheckboxAdapter extends BaseViewAdapter<ItemAttributeModel> {
 
-    public CheckboxAdapter(Context context, @LayoutRes int id, ViewGroup parent, ArrayList<CheckboxModel> data,CallBackDataListener listener,ItemQuestionModel itemmodel) {
+    public CheckboxAdapter(Context context, @LayoutRes int id, ViewGroup parent, ArrayList<ItemAttributeModel> data,CallBackDataListener listener,ItemQuestionModel itemmodel) {
         super(context, id, parent, data,listener,itemmodel);
     }
 
@@ -35,7 +35,7 @@ public class CheckboxAdapter extends BaseViewAdapter<ItemAttributeModel> {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 //DataRepository m = DataRepositoryFactory.createDataRepository(mContext);
-                listener.onItemClick(itemModel,position);
+                listener.onItemClick(itemModel,position,b);
             }
         });
 

@@ -2,6 +2,7 @@ package com.example.datasource.source.remote;
 
 import android.content.Context;
 
+import com.example.datasource.model.DataAnswerText;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -9,6 +10,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.ResponeDataText;
 import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
@@ -109,5 +111,10 @@ public class RemoteDataSource implements IRemoteDataSource {
     @Override
     public Observable<DataResponse<StoreSystem>> getListStore() {
         return mApiInterface.getListStore();
+    }
+
+    @Override
+    public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerText order) {
+        return mApiInterface.uploadDataText(order);
     }
 }

@@ -42,7 +42,7 @@ public class CheckboxTextFieldAdapter extends BaseViewAdapter<CheckboxTextFieldM
     }
 
     @Override
-    public void onItemClick(ItemQuestionModel item,int id) {
+    public void onItemClick(ItemQuestionModel item,int id,boolean ischeck) {
 
     }
 }

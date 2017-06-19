@@ -1,5 +1,6 @@
 package com.example.datasource.source.remote;
 
+import com.example.datasource.model.DataAnswerText;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -7,6 +8,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.ResponeDataText;
 import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -60,4 +63,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("table_attritute")
     Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(@Field("table_id")int tableid);
+
+    @POST("uploaddata")
+    Observable<DataResponse<ResponeDataText>> uploadDataText(@Body DataAnswerText data);
 }

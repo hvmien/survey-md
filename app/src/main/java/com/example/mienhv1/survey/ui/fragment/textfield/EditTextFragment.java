@@ -11,7 +11,6 @@ import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
-import com.example.mienhv1.survey.ui.adapter.EditTexAdapter;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
@@ -23,7 +22,8 @@ import java.util.ArrayList;
  */
 
 public class EditTextFragment extends ItemBaseSurveyFragment {
-
+    private ItemQuestionModel item;
+    private EditTexAdapter adapter;
     public static EditTextFragment newInstance(ItemQuestionModel model) {
 
         Bundle args = new Bundle();
@@ -48,7 +48,10 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
 
     @Override
     public AnswerModel getDataFromUserHandle() {
-        return null;
+        AnswerModel m = new AnswerModel();
+        m.idTypeQuestion=item.order_rank;
+        m.modelQuestion = adapter.getDataTextview();
+        return m;
     }
 
     @Override
@@ -66,7 +69,7 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     @Override
     protected void initData() {
         super.initData();
-        ItemQuestionModel item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
+        item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
         txtTitle.setText(item.order_rank + ". " + item.title);
     }
 
@@ -92,7 +95,7 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
 
     @Override
     public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
-        EditTexAdapter adapter = new EditTexAdapter(getContext(), null);
+        adapter = new EditTexAdapter(getContext(), null);
         adapter.updateData(data);
         rcQuestion.setAdapter(adapter);
     }

@@ -2,6 +2,7 @@ package com.example.mienhv1.survey.ui.fragment.checkbox;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.example.mienhv1.survey.utils.view.CSGroupCheckbox;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by HVM on 4/23/2017.
@@ -26,6 +28,8 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
     private CSTextView txtTitle;
     private CSGroupCheckbox grCheckboxParent;
     private ProgressBar checkboxProgressbar;
+    HashMap<String, Boolean> meMap=new HashMap<String, Boolean>();
+    private ArrayList<ItemAttributeModel> mList;
 
 
     public static CheckboxFragment newInstance(ItemQuestionModel item) {
@@ -55,6 +59,7 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
     @Override
     protected void initData() {
         super.initData();
+
         item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
         txtTitle.setText(item.order_rank + ". " + item.title);
     }
@@ -76,7 +81,10 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
 
     @Override
     public AnswerModel getDataFromUserHandle() {
-        return null;
+        AnswerModel m =new AnswerModel();
+        m.idTypeQuestion=item.order_rank;
+        m.modelQuestion=meMap;
+        return m;
     }
 
     @Override
@@ -98,19 +106,23 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
     public void onGetDataListenner(ArrayList<ItemAttributeModel> dataAtt) {
         if (dataAtt != null) {
             //goi toi api /table_attritute params{table_id} lay table_id trong getArguments()
-            ArrayList mList = new ArrayList<>();
+            mList = new ArrayList<>();
             mList.addAll(dataAtt);
+            for (int i = 0; i < mList.size(); i++) {
+                meMap.put(mList.get(i).name_column.toString(),false);
+            }
             CheckboxAdapter ckA = new CheckboxAdapter(getActivity(), R.layout.item_check_box_view, grCheckboxParent, mList, this, item);
             grCheckboxParent.setAdapter(ckA);
         }
     }
 
     @Override
-    public void onItemClick(ItemQuestionModel item, int id) {
+    public void onItemClick(ItemQuestionModel item, int id,boolean ischecked) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(item, id);
+            if(meMap.containsKey(mList.get(id).name_column))
+            {
+                meMap.put(mList.get(id).name_column,ischecked);
+            }
         }
     }
-
-
 }

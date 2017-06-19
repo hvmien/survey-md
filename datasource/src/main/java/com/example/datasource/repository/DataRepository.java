@@ -2,6 +2,7 @@ package com.example.datasource.repository;
 
 import android.text.TextUtils;
 
+import com.example.datasource.model.DataAnswerText;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -9,6 +10,7 @@ import com.example.datasource.model.ImageRespone;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.ResponeDataText;
 import com.example.datasource.model.StoreSystem;
 import com.example.datasource.model.User;
 import com.example.datasource.model.WardModel;
@@ -103,5 +105,9 @@ public class DataRepository {
 
     public Observable<DataResponse<StoreSystem>> getListStore() {
         return mRemoteDataSource.getListStore();
+    }
+
+    public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerText order) {
+        return mRemoteDataSource.uploadDataText(order);
     }
 }
