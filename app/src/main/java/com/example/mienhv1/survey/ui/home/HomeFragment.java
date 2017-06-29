@@ -1,6 +1,5 @@
 package com.example.mienhv1.survey.ui.home;
 
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +24,7 @@ import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 
 import java.util.ArrayList;
 
+import cn.refactor.lib.colordialog.PromptDialog;
 import io.reactivex.observers.DisposableObserver;
 
 /**
@@ -115,6 +115,44 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         }
     }
 
+    private void showPromptDlgSuccess() {
+        PromptDialog promptDialog =new PromptDialog(getActivity());
+
+        promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_SUCCESS);
+        promptDialog.setAnimationEnable(true);
+        promptDialog.setCancelable(false);
+        promptDialog.setTitleText(getString(R.string.success));
+        promptDialog.setContentText(getString(R.string.text_data));
+        promptDialog.setPositiveListener(getString(R.string.ok), new PromptDialog.OnPositiveListener() {
+            @Override
+            public void onClick(PromptDialog dialog) {
+                dialog.dismiss();
+                getActivity().finish();
+            }
+        });
+        promptDialog.setCancelable(false);
+        promptDialog.show();
+    }
+
+    private void showPromptDlgError(String message) {
+        PromptDialog promptDialog =new PromptDialog(getActivity());
+
+        promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_WRONG);
+        promptDialog.setAnimationEnable(true);
+        promptDialog.setCancelable(false);
+        promptDialog.setTitleText(getString(R.string.success));
+        promptDialog.setContentText(message);
+        promptDialog.setPositiveListener(getString(R.string.ok), new PromptDialog.OnPositiveListener() {
+            @Override
+            public void onClick(PromptDialog dialog) {
+                curChildPosition--;
+                dialog.dismiss();
+            }
+        });
+        promptDialog.setCancelable(false);
+        promptDialog.show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -136,21 +174,22 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     if (curChildPosition + 1 == mViewPager.getAdapter().getCount()) {
                         viewBtnPre.setClickable(true);
                         viewBtnNext.setImageResource(R.drawable.checked_done);
-//                        DataAnswerText datatext = new DataAnswerText();
-//                        datatext.userid = 10;
-//                        datatext.answerModelArrayList = mListAnswer;
-//                        uploaddata(datatext);
-                    } else if (curChildPosition + 1 == mViewPager.getAdapter().getCount() + 1) {
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.addToBackStack(null);
 
-                        DoneAnswerDialogFragment generalDialogFragment =
-                                DoneAnswerDialogFragment.newInstance(getResources().getString(R.string.title_dialog), "message");
-                        generalDialogFragment.setCancelable(false);
-                        generalDialogFragment.setDoneAnswerDialogFragment(this);
-                        ft.add(generalDialogFragment,"");
-                        ft.commit();
-                        //generalDialogFragment.show(ft,"dialog");
+                    } else if (curChildPosition + 1 == mViewPager.getAdapter().getCount() + 1) {
+//                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                        ft.addToBackStack(null);
+//
+//                        DoneAnswerDialogFragment generalDialogFragment =
+//                                DoneAnswerDialogFragment.newInstance(getResources().getString(R.string.title_dialog), "message");
+//                        generalDialogFragment.setCancelable(false);
+//                        generalDialogFragment.setDoneAnswerDialogFragment(this);
+//                        ft.add(generalDialogFragment,"");
+//                        ft.commit();
+                        DataAnswerText datatext = new DataAnswerText();
+                        datatext.userid = 10;
+                        datatext.answerModelArrayList = mListAnswer;
+                        uploaddata(datatext);
+//                        showPromptDlg();
                     } else {
                         viewBtnPre.setClickable(true);
                         viewBtnNext.setImageResource(R.drawable.ic_arrow_right_active);
@@ -230,17 +269,19 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> {
         @Override
         public void onNext(DataResponse<ResponeDataText> storeSystemDataResponse) {
-            Toast.makeText(getActivity(), "onNext UploadDataObserver" + storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "onNext UploadDataObserver" + storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
         public void onError(Throwable e) {
-            Toast.makeText(getActivity(), "onError " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            showPromptDlgError(e.getMessage());
+//            Toast.makeText(getActivity(), "onError " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onComplete() {
-
+            showPromptDlgSuccess();
         }
     }
 }
