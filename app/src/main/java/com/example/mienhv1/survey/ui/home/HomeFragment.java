@@ -1,5 +1,6 @@
 package com.example.mienhv1.survey.ui.home;
 
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
 import com.example.mienhv1.survey.ui.dialog.DoneAnswerDialogFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.upload.UploadFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 
@@ -31,7 +33,8 @@ import io.reactivex.observers.DisposableObserver;
  * Created by MienHV1 on 4/12/2017.
  */
 
-public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener, DoneAnswerDialogFragment.OnDialogFragmentClickListener {
+public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener,
+        DoneAnswerDialogFragment.OnDialogFragmentClickListener {
 
     private HomePresenter mHomePresenter;
 
@@ -265,8 +268,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         Toast.makeText(getActivity(), "onCancelClicked", Toast.LENGTH_SHORT).show();
     }
 
-
-    private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> {
+    UploadFragment uploadimage;
+    private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> implements UploadFragment.OnCallbackUpload {
         @Override
         public void onNext(DataResponse<ResponeDataText> storeSystemDataResponse) {
 //            Toast.makeText(getActivity(), "onNext UploadDataObserver" + storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
@@ -281,7 +284,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         @Override
         public void onComplete() {
+            uploadimage = (UploadFragment)adapter.getItem(mListQuestion.size()-1);
+            uploadimage.setOnCallbackUpload(this);
+            uploadimage.upload();
+
+        }
+
+        @Override
+        public void onSuccess() {
             showPromptDlgSuccess();
+        }
+
+        @Override
+        public void onError() {
+            showPromptDlgError("uploadimage error");
         }
     }
 }

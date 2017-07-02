@@ -61,11 +61,13 @@ public class UploadPresenter {
         public void onError(Throwable e) {
             uploadView.hideProgress();
             uploadView.showError(e.getMessage());
+            uploadView.onErrorUploadImage();
         }
 
         @Override
         public void onComplete() {
             uploadView.hideProgress();
+            uploadView.onSuccessUploadImage();
         }
     }
 }
