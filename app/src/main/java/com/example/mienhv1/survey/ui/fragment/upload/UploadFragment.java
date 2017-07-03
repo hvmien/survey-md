@@ -320,6 +320,9 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
             mUploadPresenter.uploadImage(getMutilPart(mUriString));
 
         }
+        else {
+            mListener.onError();
+        }
     }
 
     public void setOnCallbackUpload(OnCallbackUpload mListener) {
