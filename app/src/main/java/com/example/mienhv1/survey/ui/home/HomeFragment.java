@@ -278,7 +278,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> implements UploadFragment.OnCallbackUpload {
         @Override
         public void onNext(DataResponse<ResponeDataText> storeSystemDataResponse) {
-//            Toast.makeText(getActivity(), "onNext UploadDataObserver" + storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "onNext UploadDataObserver" + storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -290,9 +290,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         @Override
         public void onComplete() {
-            uploadimage = (UploadFragment) adapter.getItem(mListQuestion.size() - 1);
-            uploadimage.setOnCallbackUpload(this);
-            uploadimage.upload();
+//            uploadimage = (UploadFragment) adapter.getItem(mListQuestion.size() - 1);
+//            uploadimage.setOnCallbackUpload(this);
+//            uploadimage.upload();
 
         }
 
