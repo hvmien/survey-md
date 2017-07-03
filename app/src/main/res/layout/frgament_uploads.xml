@@ -43,6 +43,7 @@
         android:layout_height="200dp" />
 
     <com.example.mienhv1.survey.utils.view.CSButton
+        android:visibility="gone"
         android:layout_marginBottom="44dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

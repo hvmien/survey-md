@@ -8,4 +8,7 @@ import com.example.mienhv1.survey.base.BaseView;
 
 public interface UploadView extends BaseView {
     void showProgressItemRecyc();
+    void upload();
+    void onSuccessUploadImage();
+    void onErrorUploadImage();
 }

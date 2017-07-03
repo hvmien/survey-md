@@ -1,5 +1,6 @@
 package com.example.mienhv1.survey.ui.home;
 
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
 import com.example.mienhv1.survey.ui.dialog.DoneAnswerDialogFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.upload.UploadFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
 
@@ -31,7 +33,8 @@ import io.reactivex.observers.DisposableObserver;
  * Created by MienHV1 on 4/12/2017.
  */
 
-public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener, DoneAnswerDialogFragment.OnDialogFragmentClickListener {
+public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener,
+        DoneAnswerDialogFragment.OnDialogFragmentClickListener {
 
     private HomePresenter mHomePresenter;
 
@@ -111,12 +114,13 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
             mViewPager.setAdapter(adapter);
             mViewPager.setOffscreenPageLimit(mListQuestion.size());
+
             txtCurPage.setText(1 + "/" + mListQuestion.size());
         }
     }
 
     private void showPromptDlgSuccess() {
-        PromptDialog promptDialog =new PromptDialog(getActivity());
+        PromptDialog promptDialog = new PromptDialog(getActivity());
 
         promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_SUCCESS);
         promptDialog.setAnimationEnable(true);
@@ -135,12 +139,12 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
     private void showPromptDlgError(String message) {
-        PromptDialog promptDialog =new PromptDialog(getActivity());
+        PromptDialog promptDialog = new PromptDialog(getActivity());
 
         promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_WRONG);
         promptDialog.setAnimationEnable(true);
         promptDialog.setCancelable(false);
-        promptDialog.setTitleText(getString(R.string.success));
+        promptDialog.setTitleText(getString(R.string.error));
         promptDialog.setContentText(message);
         promptDialog.setPositiveListener(getString(R.string.ok), new PromptDialog.OnPositiveListener() {
             @Override
@@ -170,7 +174,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
                     curChildPosition++;
                     mViewPager.setCurrentItem(getItem(+1), true);
-                    txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
+                    if (curChildPosition < mListQuestion.size()) {
+                        txtCurPage.setText(curChildPosition + 1 + "/" + mListQuestion.size());
+                    }
                     if (curChildPosition + 1 == mViewPager.getAdapter().getCount()) {
                         viewBtnPre.setClickable(true);
                         viewBtnNext.setImageResource(R.drawable.checked_done);
@@ -241,10 +247,12 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
     private boolean checkHaveData() {
-        ItemBaseSurveyFragment item = (ItemBaseSurveyFragment) adapter.getItem(curChildPosition);
-        //if(item.checkData())
-        return true;
-        //return false;
+        if (curChildPosition < mListQuestion.size() + 1) {
+            ItemBaseSurveyFragment item = (ItemBaseSurveyFragment) adapter.getItem(curChildPosition);
+            //if(item.checkData())
+            return true;
+        }
+        return false;
     }
 
     private int getItem(int i) {
@@ -265,8 +273,9 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         Toast.makeText(getActivity(), "onCancelClicked", Toast.LENGTH_SHORT).show();
     }
 
+    UploadFragment uploadimage;
 
-    private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> {
+    private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> implements UploadFragment.OnCallbackUpload {
         @Override
         public void onNext(DataResponse<ResponeDataText> storeSystemDataResponse) {
 //            Toast.makeText(getActivity(), "onNext UploadDataObserver" + storeSystemDataResponse.msg, Toast.LENGTH_SHORT).show();
@@ -281,7 +290,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
         @Override
         public void onComplete() {
+            uploadimage = (UploadFragment) adapter.getItem(mListQuestion.size() - 1);
+            uploadimage.setOnCallbackUpload(this);
+            uploadimage.upload();
+
+        }
+
+        @Override
+        public void onSuccess() {
             showPromptDlgSuccess();
+        }
+
+        @Override
+        public void onError() {
+            showPromptDlgError("uploadimage error");
         }
     }
 }

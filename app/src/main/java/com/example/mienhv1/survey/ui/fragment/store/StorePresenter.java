@@ -29,7 +29,7 @@ public class StorePresenter implements BasePresenter {
         this.dataRepository = data;
         mSignOutUserCase = new SignOutUserCase(dataRepository);
         getListStoreUserCase = new GetListStoreUserCase(this.dataRepository);
-        mContext= MyApplication.getInstance().getApplicationContext();
+        mContext = MyApplication.getInstance().getApplicationContext();
     }
 
 
@@ -66,27 +66,29 @@ public class StorePresenter implements BasePresenter {
     public void destroy() {
 
     }
+
     public void signOut() {
         mSignOutUserCase.execute(new SignOutObserver(), null);
     }
 
     public void getListStoreForRecyclerView() {
         storeView.showProgress();
-        getListStoreUserCase.execute(new GetListStoreObserver(),null);
+        getListStoreUserCase.execute(new GetListStoreObserver(), null);
     }
 
     private class GetListStoreObserver extends DisposableObserver<DataResponse<StoreSystem>> {
         @Override
         public void onNext(DataResponse<StoreSystem> listStoreModelDataResponse) {
             storeView.hideProgress();
-            if(listStoreModelDataResponse.data!=null&&listStoreModelDataResponse.data.size()>0){
+            if (listStoreModelDataResponse.data != null && listStoreModelDataResponse.data.size() > 0) {
                 storeView.initStoreData(listStoreModelDataResponse.data);
             }
         }
 
         @Override
         public void onError(Throwable e) {
-        storeView.showError(e.getMessage());
+            storeView.hideProgress();
+            storeView.showError(e.getMessage());
         }
 
         @Override

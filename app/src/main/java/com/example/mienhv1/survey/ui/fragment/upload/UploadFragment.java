@@ -308,6 +308,39 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     @Override
+    public void upload(){
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
+        mUploadPresenter = new UploadPresenter(dataRepository,this);
+
+        if(bmList.size()>0){
+            for (int i = 0; i < bmList.size(); i++) {
+                mUriString.add(bmList.get(i).uri.toString());
+            }
+            bmList.clear();
+            mUploadPresenter.uploadImage(getMutilPart(mUriString));
+
+        }
+        else {
+            mListener.onError();
+        }
+    }
+
+    public void setOnCallbackUpload(OnCallbackUpload mListener) {
+        this.mListener = mListener;
+    }
+
+    private OnCallbackUpload mListener;
+    @Override
+    public void onSuccessUploadImage() {
+        mListener.onSuccess();
+    }
+
+    @Override
+    public void onErrorUploadImage() {
+        mListener.onError();
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_hoan_thanh) {
             DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
@@ -403,6 +436,10 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
             mProgressItemRecyc.setVisibility(View.GONE);
             imageviewPos.imageView.setImageBitmap(bitmapResult);
         }
+    }
+    public interface OnCallbackUpload{
+        void onSuccess();
+        void onError();
     }
 }
 
