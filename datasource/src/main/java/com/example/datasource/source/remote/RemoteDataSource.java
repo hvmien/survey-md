@@ -70,8 +70,8 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion() {
-        return mApiInterface.getDatabaseQuestion();
+    public Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion(int id) {
+        return mApiInterface.getDatabaseQuestion(id);
     }
 
     @Override
@@ -109,8 +109,8 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<DataResponse<StoreSystem>> getListStore() {
-        return mApiInterface.getListStore();
+    public Observable<DataResponse<StoreSystem>> getListStore(String username) {
+        return mApiInterface.getListStore(username);
     }
 
     @Override

@@ -78,8 +78,8 @@ public class DataRepository {
         return mRemoteDataSource.signOut();
     }
 
-    public Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion() {
-        return mRemoteDataSource.getDatabaseQuestion();
+    public Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion(int id) {
+        return mRemoteDataSource.getDatabaseQuestion(id);
     }
 
     public Observable<DataResponse<ImageRespone>> upLoadImageFilesMutilPart(ArrayList<MultipartBody.Part> responseBody) {
@@ -103,8 +103,8 @@ public class DataRepository {
     }
 
 
-    public Observable<DataResponse<StoreSystem>> getListStore() {
-        return mRemoteDataSource.getListStore();
+    public Observable<DataResponse<StoreSystem>> getListStore(String username) {
+        return mRemoteDataSource.getListStore(username);
     }
 
     public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerText order) {

@@ -38,6 +38,8 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
 
     interface OnStoreListener {
         void onOpenLoginPage();
+
+        void onTopicClick(int pos);
     }
 
     @Override
@@ -58,6 +60,7 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
         super.onDetach();
         mListener = null;
     }
+
 
     @Override
     protected int getResourcesLayout() {
@@ -126,9 +129,7 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
 
     @Override
     public void onItemClick(int position) {
-        //check gps this here
-        Intent intent = new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
+        mListener.onTopicClick(position);
     }
 
     @Override
@@ -158,4 +159,10 @@ public class StoreFragment extends BaseFragment implements StoreView, RecyclerVi
         return true;
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
 }

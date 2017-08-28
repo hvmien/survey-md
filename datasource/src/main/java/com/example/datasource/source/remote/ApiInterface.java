@@ -31,11 +31,13 @@ import retrofit2.http.Part;
 
 public interface ApiInterface {
 
-    @POST("list_store")
-    Observable<DataResponse<StoreSystem>> getListStore();
+    @FormUrlEncoded
+    @POST("list_topic_user")
+    Observable<DataResponse<StoreSystem>> getListStore(@Field("username") String username);
 
-    @POST("survey")
-    Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion();
+    @FormUrlEncoded
+    @POST("list_question")
+    Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion(@Field("id_topic") int idtopic);
 
     @FormUrlEncoded
     @POST("login")
@@ -49,7 +51,7 @@ public interface ApiInterface {
     @POST("upload_images")
     Observable<DataResponse<ImageRespone>> uploadImageFileMutilPart(@Part ArrayList<MultipartBody.Part> files);
 
-    @GET("list_province")
+    @GET("list_provinces")
     Observable<DataResponse<ProvinceModel>> getListProvince();
 
     @FormUrlEncoded
@@ -61,9 +63,9 @@ public interface ApiInterface {
     Observable<DataResponse<WardModel>> getWardViaDistrict(@Field("district_id") String districtid);
 
     @FormUrlEncoded
-    @POST("table_attritute")
-    Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(@Field("table_id")int tableid);
+    @POST("question_meta")
+    Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(@Field("id_question")int tableid);
 
-    @POST("uploaddata")
+    @POST("anwser_result")
     Observable<DataResponse<ResponeDataText>> uploadDataText(@Body DataAnswerText data);
 }

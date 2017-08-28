@@ -11,6 +11,8 @@ public class StoreSystem {
     public int id;
     @SerializedName("name")
     public String name = "VinMart";
+    @SerializedName("title")
+    public String titile;
     @SerializedName("thumb")
     public String img_thumb;
 }

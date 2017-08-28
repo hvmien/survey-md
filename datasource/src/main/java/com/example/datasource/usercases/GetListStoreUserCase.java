@@ -17,9 +17,14 @@ public class GetListStoreUserCase extends RxUserCase<DataResponse<StoreSystem>, 
 
     @Override
     protected Observable<DataResponse<StoreSystem>> buildPagrams(RequestValue pagram) {
-        return mDataRepository.getListStore();
+        return mDataRepository.getListStore(pagram.username);
     }
 
     public static class RequestValue implements RxUserCase.RequestValue {
+        public RequestValue(String username) {
+            this.username = username;
+        }
+
+        public String username;
     }
 }

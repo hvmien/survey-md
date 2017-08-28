@@ -5,6 +5,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -105,4 +109,16 @@ public class Utils {
 //        printImages(images);
 //        return;
 //    }
+
+
+    public static void replaceFragmentToActivity(@NonNull FragmentManager fragmentManager,
+                                                 @NonNull Fragment fragment, int frameId, String tag) {
+        try {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(frameId, fragment, tag);
+            transaction.commit();
+        } catch (Exception ignored) {
+            Log.e("Utils", String.valueOf(ignored));
+        }
+    }
 }

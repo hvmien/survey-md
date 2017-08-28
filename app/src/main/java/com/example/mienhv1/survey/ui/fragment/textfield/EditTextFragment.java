@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class EditTextFragment extends ItemBaseSurveyFragment {
     private ItemQuestionModel item;
     private EditTexAdapter adapter;
+
     public static EditTextFragment newInstance(ItemQuestionModel model) {
 
         Bundle args = new Bundle();
@@ -49,8 +50,10 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     @Override
     public AnswerModel getDataFromUserHandle() {
         AnswerModel m = new AnswerModel();
-        m.idTypeQuestion=item.order_rank;
-        m.modelQuestion = adapter.getDataTextview();
+        m.idTypeQuestion = item.order_rank;
+        if (adapter.getDataTextview() != null) {
+            m.modelQuestion = adapter.getDataTextview();
+        }
         return m;
     }
 
@@ -99,4 +102,5 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
         adapter.updateData(data);
         rcQuestion.setAdapter(adapter);
     }
+
 }

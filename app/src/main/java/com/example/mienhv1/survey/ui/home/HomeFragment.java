@@ -1,5 +1,7 @@
 package com.example.mienhv1.survey.ui.home;
 
+import android.app.Activity;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +36,8 @@ import io.reactivex.observers.DisposableObserver;
  */
 
 public class HomeFragment extends BaseFragment implements HomeView, View.OnClickListener,
-        DoneAnswerDialogFragment.OnDialogFragmentClickListener {
+        DoneAnswerDialogFragment.OnDialogFragmentClickListener, PromptDialog.OnPositiveListener {
+    public static final String TAG = HomeFragment.class.getSimpleName();
 
     private HomePresenter mHomePresenter;
 
@@ -70,8 +73,11 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         mViewPager.setScrolling(false);
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
         mHomePresenter = new HomePresenter(dataRepository, this);
-
-        mHomePresenter.createDatabase();
+        Log.d("mien123", "homefragment");
+        int idTopic = getArguments().getInt("idtopic");
+        if (idTopic < 0)
+            return;
+        mHomePresenter.createDatabase(idTopic);
         if (curChildPosition + 1 == 1) {
             viewBtnPre.setClickable(false);
             viewBtnNext.setImageResource(R.drawable.ic_arrow_right_active);
@@ -119,23 +125,20 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         }
     }
 
-    private void showPromptDlgSuccess() {
-        PromptDialog promptDialog = new PromptDialog(getActivity());
+    PromptDialog promptDialog;
 
+    //show dialog when success...
+    private void showPromptDlgSuccess(String msg) {
+        promptDialog = new PromptDialog(getActivity());
         promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_SUCCESS);
         promptDialog.setAnimationEnable(true);
         promptDialog.setCancelable(false);
         promptDialog.setTitleText(getString(R.string.success));
-        promptDialog.setContentText(getString(R.string.text_data));
-        promptDialog.setPositiveListener(getString(R.string.ok), new PromptDialog.OnPositiveListener() {
-            @Override
-            public void onClick(PromptDialog dialog) {
-                dialog.dismiss();
-                getActivity().finish();
-            }
-        });
+        promptDialog.setContentText(msg);
+        promptDialog.setPositiveListener(getString(R.string.ok), this);
         promptDialog.setCancelable(false);
         promptDialog.show();
+
     }
 
     private void showPromptDlgError(String message) {
@@ -157,6 +160,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         promptDialog.show();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -166,7 +170,10 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
                     ItemBaseSurveyFragment item = (ItemBaseSurveyFragment) adapter.getItem(curChildPosition);
 
                     AnswerModel m = item.getDataFromUserHandle();
-                    mListAnswer.add(m);
+                    if (m != null) {
+                        mListAnswer.add(m);
+                    }
+
                     if (curChildPosition + 1 >= mListQuestion.size() + 1) {
                         Log.d("Homefrag", "return out page");
                         return;
@@ -275,6 +282,29 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     UploadFragment uploadimage;
 
+    //implement from dialog click
+    @Override
+    public void onClick(PromptDialog dialog) {
+        if (dialog != null && dialog.isShowing() && getActivity().isFinishing()) {
+            dialog.dismiss();
+            int a = Integer.valueOf("abc");
+        }
+        mListener.onCallbacEndSurvey();
+//        getActivity().finish();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mHomePresenter != null) {
+            mHomePresenter.destroy();
+        }
+        if (promptDialog != null && promptDialog.isShowing()) {
+            promptDialog.dismiss();
+        }
+    }
+
     private class UploadDataObserver extends DisposableObserver<DataResponse<ResponeDataText>> implements UploadFragment.OnCallbackUpload {
         @Override
         public void onNext(DataResponse<ResponeDataText> storeSystemDataResponse) {
@@ -293,17 +323,32 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //            uploadimage = (UploadFragment) adapter.getItem(mListQuestion.size() - 1);
 //            uploadimage.setOnCallbackUpload(this);
 //            uploadimage.upload();
+            showPromptDlgSuccess("abc");
 
         }
 
         @Override
-        public void onSuccess() {
-            showPromptDlgSuccess();
+        public void onSuccess(String msg) {
+            showPromptDlgSuccess(msg);
         }
 
         @Override
         public void onError() {
             showPromptDlgError("uploadimage error");
         }
+    }
+
+    private OnCallbackEndSurvey mListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof OnCallbackEndSurvey) {
+            mListener = (OnCallbackEndSurvey) activity;
+        }
+    }
+
+    interface OnCallbackEndSurvey {
+        void onCallbacEndSurvey();
     }
 }

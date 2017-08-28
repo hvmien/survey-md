@@ -1,5 +1,6 @@
 package com.example.mienhv1.survey.ui.fragment.store;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.example.mienhv1.survey.R;
 import com.example.mienhv1.survey.base.BaseActivity;
 import com.example.mienhv1.survey.ui.fragment.DrawerMenuFragment;
+import com.example.mienhv1.survey.ui.home.HomeActivity;
 
 /**
  * Created by MienHV1 on 4/28/2017.
@@ -81,6 +83,14 @@ public class StoreActivity extends BaseActivity implements StoreFragment.OnStore
     @Override
     public void onOpenLoginPage() {
         openLoginPage();
+    }
+
+    @Override
+    public void onTopicClick(int pos) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra(HomeActivity.ID_TOPIC,pos);
+        startActivity(intent);
+        finish();
     }
 
     @Override

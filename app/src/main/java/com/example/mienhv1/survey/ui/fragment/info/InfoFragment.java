@@ -123,6 +123,12 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.destroy();
+    }
+
+    @Override
     protected void destroyView() {
 
     }

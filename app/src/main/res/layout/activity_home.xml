@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.home.HomeActivity">
-    <fragment
+    <FrameLayout
         android:id="@+id/fragment_home"
-        android:name="com.example.mienhv1.survey.ui.home.HomeFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></fragment>
+        android:layout_height="match_parent"></FrameLayout>
 
 
 </LinearLayout>
