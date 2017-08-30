@@ -10,5 +10,5 @@ public interface UploadView extends BaseView {
     void showProgressItemRecyc();
     void upload();
     void onSuccessUploadImage(String msg);
-    void onErrorUploadImage();
+    void onErrorUploadImage(String error);
 }

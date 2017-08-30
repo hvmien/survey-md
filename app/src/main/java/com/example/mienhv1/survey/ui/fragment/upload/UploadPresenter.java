@@ -84,23 +84,20 @@ public class UploadPresenter implements BasePresenter {
 //                        Log.d("OnNext", list.get(i).image + " image upload thanh cong");
 //                    }
 //                }
-
-                Toast.makeText(mContext, "onNext: " + responseBody.msg + "", Toast.LENGTH_LONG).show();
-
+                uploadView.onSuccessUploadImage(responseBody.msg);
             }
         }
 
         @Override
         public void onError(Throwable e) {
             uploadView.hideProgress();
-            uploadView.showError(e.getMessage());
-            uploadView.onErrorUploadImage();
+//            uploadView.showError(e.getMessage());
+            uploadView.onErrorUploadImage(e.getMessage());
         }
 
         @Override
         public void onComplete() {
             uploadView.hideProgress();
-            uploadView.onSuccessUploadImage("responseBody.msg");
         }
     }
 }

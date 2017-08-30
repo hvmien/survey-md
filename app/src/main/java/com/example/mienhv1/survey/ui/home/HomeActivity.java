@@ -39,7 +39,7 @@ public class HomeActivity extends BaseActivity implements ItemBaseSurveyFragment
         Log.d("mien123","home activity");
         Bundle extras = getIntent().getExtras();
         int id_topic=  extras.getInt(ID_TOPIC);
-        Toast.makeText(this, id_topic+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, id_topic+"", Toast.LENGTH_SHORT).show();
         ID= id_topic;
         Bundle bundle = new Bundle();
         bundle.putInt("idtopic", id_topic);

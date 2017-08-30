@@ -319,7 +319,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
             mUploadPresenter.uploadImage(getMutilPart(mUriString));
 
         } else {
-            mListener.onError();
+            mListener.warrning("Chưa có hình ảnh minh họa!");
         }
     }
 
@@ -335,8 +335,8 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     @Override
-    public void onErrorUploadImage() {
-        mListener.onError();
+    public void onErrorUploadImage(String error) {
+        mListener.onError(error);
     }
 
     @Override
@@ -440,7 +440,9 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     public interface OnCallbackUpload {
         void onSuccess(String msg);
 
-        void onError();
+        void onError(String error);
+
+        void warrning(String warn);
     }
 
     @Override
