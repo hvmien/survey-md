@@ -17,6 +17,7 @@ import com.example.datasource.model.DistrictModel;
 import com.example.datasource.model.ItemAttributeModel;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ProvinceModel;
+import com.example.datasource.model.SurveyPreModel;
 import com.example.datasource.model.WardModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.R;
@@ -48,7 +49,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     private TextView nameStoreEditText;
     private TextView homeNumberStreet;
     private TextView nameUserSurvey;
-    public static final String BLANK_SPACE="";
+    public static final String BLANK_SPACE = "";
     private ItemQuestionModel item;
 
     public static InfoFragment newInstance(ItemQuestionModel mode) {
@@ -85,7 +86,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
         presenter.create();
         presenter.getProvinceList();
         item = getArguments().getParcelable(Constants.ARG_ITEM_SURVEY);
-        titleQuestion.setText(item.order_rank+ ". " +item.title);
+        titleQuestion.setText(item.order_rank + ". " + item.title);
         setDefaultValueSpinner(provinceSpinner, getResources().getString(R.string.default_value_province));
         setDefaultValueSpinner(districtSpinner, getResources().getString(R.string.default_value_district));
         setDefaultValueSpinner(wardSpinner, getResources().getString(R.string.default_value_ward));
@@ -163,7 +164,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
 
     @Override
     public boolean checkData() {
-        if(nameStoreEditText.getText().toString().equals(BLANK_SPACE)){
+        if (nameStoreEditText.getText().toString().equals(BLANK_SPACE)) {
             return false;
         }
         return true;
@@ -173,21 +174,27 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     public AnswerModel<T> getDataFromUserHandle() {
         AnswerModel result = new AnswerModel();
         InforModel inforModel = new InforModel();
-        inforModel.nameStore=nameStoreEditText.getText().toString();
-        inforModel.address = address;
+        inforModel.namesystemstore="B'mart";
+        inforModel.namestoredetail = nameStoreEditText.getText().toString();
         inforModel.province = province;
         inforModel.district = district;
         inforModel.ward = ward;
-        inforModel.homenumberstreet = homeNumberStreet.getText().toString();
-
-        inforModel.datemake ="06-17-2017";
-        inforModel.namePersonSurvey=nameUserSurvey.getText().toString();
-        inforModel.GPS = "GPS";
-        result.idTypeQuestion=item.order_rank;
-        result.modelQuestion=inforModel;
+        inforModel.homenumberandstreet = homeNumberStreet.getText().toString();
+        inforModel.namepersonsurvey = nameUserSurvey.getText().toString();
+        result.idTypeQuestion = item.order_rank;
+        result.modelQuestion = inforModel;
         return result;
     }
 
+    public SurveyPreModel getInforSysDevicesPreSurvey() {
+        SurveyPreModel preSurvey = new SurveyPreModel();
+        preSurvey.id_survey_for_what=1;
+        preSurvey.id_topic=1;
+        preSurvey.id_account="minhduc";
+        preSurvey.gps="1,1,1,";
+        preSurvey.date_survey="12-12-2012";
+        return preSurvey;
+    }
 
     @Override
     public void getListProvince(DataResponse<ProvinceModel> mdataRes) {
@@ -312,7 +319,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
             if (i > 0) {
                 ward = adapterView.getItemAtPosition(i).toString();
                 addressTextView.setText(province + "," + district + "," + ward);
-                address=addressTextView.getText().toString()+homeNumberStreet.getText().toString();
+                address = addressTextView.getText().toString() + homeNumberStreet.getText().toString();
             }
         }
 

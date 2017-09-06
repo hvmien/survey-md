@@ -1,6 +1,7 @@
 package com.example.mienhv1.survey.ui.home;
 
 import android.app.Activity;
+import android.icu.text.IDNA;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.SurveyPagerAdapter;
 import com.example.mienhv1.survey.ui.dialog.DoneAnswerDialogFragment;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
+import com.example.mienhv1.survey.ui.fragment.info.InfoFragment;
 import com.example.mienhv1.survey.ui.fragment.upload.UploadFragment;
 import com.example.mienhv1.survey.utils.view.CSTextView;
 import com.example.mienhv1.survey.utils.view.CSViewPageNoScroll;
@@ -73,7 +75,6 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
         mViewPager.setScrolling(false);
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
         mHomePresenter = new HomePresenter(dataRepository, this);
-        Log.d("mien123", "homefragment");
         int idTopic = getArguments().getInt("idtopic");
         if (idTopic < 0)
             return;
@@ -127,6 +128,8 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     //show dialog when success...
     private void showPromptDlgSuccess(String msg) {
+        if (getActivity() == null)
+            return;
         PromptDialog promptDialog = new PromptDialog(getActivity());
         promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_SUCCESS);
         promptDialog.setAnimationEnable(true);
@@ -150,16 +153,19 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
     }
 
     private void showPromptDlgError(String message) {
-        PromptDialog promptDialog = new PromptDialog(getActivity());
+        if (getActivity() == null)
+            return;
+        final PromptDialog promptDialog = new PromptDialog(getActivity());
 
         promptDialog.setDialogType(PromptDialog.DIALOG_TYPE_WRONG);
-        promptDialog.setAnimationEnable(false);
+        promptDialog.setAnimationEnable(true);
         promptDialog.setCancelable(false);
         promptDialog.setTitleText(getString(R.string.error));
         promptDialog.setContentText(message);
         promptDialog.setPositiveListener(getString(R.string.ok), new PromptDialog.OnPositiveListener() {
             @Override
             public void onClick(PromptDialog dialog) {
+                promptDialog.setAnimationEnable(false);
                 curChildPosition--;
                 dialog.dismiss();
             }
@@ -236,9 +242,13 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //                        ft.add(generalDialogFragment,"");
 //                        ft.commit();
                         DataAnswerText datatext = new DataAnswerText();
-                        datatext.userid = 10;
-                        datatext.answerModelArrayList = mListAnswer;
-                        uploaddata(datatext);
+                        InfoFragment infor = (InfoFragment) adapter.getItem(0);
+                        if (infor != null) {
+                            datatext.preSurvey = infor.getInforSysDevicesPreSurvey();
+                            datatext.answerModelArrayList = mListAnswer;
+                            uploaddata(datatext);
+                        }
+
 //                        showPromptDlg();
                     } else {
                         viewBtnPre.setClickable(true);
