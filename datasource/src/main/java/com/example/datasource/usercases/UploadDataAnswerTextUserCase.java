@@ -1,6 +1,7 @@
 package com.example.datasource.usercases;
 
 import com.example.datasource.model.DataAnswerText;
+import com.example.datasource.model.DataAnswerTextModel;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ResponeDataText;
@@ -30,9 +31,9 @@ public class UploadDataAnswerTextUserCase extends RxUserCase<DataResponse<Respon
 
 
     public static class RequestValue implements RxUserCase.RequestValue {
-        DataAnswerText order;
+        DataAnswerTextModel order;
 
-        public RequestValue(DataAnswerText orderdetail) {
+        public RequestValue(DataAnswerTextModel orderdetail) {
             order=orderdetail;
         }
     }

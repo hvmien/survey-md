@@ -3,6 +3,7 @@ package com.example.datasource.repository;
 import android.text.TextUtils;
 
 import com.example.datasource.model.DataAnswerText;
+import com.example.datasource.model.DataAnswerTextModel;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -107,7 +108,7 @@ public class DataRepository {
         return mRemoteDataSource.getListStore(username);
     }
 
-    public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerText order) {
+    public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerTextModel order) {
         return mRemoteDataSource.uploadDataText(order);
     }
 }

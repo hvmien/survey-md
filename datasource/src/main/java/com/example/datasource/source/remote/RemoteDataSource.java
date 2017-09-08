@@ -3,6 +3,7 @@ package com.example.datasource.source.remote;
 import android.content.Context;
 
 import com.example.datasource.model.DataAnswerText;
+import com.example.datasource.model.DataAnswerTextModel;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -114,7 +115,7 @@ public class RemoteDataSource implements IRemoteDataSource {
     }
 
     @Override
-    public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerText order) {
+    public Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerTextModel order) {
         return mApiInterface.uploadDataText(order);
     }
 }

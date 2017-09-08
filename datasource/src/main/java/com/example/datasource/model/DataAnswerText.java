@@ -12,6 +12,6 @@ public class DataAnswerText {
     @SerializedName("survey_pre")
     public SurveyPreModel preSurvey;
 
-    @SerializedName("AnswerList")
+    @SerializedName("answerlist")
     public ArrayList<AnswerModel> answerModelArrayList;
 }

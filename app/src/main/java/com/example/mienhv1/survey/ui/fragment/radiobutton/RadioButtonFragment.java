@@ -117,10 +117,10 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
             //goi toi api /table_attritute params{table_id} lay table_id trong getArguments()
             mList = new ArrayList<>();
             mList.addAll(data);
-            for (int i = 0; i < mList.size(); i++) {
-                if ((mList.get(i).name_column.toString() != null))
-                meMap.put(mList.get(i).name_column.toString(), false);
-            }
+//            for (int i = 0; i < mList.size(); i++) {
+//                if ((mList.get(i).name_column.toString() != null))
+//                meMap.put(mList.get(i).name_column.toString(), false);
+//            }
 
             radioButtonAdapter = new RadioButtonAdapter(getActivity(), R.layout.item_radio_button, csRadioGroupParent, mList, this, item);
             csRadioGroupParent.setAdapter(radioButtonAdapter);
@@ -149,7 +149,8 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
         View radioButton = group.findViewById(radioButtonID);
         int position = group.indexOfChild(radioButton);
         mPosition = position;
-        if (meMap.containsKey(mList.get(mPosition).name_column)) {
+        meMap.clear();
+        if (!meMap.containsKey(mList.get(mPosition).name_column)) {
             meMap.put(mList.get(mPosition).name_column, true);
         }
         Log.d("check", checkedId + "===" + position);

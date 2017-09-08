@@ -1,6 +1,7 @@
 package com.example.datasource.source.remote;
 
 import com.example.datasource.model.DataAnswerText;
+import com.example.datasource.model.DataAnswerTextModel;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -67,5 +68,5 @@ public interface ApiInterface {
     Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(@Field("id_question")int tableid);
 
     @POST("anwser_result")
-    Observable<DataResponse<ResponeDataText>> uploadDataText(@Body DataAnswerText data);
+    Observable<DataResponse<ResponeDataText>> uploadDataText(@Body DataAnswerTextModel data);
 }

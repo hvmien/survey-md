@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.DataAnswerText;
+import com.example.datasource.model.DataAnswerTextModel;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.datasource.model.ResponeDataText;
@@ -241,11 +242,12 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 //                        generalDialogFragment.setDoneAnswerDialogFragment(this);
 //                        ft.add(generalDialogFragment,"");
 //                        ft.commit();
-                        DataAnswerText datatext = new DataAnswerText();
+
+                        DataAnswerTextModel datatext = new DataAnswerTextModel();
                         InfoFragment infor = (InfoFragment) adapter.getItem(0);
                         if (infor != null) {
-                            datatext.preSurvey = infor.getInforSysDevicesPreSurvey();
-                            datatext.answerModelArrayList = mListAnswer;
+                            datatext.data.preSurvey = infor.getInforSysDevicesPreSurvey();
+                            datatext.data.answerModelArrayList = mListAnswer;
                             uploaddata(datatext);
                         }
 
@@ -293,7 +295,7 @@ public class HomeFragment extends BaseFragment implements HomeView, View.OnClick
 
     }
 
-    private void uploaddata(DataAnswerText order) {
+    private void uploaddata(DataAnswerTextModel order) {
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
         UploadDataAnswerTextUserCase uploadDataAnswerTextUserCase = new UploadDataAnswerTextUserCase(dataRepository);
         UploadDataAnswerTextUserCase.RequestValue requestValue = new UploadDataAnswerTextUserCase.RequestValue(order);

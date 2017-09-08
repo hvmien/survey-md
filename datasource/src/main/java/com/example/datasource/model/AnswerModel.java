@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class AnswerModel<T> {
-    @SerializedName("idTypeQuestion")
+    @SerializedName("id")
     public int idTypeQuestion;
     @SerializedName("modelQuestion")
     public T modelQuestion;
