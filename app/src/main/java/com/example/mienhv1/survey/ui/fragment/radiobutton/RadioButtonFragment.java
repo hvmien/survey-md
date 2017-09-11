@@ -26,7 +26,7 @@ import java.util.HashMap;
  * Created by HVM on 4/23/2017.
  */
 
-public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.OnClickListener, CallBackDataListener,RadioGroup.OnCheckedChangeListener {
+public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.OnClickListener, CallBackDataListener, RadioGroup.OnCheckedChangeListener {
     private CSTextView txtTitle;
     private CSRadioGroup csRadioGroupParent;
     private ProgressBar radiobuttonProgress;
@@ -34,8 +34,8 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     private int mID = -1;
     private int mPosition = -1;
     private RadioButtonAdapter radioButtonAdapter;
-    private ArrayList mListAnswer=new ArrayList();
-    HashMap<String, Boolean> meMap=new HashMap<String, Boolean>();
+    private ArrayList mListAnswer = new ArrayList();
+    HashMap<String, Boolean> meMap = new HashMap<String, Boolean>();
 
     public static RadioButtonFragment newInstance(ItemQuestionModel item) {
 
@@ -91,8 +91,8 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     public AnswerModel getDataFromUserHandle() {
         //radioButtonAdapter.getdataFromAdapter();
         AnswerModel m = new AnswerModel();
-        m.idTypeQuestion=item.order_rank;
-        m.modelQuestion =meMap;
+        m.idTypeQuestion = item.order_rank;
+        m.modelQuestion = meMap;
         return m;
     }
 
@@ -117,9 +117,10 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
             //goi toi api /table_attritute params{table_id} lay table_id trong getArguments()
             mList = new ArrayList<>();
             mList.addAll(data);
-            for (int i = 0; i < mList.size(); i++) {
-                meMap.put(mList.get(i).name_column.toString(),false);
-            }
+//            for (int i = 0; i < mList.size(); i++) {
+//                if ((mList.get(i).name_column.toString() != null))
+//                meMap.put(mList.get(i).name_column.toString(), false);
+//            }
 
             radioButtonAdapter = new RadioButtonAdapter(getActivity(), R.layout.item_radio_button, csRadioGroupParent, mList, this, item);
             csRadioGroupParent.setAdapter(radioButtonAdapter);
@@ -134,7 +135,7 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     }
 
     @Override
-    public void onItemClick(ItemQuestionModel item, int id,boolean b) {
+    public void onItemClick(ItemQuestionModel item, int id, boolean b) {
         if (mListener != null) {
             mID = id;
             mListener.onFragmentInteraction(item, id);
@@ -147,11 +148,11 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
         int radioButtonID = group.getCheckedRadioButtonId();
         View radioButton = group.findViewById(radioButtonID);
         int position = group.indexOfChild(radioButton);
-        mPosition=position;
-        if(meMap.containsKey(mList.get(mPosition).name_column))
-        {
-            meMap.put(mList.get(mPosition).name_column,true);
+        mPosition = position;
+        meMap.clear();
+        if (!meMap.containsKey(mList.get(mPosition).name_column)) {
+            meMap.put(mList.get(mPosition).name_column, true);
         }
-        Log.d("check",checkedId+"==="+position);
+        Log.d("check", checkedId + "===" + position);
     }
 }

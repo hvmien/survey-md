@@ -5,13 +5,11 @@ package com.example.mienhv1.survey.ui.fragment.info;
  */
 
 public class InforModel {
-    String nameStore;
-    String address;
+    String namesystemstore;
+    String namestoredetail;
     String province;
     String district;
     String ward;
-    String homenumberstreet;
-    String namePersonSurvey;
-    String GPS;
-    String datemake;
+    String homenumberandstreet;
+    String namepersonsurvey;
 }

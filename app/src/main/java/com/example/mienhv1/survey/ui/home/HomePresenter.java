@@ -58,14 +58,16 @@ public class HomePresenter implements BasePresenter {
 
     @Override
     public void destroy() {
-
+        getSurveyQuestionUserCase.dispose();
     }
 
 
-
-    public void createDatabase() {
+    public void createDatabase(int id) {
         mHomeView.showProgress();
-        getSurveyQuestionUserCase.execute(new GetSurveyQuestionObserver(), null);
+        if (id < 0)
+            return;
+        GetSurveyQuestionUserCase.RequestValue requestValue = new GetSurveyQuestionUserCase.RequestValue(id);
+        getSurveyQuestionUserCase.execute(new GetSurveyQuestionObserver(), requestValue);
     }
 
     private class GetSurveyQuestionObserver extends DisposableObserver<DataResponse<ItemQuestionModel>> {

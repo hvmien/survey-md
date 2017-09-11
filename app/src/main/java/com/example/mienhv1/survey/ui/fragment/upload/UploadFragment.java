@@ -60,7 +60,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerViewItemListener,
         ProgressRequestBody.UploadCallbacks, View.OnClickListener,
-        OnposItemRecyclerClickListener, OnItemRecyclerClickListener,UploadView {
+        OnposItemRecyclerClickListener, OnItemRecyclerClickListener, UploadView {
 
     private ArrayList<Image> images = new ArrayList<>();
     private List<String> mUriString = new ArrayList<>();
@@ -147,18 +147,18 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
     @Override
     public void showError(String error) {
-        Log.d("Upload",error);
-        Toast.makeText(getActivity(), error+"", Toast.LENGTH_SHORT).show();
+        Log.d("Upload", error);
+        Toast.makeText(getActivity(), error + "", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
-        if(data!=null) {
+        if (data != null) {
             ArrayList<PickImageModel> list = new ArrayList<>();
             for (int i = 0; i < data.size(); i++) {
-                PickImageModel m =new PickImageModel();
-                m.title=data.get(i).name_display;
-                m.pos=i+1+"";
+                PickImageModel m = new PickImageModel();
+                m.title = data.get(i).name_display;
+                m.pos = i + 1 + "";
                 list.add(m);
             }
             adapter = new UploadAdapter(getContext(), this);
@@ -178,10 +178,10 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     @Override
     public void onItemClickElement(String titleElement, int position) {
         final Activity activity = getActivity();
-        final String[] permissions = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+        final String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permissions, RC_CAMERA);
-            ActivityCompat.requestPermissions(activity,permissions, 200);
+            ActivityCompat.requestPermissions(activity, permissions, 200);
             ActivityCompat.requestPermissions(activity, permissions, 100);
         } else {
 
@@ -228,7 +228,6 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
         }
 
     }
-
 
 
     private void checkContainData(UriPostModel model) {
@@ -278,7 +277,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
                 ProgressRequestBody requestFile = new ProgressRequestBody(files, this);
 
                 MultipartBody.Part body =
-                        MultipartBody.Part.createFormData("photo[]", files.getName(), requestFile);
+                        MultipartBody.Part.createFormData("photo", files.getName(), requestFile);
                 listPart.add(body);
             }
             return listPart;
@@ -308,20 +307,19 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     @Override
-    public void upload(){
+    public void upload() {
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
-        mUploadPresenter = new UploadPresenter(dataRepository,this);
+        mUploadPresenter = new UploadPresenter(dataRepository, this);
 
-        if(bmList.size()>0){
+        if (bmList.size() > 0) {
             for (int i = 0; i < bmList.size(); i++) {
                 mUriString.add(bmList.get(i).uri.toString());
             }
             bmList.clear();
             mUploadPresenter.uploadImage(getMutilPart(mUriString));
 
-        }
-        else {
-            mListener.onError();
+        } else {
+            mListener.warrning("Chưa có hình ảnh minh họa!");
         }
     }
 
@@ -330,23 +328,24 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
     }
 
     private OnCallbackUpload mListener;
+
     @Override
-    public void onSuccessUploadImage() {
-        mListener.onSuccess();
+    public void onSuccessUploadImage(String msg) {
+        mListener.onSuccess(msg);
     }
 
     @Override
-    public void onErrorUploadImage() {
-        mListener.onError();
+    public void onErrorUploadImage(String error) {
+        mListener.onError(error);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_hoan_thanh) {
             DataRepository dataRepository = DataRepositoryFactory.createDataRepository(getActivity());
-            mUploadPresenter = new UploadPresenter(dataRepository,this);
+            mUploadPresenter = new UploadPresenter(dataRepository, this);
 
-            if(bmList.size()>0){
+            if (bmList.size() > 0) {
                 for (int i = 0; i < bmList.size(); i++) {
                     mUriString.add(bmList.get(i).uri.toString());
                 }
@@ -377,7 +376,7 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
 
             captureImage();
         }
-        mProgressItemRecyc =progress;
+        mProgressItemRecyc = progress;
     }
 
     @Override
@@ -437,9 +436,20 @@ public class UploadFragment extends ItemBaseSurveyFragment implements RecyclerVi
             imageviewPos.imageView.setImageBitmap(bitmapResult);
         }
     }
-    public interface OnCallbackUpload{
-        void onSuccess();
-        void onError();
+
+    public interface OnCallbackUpload {
+        void onSuccess(String msg);
+
+        void onError(String error);
+
+        void warrning(String warn);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mUploadPresenter != null)
+            mUploadPresenter.destroy();
     }
 }
 

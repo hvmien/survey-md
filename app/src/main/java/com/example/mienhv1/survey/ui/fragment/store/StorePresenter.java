@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.StoreSystem;
 import com.example.datasource.repository.DataRepository;
+import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.datasource.usercases.GetListStoreUserCase;
 import com.example.datasource.usercases.SignOutUserCase;
 import com.example.mienhv1.survey.MyApplication;
@@ -64,8 +65,9 @@ public class StorePresenter implements BasePresenter {
 
     @Override
     public void destroy() {
-
+        getListStoreUserCase.dispose();
     }
+
 
     public void signOut() {
         mSignOutUserCase.execute(new SignOutObserver(), null);
@@ -73,7 +75,12 @@ public class StorePresenter implements BasePresenter {
 
     public void getListStoreForRecyclerView() {
         storeView.showProgress();
-        getListStoreUserCase.execute(new GetListStoreObserver(), null);
+        DataRepository dataRepository = DataRepositoryFactory.createDataRepository(MyApplication.getInstance().getApplicationContext());
+        if (dataRepository == null)
+            return;
+
+        GetListStoreUserCase.RequestValue username = new GetListStoreUserCase.RequestValue(dataRepository.getUserName());
+        getListStoreUserCase.execute(new GetListStoreObserver(), username);
     }
 
     private class GetListStoreObserver extends DisposableObserver<DataResponse<StoreSystem>> {

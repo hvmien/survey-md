@@ -100,7 +100,8 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     @Override
     public void destroy() {
-
+        if (getListDistrictUserCase != null)
+            getListDistrictUserCase.dispose();
     }
 
     protected void startLocationUpdates() {
@@ -133,7 +134,6 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
     }
 
 
-
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
@@ -162,7 +162,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-       // Log.d(TAG, connectionResult.getErrorMessage());
+        // Log.d(TAG, connectionResult.getErrorMessage());
     }
 
     @Override
@@ -180,12 +180,12 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
 
     }
 
-    public void uploadImage( ArrayList<MultipartBody.Part> files) {
+    public void uploadImage(ArrayList<MultipartBody.Part> files) {
         infoView.showProgress();
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
         upLoadImageFileUserCase = new UpLoadImageFileUserCase(dataRepository);
         UpLoadImageFileUserCase.RequestValue requestValue = new UpLoadImageFileUserCase.RequestValue(files);
-        upLoadImageFileUserCase.execute(new UpLoadImageFileObserver(),requestValue);
+        upLoadImageFileUserCase.execute(new UpLoadImageFileObserver(), requestValue);
     }
 
     @Override
@@ -201,7 +201,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         infoView.showProgress();
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
         getListProvinceUserCase = new GetListProvinceUserCase(dataRepository);
-        getListProvinceUserCase.execute(new GetListProvinceObserver(),null);
+        getListProvinceUserCase.execute(new GetListProvinceObserver(), null);
     }
 
     public void getDistristViaProvince(String provinceid) {
@@ -209,7 +209,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
         getListDistrictUserCase = new GetListDistrictUserCase(dataRepository);
         GetListDistrictUserCase.RequestValue requestValue = new GetListDistrictUserCase.RequestValue(provinceid);
-        getListDistrictUserCase.execute(new GetListDistrictObserver(),requestValue);
+        getListDistrictUserCase.execute(new GetListDistrictObserver(), requestValue);
     }
 
     public void getWardViaDistrict(String districtid) {
@@ -217,7 +217,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         DataRepository dataRepository = DataRepositoryFactory.createDataRepository(mActivity);
         getListWardUserCase = new GetListWardUserCase(dataRepository);
         GetListWardUserCase.RequestValue requestValue = new GetListWardUserCase.RequestValue(districtid);
-        getListWardUserCase.execute(new GetListWardObserver(),requestValue);
+        getListWardUserCase.execute(new GetListWardObserver(), requestValue);
     }
 
     private class UpLoadImageFileObserver extends DisposableObserver<DataResponse<ImageRespone>> {
@@ -225,19 +225,19 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         public void onNext(DataResponse<ImageRespone> responseBody) {
             infoView.hideProgress();
             ArrayList<ImageRespone> list = responseBody.data;
-            if(list!=null&&list.size()>0){
+            if (list != null && list.size() > 0) {
                 for (int i = 0; i < list.size(); i++) {
-                    Log.d("OnNext",list.get(i).image+"");
+                    Log.d("OnNext", list.get(i).image + "");
                 }
             }
 
-            Toast.makeText(mActivity, "onNext: " +responseBody.msg, Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "onNext: " + responseBody.msg, Toast.LENGTH_LONG).show();
         }
 
         @Override
         public void onError(Throwable e) {
             infoView.hideProgress();
-            Toast.makeText(mActivity, "onError"+e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(mActivity, "onError" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -256,7 +256,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         @Override
         public void onError(Throwable e) {
             infoView.hideProgress();
-            infoView.showError(e.getMessage());
+            infoView.showError(TAG + e.getMessage());
         }
 
         @Override

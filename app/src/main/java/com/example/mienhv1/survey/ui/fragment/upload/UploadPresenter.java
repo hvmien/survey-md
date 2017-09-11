@@ -10,6 +10,7 @@ import com.example.datasource.repository.DataRepository;
 import com.example.datasource.repository.DataRepositoryFactory;
 import com.example.datasource.usercases.UpLoadImageFileUserCase;
 import com.example.mienhv1.survey.MyApplication;
+import com.example.mienhv1.survey.base.BasePresenter;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ import okhttp3.MultipartBody;
  * Created by HVM on 4/29/2017.
  */
 
-public class UploadPresenter {
+public class UploadPresenter implements BasePresenter {
     private DataRepository mDataRepository;
     private UploadView uploadView;
     private UpLoadImageFileUserCase upLoadImageFileUserCase;
@@ -40,6 +41,37 @@ public class UploadPresenter {
         upLoadImageFileUserCase.execute(new UpLoadImageFileObserver(), requestValue);
     }
 
+    @Override
+    public void create() {
+
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void destroy() {
+        if (upLoadImageFileUserCase != null)
+            upLoadImageFileUserCase.dispose();
+    }
+
     private class UpLoadImageFileObserver extends DisposableObserver<DataResponse<ImageRespone>> {
         @Override
         public void onNext(DataResponse<ImageRespone> responseBody) {
@@ -52,22 +84,20 @@ public class UploadPresenter {
 //                        Log.d("OnNext", list.get(i).image + " image upload thanh cong");
 //                    }
 //                }
-
-                Toast.makeText(mContext, "onNext: " + responseBody.msg+ " hinh upload thanh cong", Toast.LENGTH_LONG).show();
+                uploadView.onSuccessUploadImage(responseBody.msg);
             }
         }
 
         @Override
         public void onError(Throwable e) {
             uploadView.hideProgress();
-            uploadView.showError(e.getMessage());
-            uploadView.onErrorUploadImage();
+//            uploadView.showError(e.getMessage());
+            uploadView.onErrorUploadImage(e.getMessage());
         }
 
         @Override
         public void onComplete() {
             uploadView.hideProgress();
-            uploadView.onSuccessUploadImage();
         }
     }
 }

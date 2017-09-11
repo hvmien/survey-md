@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ItemAttributeModel {
-    @SerializedName("name_column")
+    @SerializedName("name_colume")
     public String name_column;
-    @SerializedName("name_display")
+    @SerializedName("nam_display")
     public String name_display;
 }

@@ -9,9 +9,9 @@ import java.util.ArrayList;
  */
 
 public class DataAnswerText {
-    @SerializedName("UserID")
-    public int userid;
+    @SerializedName("survey_pre")
+    public SurveyPreModel preSurvey;
 
-    @SerializedName("AnswerList")
+    @SerializedName("answerlist")
     public ArrayList<AnswerModel> answerModelArrayList;
 }

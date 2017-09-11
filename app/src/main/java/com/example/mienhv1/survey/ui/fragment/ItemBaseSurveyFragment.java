@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.ItemQuestionModel;
+import com.example.datasource.model.SurveyPreModel;
 import com.example.mienhv1.survey.Constants;
 import com.example.mienhv1.survey.base.BaseFragment;
 import com.example.mienhv1.survey.ui.adapter.EnumSurveyFragment;

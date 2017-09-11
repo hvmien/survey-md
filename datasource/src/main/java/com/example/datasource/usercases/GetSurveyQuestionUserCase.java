@@ -17,9 +17,13 @@ public class GetSurveyQuestionUserCase extends RxUserCase<DataResponse<ItemQuest
 
     @Override
     protected Observable<DataResponse<ItemQuestionModel>> buildPagrams(RequestValue pagram) {
-        return mDataRepository.getDatabaseQuestion();
+        return mDataRepository.getDatabaseQuestion(pagram.idTopic);
     }
     public static class RequestValue implements RxUserCase.RequestValue{
+        public RequestValue(int idTopic) {
+            this.idTopic = idTopic;
+        }
 
+        public int idTopic;
     }
 }

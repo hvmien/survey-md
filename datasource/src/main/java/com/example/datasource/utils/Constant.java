@@ -5,5 +5,5 @@ package com.example.datasource.utils;
  */
 
 public class Constant {
-    public static String BASE_URL="http://stackviet.com/apis/";
+    public static String BASE_URL="http://139.59.116.244:3000/apis/";
 }

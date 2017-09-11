@@ -1,6 +1,7 @@
 package com.example.datasource.source.remote;
 
 import com.example.datasource.model.DataAnswerText;
+import com.example.datasource.model.DataAnswerTextModel;
 import com.example.datasource.model.DataLoginResponse;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -28,7 +29,7 @@ public interface IRemoteDataSource {
 
     Observable<Boolean> signOut();
 
-    Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion();
+    Observable<DataResponse<ItemQuestionModel>> getDatabaseQuestion(int id);
 
     Observable<DataLoginResponse<User>> signInNoPass(String email,String devicesid);
 
@@ -42,6 +43,6 @@ public interface IRemoteDataSource {
 
     Observable<DataResponse<ItemAttributeModel>> getSurveyAttribute(int tableid);
 
-    Observable<DataResponse<StoreSystem>> getListStore();
-    Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerText order);
+    Observable<DataResponse<StoreSystem>> getListStore(String username);
+    Observable<DataResponse<ResponeDataText>> uploadDataText(DataAnswerTextModel order);
 }

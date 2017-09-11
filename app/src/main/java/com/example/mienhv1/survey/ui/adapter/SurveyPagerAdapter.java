@@ -3,6 +3,7 @@ package com.example.mienhv1.survey.ui.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.datasource.model.ItemQuestionModel;
 import com.example.mienhv1.survey.ui.fragment.ItemBaseSurveyFragment;
@@ -60,7 +61,7 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
                     EditTextFragment f6 = EditTextFragment.newInstance(models.get(i));
                     fragments.add(f6);
                     break;
-                case  7:
+                case 7:
                     UploadFragment f7 = UploadFragment.newInstance(models.get(i));
                     fragments.add(f7);
                     break;
@@ -70,7 +71,10 @@ public class SurveyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        Log.d("mien123",position+"/"+fragments.size());
+        if (position < fragments.size())
+            return fragments.get(position);
+        return null;
     }
 
     @Override
