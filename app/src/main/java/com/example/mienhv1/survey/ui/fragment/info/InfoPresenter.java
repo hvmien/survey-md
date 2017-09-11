@@ -125,7 +125,7 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
-            Log.d(TAG, mLastLocation.toString());
+            Log.d(TAG+"Last", mLastLocation.toString());
         }
         createLocationRequest();
         startLocationUpdates();
@@ -191,6 +191,10 @@ public class InfoPresenter implements BasePresenter, GoogleApiClient.ConnectionC
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "Location Change: " + location);
+        int x = (int) location.getLatitude();
+        int y = (int) location.getLongitude();
+        Log.d(TAG, "Location Change: " + x);
+        Log.d(TAG, "Location Change: " + y);
     }
 
     public void getProvinceList() {
