@@ -10,6 +10,7 @@ public class InforModel {
     String province;
     String district;
     String ward;
-    String homenumberandstreet;
+    String street;
     String namepersonsurvey;
+    String housenumber;
 }

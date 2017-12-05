@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.datasource.model.AnswerMetaModel;
 import com.example.datasource.model.AnswerModel;
 import com.example.datasource.model.DataResponse;
 import com.example.datasource.model.DistrictModel;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView {
 
+
     InfoPresenter presenter;
     private String TAG = "InfoFragment";
     private ProgressBar mProgressBar;
@@ -51,6 +53,7 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     private TextView nameUserSurvey;
     public static final String BLANK_SPACE = "";
     private ItemQuestionModel item;
+    private ArrayList<ItemAttributeModel> listQuestionMeta;
 
     public static InfoFragment newInstance(ItemQuestionModel mode) {
         Bundle args = new Bundle();
@@ -137,8 +140,10 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     @Override
     public void onGetDataListenner(ArrayList<ItemAttributeModel> data) {
         if (data != null) {
+            listQuestionMeta = new ArrayList<>();
+            listQuestionMeta.addAll(data);
             String a = "ádfsd";
-            Log.d("", "");
+            Log.d("", a+"");
         }
     }
 
@@ -173,16 +178,28 @@ public class InfoFragment<T> extends ItemBaseSurveyFragment implements InfoView 
     @Override
     public AnswerModel<T> getDataFromUserHandle() {
         AnswerModel result = new AnswerModel();
+        ArrayList<AnswerMetaModel> arrayList = new ArrayList<>();
+
+        for (int i = 0; i <listQuestionMeta.size(); i++) {
+            AnswerMetaModel temp = new AnswerMetaModel();
+            temp.idQuestionMeta = listQuestionMeta.get(i).id_question_meta;
+
+            arrayList.add(temp);
+        }
+
         InforModel inforModel = new InforModel();
         inforModel.namesystemstore="B'mart";
         inforModel.namestoredetail = nameStoreEditText.getText().toString();
         inforModel.province = province;
         inforModel.district = district;
         inforModel.ward = ward;
-        inforModel.homenumberandstreet = homeNumberStreet.getText().toString();
+        inforModel.street = homeNumberStreet.getText().toString();
+        inforModel.housenumber = homeNumberStreet.getText().toString();
         inforModel.namepersonsurvey = nameUserSurvey.getText().toString();
-        result.idTypeQuestion = item.order_rank;
-        result.modelQuestion = inforModel;
+
+
+        result.idQuestion = item.order_rank;
+        result.modelAnswerMeta = arrayList;
         return result;
     }
 

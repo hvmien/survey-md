@@ -28,7 +28,7 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
     private CSTextView txtTitle;
     private CSGroupCheckbox grCheckboxParent;
     private ProgressBar checkboxProgressbar;
-    HashMap<String, Boolean> meMap=new HashMap<String, Boolean>();
+    HashMap<String, Boolean> meMap = new HashMap<String, Boolean>();
     private ArrayList<ItemAttributeModel> mList;
 
 
@@ -81,9 +81,9 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
 
     @Override
     public AnswerModel getDataFromUserHandle() {
-        AnswerModel m =new AnswerModel();
-        m.idTypeQuestion=item.order_rank;
-        m.modelQuestion=meMap;
+        AnswerModel m = new AnswerModel();
+        m.idQuestion = item.order_rank;
+        //m.modelAnswerMeta = meMap;
         return m;
     }
 
@@ -108,21 +108,30 @@ public class CheckboxFragment extends ItemBaseSurveyFragment implements CallBack
             //goi toi api /table_attritute params{table_id} lay table_id trong getArguments()
             mList = new ArrayList<>();
             mList.addAll(dataAtt);
-            for (int i = 0; i < mList.size(); i++) {
-                meMap.put(mList.get(i).name_column.toString(),false);
-            }
+//            for (int i = 0; i < mList.size(); i++) {
+//                meMap.put(mList.get(i).name_column.toString(),false);
+//            }
             CheckboxAdapter ckA = new CheckboxAdapter(getActivity(), R.layout.item_check_box_view, grCheckboxParent, mList, this, item);
             grCheckboxParent.setAdapter(ckA);
         }
     }
 
     @Override
-    public void onItemClick(ItemQuestionModel item, int id,boolean ischecked) {
-        if (mListener != null) {
-            if(meMap.containsKey(mList.get(id).name_column))
+    public void onItemClick(ItemQuestionModel item, int id, boolean ischecked) {
+        if (mListener != null ) {
+            if(!meMap.containsKey(mList.get(id).name_column)&&ischecked==true)
             {
-                meMap.put(mList.get(id).name_column,ischecked);
+                meMap.put(mList.get(id).name_column, ischecked);
+            }else {
+                meMap.remove(mList.get(id).name_column);
             }
+//                for (int i = 0; i <meMap.size() ; i++) {
+//                    if(meMap.get(mList.get(id).name_column).booleanValue()==false)
+//                    {
+//                        meMap.remove(mList.get(id).name_column);
+//                    }
+//                }
+
         }
     }
 }

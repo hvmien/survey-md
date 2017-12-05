@@ -21,6 +21,8 @@ public class ItemQuestionModel implements Parcelable {
     public int type;
     @SerializedName("stt_question")
     public int order_rank;
+    @SerializedName("total_submeta")
+    public int totalSubMeta;
 
     public ItemQuestionModel(){}
 

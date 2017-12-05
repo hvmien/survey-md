@@ -50,9 +50,9 @@ public class EditTextFragment extends ItemBaseSurveyFragment {
     @Override
     public AnswerModel getDataFromUserHandle() {
         AnswerModel m = new AnswerModel();
-        m.idTypeQuestion = item.order_rank;
+        m.idQuestion = item.order_rank;
         if (adapter.getDataTextview() != null) {
-            m.modelQuestion = adapter.getDataTextview();
+//            m.modelAnswerMeta = adapter.getDataTextview();
         }
         return m;
     }

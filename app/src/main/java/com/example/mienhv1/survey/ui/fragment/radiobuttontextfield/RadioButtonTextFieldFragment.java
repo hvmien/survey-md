@@ -77,8 +77,8 @@ public class RadioButtonTextFieldFragment extends ItemBaseSurveyFragment {
     @Override
     public AnswerModel getDataFromUserHandle() {
         AnswerModel m =new AnswerModel();
-        m.idTypeQuestion=item.order_rank;
-        m.modelQuestion=getData();
+        m.idQuestion=item.order_rank;
+//        m.modelAnswerMeta=getData();
         return m;
     }
 

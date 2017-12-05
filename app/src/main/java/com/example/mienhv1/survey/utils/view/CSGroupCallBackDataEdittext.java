@@ -78,12 +78,12 @@ public class CSGroupCallBackDataEdittext extends LinearLayout implements CallBac
             mList.add(data.get(i));
         RadioButtonAdapter adapter = new RadioButtonAdapter(getContext(), R.layout.item_radio_button, groupRadio, mList, this, item);
         groupRadio.setAdapter(adapter);
-        for (int i = 0; i < data.size(); i++) {
-            meMap.put(data.get(i).name_column, "0");
-        }
+//        for (int i = 0; i < data.size(); i++) {
+//            meMap.put(data.get(i).name_column, "0");
+//        }
         if (data.size() > 1) {
             csEditText.setHint(data.get(data.size() - 1).name_display);
-            meMap.put(data.get(data.size()-1).name_column, "");
+//            meMap.put(data.get(data.size()-1).name_column, "");
         }
 
         invalidate();
@@ -92,7 +92,9 @@ public class CSGroupCallBackDataEdittext extends LinearLayout implements CallBac
     HashMap<String, String> meMap = new HashMap<String, String>();
 
     public HashMap<String, String> getDataFromUser() {
-        if (meMap.containsKey(dataRb.get(mList.size()-1).name_column)) {
+
+        if (!csEditText.getText().toString().equals("")) {
+            meMap.clear();
             meMap.put(dataRb.get(dataRb.size()-1).name_column, csEditText.getText().toString());
         }
         return meMap;
@@ -109,8 +111,12 @@ public class CSGroupCallBackDataEdittext extends LinearLayout implements CallBac
         View radioButton = group.findViewById(radioButtonID);
         int position = group.indexOfChild(radioButton);
         mPosition = position;
-        if (meMap.containsKey(mList.get(mPosition).name_column)) {
+        meMap.clear();
+        if (!meMap.containsKey(mList.get(mPosition).name_column)) {
             meMap.put(mList.get(mPosition).name_column, "1");
+        }
+        else {
+            meMap.remove(mList.get(mPosition).name_column);
         }
         csEditText.removeTextChangedListener(this);
         csEditText.setText(null);

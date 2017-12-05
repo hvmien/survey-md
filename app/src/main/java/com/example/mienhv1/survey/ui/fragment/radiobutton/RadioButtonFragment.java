@@ -91,8 +91,8 @@ public class RadioButtonFragment extends ItemBaseSurveyFragment implements View.
     public AnswerModel getDataFromUserHandle() {
         //radioButtonAdapter.getdataFromAdapter();
         AnswerModel m = new AnswerModel();
-        m.idTypeQuestion = item.order_rank;
-        m.modelQuestion = meMap;
+        m.idQuestion = item.order_rank;
+//        m.modelQuestion = meMap;
         return m;
     }
 
